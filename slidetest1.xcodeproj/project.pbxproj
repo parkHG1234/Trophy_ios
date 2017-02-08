@@ -17,6 +17,7 @@
 		3110B5DB1E49CAC400E43674 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DA1E49CAC400E43674 /* SWRevealViewController.m */; };
 		3110B5DD1E49CBC200E43674 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DC1E49CBC200E43674 /* BackTableVC.swift */; };
 		3110B5DF1E4ADCD300E43674 /* SlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */; };
+		3110B5E21E4AFBC900E43674 /* SlideMenu_TeamSearch_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5E11E4AFBC900E43674 /* SlideMenu_TeamSearch_ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		3110B5DA1E49CAC400E43674 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		3110B5DC1E49CBC200E43674 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
 		3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuViewController.swift; sourceTree = "<group>"; };
+		3110B5E11E4AFBC900E43674 /* SlideMenu_TeamSearch_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu_TeamSearch_ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
 				3110B5D71E49CAA800E43674 /* Supporting Files */,
 				3110B5DC1E49CBC200E43674 /* BackTableVC.swift */,
+				3110B5E11E4AFBC900E43674 /* SlideMenu_TeamSearch_ViewController.swift */,
 			);
 			path = slidetest1;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 			files = (
 				3110B5DF1E4ADCD300E43674 /* SlideMenuViewController.swift in Sources */,
 				3110B5AC1E49C9F500E43674 /* ViewController.swift in Sources */,
+				3110B5E21E4AFBC900E43674 /* SlideMenu_TeamSearch_ViewController.swift in Sources */,
 				3110B5AA1E49C9F500E43674 /* AppDelegate.swift in Sources */,
 				3110B5DD1E49CBC200E43674 /* BackTableVC.swift in Sources */,
 				3110B5DB1E49CAC400E43674 /* SWRevealViewController.m in Sources */,
