@@ -110,7 +110,9 @@
 				3110B5A91E49C9F500E43674 /* AppDelegate.swift */,
 				3110B5AB1E49C9F500E43674 /* ViewController.swift */,
 				3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */,
+				32A244231E4AFE3200CDA02F /* LoginViewController.swift */,
 				3110B5AD1E49C9F500E43674 /* Main.storyboard */,
+				32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */,
 				3110B5B01E49C9F500E43674 /* Assets.xcassets */,
 				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
 				3110B5D71E49CAA800E43674 /* Supporting Files */,
@@ -280,6 +282,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */,
+				32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */,
 				3110B5DF1E4ADCD300E43674 /* SlideMenuViewController.swift in Sources */,
 				3110B5AC1E49C9F500E43674 /* ViewController.swift in Sources */,
 				3110B5E21E4AFBC900E43674 /* SlideMenu_TeamSearch_ViewController.swift in Sources */,
@@ -517,6 +521,7 @@
 				3110B5D01E49C9F600E43674 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3110B5D11E49C9F600E43674 /* Build configuration list for PBXNativeTarget "slidetest1Tests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +530,7 @@
 				3110B5D31E49C9F600E43674 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3110B5D41E49C9F600E43674 /* Build configuration list for PBXNativeTarget "slidetest1UITests" */ = {
 			isa = XCConfigurationList;
@@ -533,6 +539,7 @@
 				3110B5D61E49C9F600E43674 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
