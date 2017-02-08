@@ -17,6 +17,8 @@
 		3110B5DB1E49CAC400E43674 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DA1E49CAC400E43674 /* SWRevealViewController.m */; };
 		3110B5DD1E49CBC200E43674 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DC1E49CBC200E43674 /* BackTableVC.swift */; };
 		3110B5DF1E4ADCD300E43674 /* SlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */; };
+		32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244231E4AFE3200CDA02F /* LoginViewController.swift */; };
+		32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		3110B5DA1E49CAC400E43674 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		3110B5DC1E49CBC200E43674 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
 		3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuViewController.swift; sourceTree = "<group>"; };
+		32A244231E4AFE3200CDA02F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +112,9 @@
 				3110B5A91E49C9F500E43674 /* AppDelegate.swift */,
 				3110B5AB1E49C9F500E43674 /* ViewController.swift */,
 				3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */,
+				32A244231E4AFE3200CDA02F /* LoginViewController.swift */,
 				3110B5AD1E49C9F500E43674 /* Main.storyboard */,
+				32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */,
 				3110B5B01E49C9F500E43674 /* Assets.xcassets */,
 				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
 				3110B5D71E49CAA800E43674 /* Supporting Files */,
@@ -277,6 +283,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */,
+				32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */,
 				3110B5DF1E4ADCD300E43674 /* SlideMenuViewController.swift in Sources */,
 				3110B5AC1E49C9F500E43674 /* ViewController.swift in Sources */,
 				3110B5AA1E49C9F500E43674 /* AppDelegate.swift in Sources */,
@@ -513,6 +521,7 @@
 				3110B5D01E49C9F600E43674 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3110B5D11E49C9F600E43674 /* Build configuration list for PBXNativeTarget "slidetest1Tests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +530,7 @@
 				3110B5D31E49C9F600E43674 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3110B5D41E49C9F600E43674 /* Build configuration list for PBXNativeTarget "slidetest1UITests" */ = {
 			isa = XCConfigurationList;
@@ -529,6 +539,7 @@
 				3110B5D61E49C9F600E43674 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
