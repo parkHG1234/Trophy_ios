@@ -28,39 +28,55 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="845" y="311"/>
+            <point key="canvasLocation" x="826" y="356"/>
         </scene>
-        <!--Back TableVC-->
-        <scene sceneID="nwX-VX-8hO">
+        <!--Slide Menu View Controller-->
+        <scene sceneID="9DL-pf-HdU">
             <objects>
-                <tableViewController id="fCh-WH-ARY" customClass="BackTableVC" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="D57-Ec-KBf">
+                <viewController id="Qlh-AX-M3R" customClass="SlideMenuViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jw0-f8-wcA"/>
+                        <viewControllerLayoutGuide type="bottom" id="KzR-I0-5l8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ace-gR-D3t">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ywk-W3-FVL">
+                                <rect key="frame" x="11" y="28" width="240" height="128"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CNG-Q7-IIM">
+                                <rect key="frame" x="11" y="165" width="115" height="30"/>
+                                <state key="normal" title="로그인을 해주세요."/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzp-7c-Who">
+                                <rect key="frame" x="11" y="229" width="115" height="53"/>
+                                <state key="normal" title="팀 찾기"/>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6dH-gH-QtI">
+                                <rect key="frame" x="195" y="156" width="56" height="48"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bk-vn-YIR">
+                                <rect key="frame" x="129" y="228" width="122" height="54"/>
+                                <state key="normal" title="지난 대회보기"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmE-nz-0tk">
+                                <rect key="frame" x="20" y="290" width="106" height="54"/>
+                                <state key="normal" title="설정"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="xrn-aU-S34">
-                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xrn-aU-S34" id="aRH-Pe-H5d">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="fCh-WH-ARY" id="hVG-oY-u5S"/>
-                            <outlet property="delegate" destination="fCh-WH-ARY" id="dDi-YJ-XGQ"/>
-                        </connections>
-                    </tableView>
+                    </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="fkB-Or-Gcr"/>
+                        <outlet property="Profile" destination="Ywk-W3-FVL" id="AId-52-BkD"/>
+                        <outlet property="SportType" destination="6dH-gH-QtI" id="xWf-GO-Lac"/>
+                        <segue destination="BYZ-38-t0r" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="LZJ-FS-E25"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LTT-1K-1mp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fHK-66-gXZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="433" y="-345"/>
+            <point key="canvasLocation" x="440" y="-329"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="q4b-1l-Lmp">
@@ -77,8 +93,8 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <segue destination="fCh-WH-ARY" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="S0B-3I-cho"/>
                         <segue destination="iI8-fp-pTD" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="jBC-sM-XJe"/>
+                        <segue destination="Qlh-AX-M3R" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="TO2-1f-uLR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zhn-Ww-Mo4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -102,10 +118,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wYF-fT-7Tm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="433" y="311"/>
+            <point key="canvasLocation" x="435" y="356"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dlA-HB-b3R"/>
+        <segue reference="LZJ-FS-E25"/>
     </inferredMetricsTieBreakers>
 </document>

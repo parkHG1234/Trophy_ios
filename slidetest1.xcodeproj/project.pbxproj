@@ -16,6 +16,7 @@
 		3110B5CA1E49C9F600E43674 /* slidetest1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5C91E49C9F600E43674 /* slidetest1UITests.swift */; };
 		3110B5DB1E49CAC400E43674 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DA1E49CAC400E43674 /* SWRevealViewController.m */; };
 		3110B5DD1E49CBC200E43674 /* BackTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DC1E49CBC200E43674 /* BackTableVC.swift */; };
+		3110B5DF1E4ADCD300E43674 /* SlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		3110B5D91E49CAC400E43674 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		3110B5DA1E49CAC400E43674 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		3110B5DC1E49CBC200E43674 /* BackTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableVC.swift; sourceTree = "<group>"; };
+		3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			children = (
 				3110B5A91E49C9F500E43674 /* AppDelegate.swift */,
 				3110B5AB1E49C9F500E43674 /* ViewController.swift */,
+				3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */,
 				3110B5AD1E49C9F500E43674 /* Main.storyboard */,
 				3110B5B01E49C9F500E43674 /* Assets.xcassets */,
 				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
@@ -274,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3110B5DF1E4ADCD300E43674 /* SlideMenuViewController.swift in Sources */,
 				3110B5AC1E49C9F500E43674 /* ViewController.swift in Sources */,
 				3110B5AA1E49C9F500E43674 /* AppDelegate.swift in Sources */,
 				3110B5DD1E49CBC200E43674 /* BackTableVC.swift in Sources */,
