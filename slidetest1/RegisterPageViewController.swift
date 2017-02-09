@@ -28,12 +28,12 @@ class RegisterPageViewController: UIViewController {
     
     @IBAction func registerButtonTapped(sender: AnyObject) {
         
-        let userPhone = userPhoneTextField.text;
-        let userPassword = userPasswordTextField.text;
-        let userRepeatPassword = repeatPasswordTextField.text;
+        let userPhone:String = userPhoneTextField.text!;
+        let userPassword:String = userPasswordTextField.text!;
+        let userRepeatPassword:String = repeatPasswordTextField.text!;
         
         //Check for Empty fields
-        if(userPhone!.isEmpty || userPassword!.isEmpty || userRepeatPassword!.isEmpty) {
+        if(userPhone.isEmpty || userPassword.isEmpty || userRepeatPassword.isEmpty) {
             displayMyAlertMessage("All fields are required");
             return;
         }
@@ -61,7 +61,7 @@ class RegisterPageViewController: UIViewController {
                 print("response = \(response)")
             }
             
-            let responseString = String(data: data!, encoding: NSUTF8StringEncoding)
+            let responseString:String = String(data: data!, encoding: NSUTF8StringEncoding)!
             print("responseString = \(responseString)")
             
             
@@ -74,7 +74,7 @@ class RegisterPageViewController: UIViewController {
             }
             
             if let parseJSON = json {
-                var resultValue = parseJSON["status"] as? String
+                let resultValue = parseJSON["status"] as? String
                 print("result: \(resultValue)")
                 
                 var isUserRegistered:Bool = false
@@ -89,7 +89,7 @@ class RegisterPageViewController: UIViewController {
                 dispatch_async(dispatch_get_main_queue(),{
                     
                     //Display alert message with confirmation.
-                    var myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert)
+                    let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert)
                     
                     let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
                         action in
@@ -105,7 +105,7 @@ class RegisterPageViewController: UIViewController {
     
     
     func displayMyAlertMessage(userMessage:String) {
-        var myAlert = UIAlertController(title: "a", message: userMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let myAlert = UIAlertController(title: "a", message: userMessage, preferredStyle: UIAlertControllerStyle.Alert)
         
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
         
