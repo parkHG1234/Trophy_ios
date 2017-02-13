@@ -8,8 +8,8 @@
 
 import UIKit
 
-class SlideMenu_TeamSearch_ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate {
-    
+class SlideMenu_TeamSearch_ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
