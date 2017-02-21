@@ -90,8 +90,7 @@
 		317057A81E4DA5560091D4F1 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		317057AA1E4DA94A0091D4F1 /* SlideMenu_TeamSearch_Focus_TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu_TeamSearch_Focus_TableViewController.swift; sourceTree = "<group>"; };
 		317057B31E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu_TeamMake_ViewController.swift; sourceTree = "<group>"; };
-		31F40E171E5BDE23007EB0A2 /* BGColorDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGColorDemoViewController.h; sourceTree = "<group>"; };
-		31F40E181E5BDE23007EB0A2 /* BGColorDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGColorDemoViewController.m; sourceTree = "<group>"; };
+		31F40E181E5BDE23007EB0A2 /* BGColorDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BGColorDemoViewController.m; path = "/Users/md313-008/Desktop/slidetest1/slidetest1/BGColorDemoViewController.m"; sourceTree = "<absolute>"; };
 		32A244231E4AFE3200CDA02F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
 		32A244281E4C441D00CDA02F /* basketball_a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = basketball_a.png; sourceTree = "<group>"; };
@@ -145,8 +144,6 @@
 		3110B5A81E49C9F500E43674 /* slidetest1 */ = {
 			isa = PBXGroup;
 			children = (
-				31F40E171E5BDE23007EB0A2 /* BGColorDemoViewController.h */,
-				31F40E181E5BDE23007EB0A2 /* BGColorDemoViewController.m */,
 				32A244271E4C440B00CDA02F /* imgs */,
 				3110B5A91E49C9F500E43674 /* AppDelegate.swift */,
 				3110B5AB1E49C9F500E43674 /* ViewController.swift */,
