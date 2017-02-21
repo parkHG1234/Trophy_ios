@@ -11,14 +11,20 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var open: UIBarButtonItem!
-    
+    var isUserLoggedIn = NSUserDefaults.standardUserDefaults().boolForKey("isUserLoggedIn")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        print(isUserLoggedIn)
+        if(!isUserLoggedIn) {
+            NSUserDefaults.standardUserDefaults().setValue(".", forKey: "Pk")
+        }
         
         open.target = self.revealViewController()
         open.action = Selector("revealToggle:")
+        
+        
         
         
     }

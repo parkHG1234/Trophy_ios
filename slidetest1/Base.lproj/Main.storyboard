@@ -8,7 +8,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -33,7 +33,7 @@
         <!--Slide Menu View Controller-->
         <scene sceneID="9DL-pf-HdU">
             <objects>
-                <viewController id="Qlh-AX-M3R" customClass="SlideMenuViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SlideMenuViewController" id="Qlh-AX-M3R" customClass="SlideMenuViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jw0-f8-wcA"/>
                         <viewControllerLayoutGuide type="bottom" id="KzR-I0-5l8"/>
@@ -45,11 +45,11 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ywk-W3-FVL">
                                 <rect key="frame" x="11" y="28" width="240" height="128"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CNG-Q7-IIM">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="profileButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CNG-Q7-IIM">
                                 <rect key="frame" x="11" y="165" width="115" height="30"/>
                                 <state key="normal" title="로그인을 해주세요."/>
                                 <connections>
-                                    <segue destination="QHQ-bl-IQS" kind="presentation" id="h9j-0c-xMA"/>
+                                    <action selector="profileButtonTapped:" destination="Qlh-AX-M3R" eventType="touchUpInside" id="X4a-6K-9rd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzp-7c-Who">
@@ -84,6 +84,13 @@
                                     <segue destination="zvG-aQ-Gga" kind="show" id="Get-QX-gEk"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqA-Ww-V5h">
+                                <rect key="frame" x="156" y="352" width="69" height="30"/>
+                                <state key="normal" title="로그아웃"/>
+                                <connections>
+                                    <action selector="logoutButtonTapped:" destination="Qlh-AX-M3R" eventType="touchUpInside" id="Tkd-mr-zDj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -91,6 +98,7 @@
                     <connections>
                         <outlet property="Profile" destination="Ywk-W3-FVL" id="AId-52-BkD"/>
                         <outlet property="SportType" destination="6dH-gH-QtI" id="xWf-GO-Lac"/>
+                        <outlet property="profileButton" destination="CNG-Q7-IIM" id="jC3-4S-82V"/>
                         <segue destination="BYZ-38-t0r" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="LZJ-FS-E25"/>
                     </connections>
                 </viewController>
@@ -182,7 +190,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oyu-TQ-HkT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1002" y="419"/>
+            <point key="canvasLocation" x="1076" y="401"/>
         </scene>
         <!--Slide Menu Team Manager Player Manager View Controller-->
         <scene sceneID="OR7-2x-Pff">
@@ -872,7 +880,7 @@
         <!--Login View Controller-->
         <scene sceneID="qEe-Rc-stE">
             <objects>
-                <viewController id="QHQ-bl-IQS" customClass="LoginViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="QHQ-bl-IQS" customClass="LoginViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rrw-cC-in9"/>
                         <viewControllerLayoutGuide type="bottom" id="JtD-tC-0cZ"/>
@@ -919,6 +927,16 @@
                                 <state key="normal" title="회원가입"/>
                                 <connections>
                                     <segue destination="SAX-MH-HDm" kind="presentation" id="w2v-XJ-r6M"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEF-Nv-Lfa">
+                                <rect key="frame" x="93" y="456" width="135" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <state key="normal" title="더 둘러보기">
+                                    <color key="titleColor" white="0.0" alpha="0.68999999999999995" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="QHQ-bl-IQS" eventType="touchUpInside" id="OII-a9-o2A"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1058,7 +1076,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7G-FX-uz4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4667" y="-329"/>
+            <point key="canvasLocation" x="4035" y="-53"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="R5F-1Y-ufD">
@@ -1122,6 +1140,6 @@
         <image name="basketball_a.png" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dlA-HB-b3R"/>
+        <segue reference="LZJ-FS-E25"/>
     </inferredMetricsTieBreakers>
 </document>
