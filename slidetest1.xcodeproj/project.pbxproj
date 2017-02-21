@@ -167,6 +167,8 @@
 				30EA1FFE1E5B19EB007F0B91 /* Contest_Application_Setting.swift */,
 				3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */,
 				32A244231E4AFE3200CDA02F /* LoginViewController.swift */,
+				3110B5AD1E49C9F500E43674 /* Main.storyboard */,
+				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
 				32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */,
 				3110B5B01E49C9F500E43674 /* Assets.xcassets */,
 				3110B5DC1E49CBC200E43674 /* BackTableVC.swift */,
