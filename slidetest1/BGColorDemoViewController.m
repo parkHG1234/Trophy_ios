@@ -8,7 +8,6 @@
 
 #import "BGColorDemoViewController.h"
 #import "UINavigationBar+Awesome.h"
-
 #define NAVBAR_CHANGE_POINT 50
 
 @interface BGColorDemoViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -16,12 +15,11 @@
 @end
 
 @implementation BGColorDemoViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.tableView.dataSource = self;
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"maincell"];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
 }
 
@@ -71,17 +69,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"maincell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    //cell.textLabel.text = @"text";
-    
-    return cell;
+//    cell.textLabel.text = @"text";
+//    cell.t
+
+      return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 500;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return 50;
+//}
 
 
 - (void)didReceiveMemoryWarning {
