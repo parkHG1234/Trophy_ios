@@ -21,6 +21,7 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
 //        }
         //http 통신
         let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/TeamSearch.jsp")!)
+      
         let parameterString = ""
         
         request.HTTPMethod = "POST"
@@ -76,7 +77,9 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
     }
 
     // MARK: - Table view data source
-
+    @IBAction func Back_Button_Action(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
