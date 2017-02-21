@@ -183,10 +183,10 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "SegueTeamName" {
-            let SlideMenu_TeamSearch_Focus_TableViewController1 = segue.destinationViewController as! SlideMenu_TeamSearch_Focus_TableViewController
+            let SlideMenu_TeamSearch_Focus_ViewController1 = segue.destinationViewController as! SlideMenu_TeamSearch_Focus_ViewController
             let myIndexPath = self.tableView.indexPathForSelectedRow!
             let row = myIndexPath.row
-            SlideMenu_TeamSearch_Focus_TableViewController1.teamname = tableData[row]
+            SlideMenu_TeamSearch_Focus_ViewController1.teamname = tableData[row]
         }
     }
 
