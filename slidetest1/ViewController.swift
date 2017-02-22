@@ -17,11 +17,12 @@
 import UIKit
 
 
+class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSource , UISearchResultsUpdating{
+
     @IBOutlet weak var open: UIBarButtonItem!
     var isUserLoggedIn = NSUserDefaults.standardUserDefaults().boolForKey("isUserLoggedIn")
     
     
-    @IBOutlet weak var open: UIBarButtonItem!
     
     @IBOutlet var Contest_TableView: UITableView!
     var Contest_list:[Contest_Detail_Setting] = []
@@ -187,5 +188,5 @@ import UIKit
     
     
     
-}
 
+}
