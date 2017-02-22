@@ -18,8 +18,9 @@ class SlideMenuViewController: UIViewController {
         // Do any additional setup after loading the view.
         let url = NSURL(string:"http://210.122.7.193:8080/Trophy_img/profile/18.jpg")
         let data = NSData(contentsOfURL:url!)
-        Profile.image = UIImage(data:data!)
-        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.Profile.image = UIImage(data:data!)
+        });
         SportType.image = UIImage(named: "basketball_a.png")
     }
 

@@ -32,7 +32,6 @@ class SlideMenu_TeamManager_PlayerManager_ViewController: UIViewController, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("didload")
         Joiner_TableView.dataSource = self
         Joiner_TableView.delegate = self
         Player_TableView.dataSource = self
@@ -145,14 +144,25 @@ class SlideMenu_TeamManager_PlayerManager_ViewController: UIViewController, UITa
         if tableView.tag == 1{
             Joiner_ExtraCount = Joiner_Count%3
             var RowCount : Int = Joiner_Count/3
-            if Joiner_ExtraCount == 1 {
-                RowCount++
+            if Joiner_Count == 0 {
+                RowCount = 0
             }
-            else if Joiner_ExtraCount == 2{
-                RowCount++
+            else if Joiner_Count == 1 {
+                RowCount = 1
             }
-            else{
-                
+            else if Joiner_Count == 2 {
+                RowCount = 1
+            }
+            else {
+                if Joiner_ExtraCount == 1 {
+                    RowCount++
+                }
+                else if Joiner_ExtraCount == 2{
+                    RowCount++
+                }
+                else{
+                    
+                }
             }
             return RowCount
         }

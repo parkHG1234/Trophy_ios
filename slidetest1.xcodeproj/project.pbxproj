@@ -32,7 +32,6 @@
 		317057B41E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317057B31E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift */; };
 		32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244231E4AFE3200CDA02F /* LoginViewController.swift */; };
 		32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */; };
-		32A244291E4C441D00CDA02F /* basketball_a.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A244281E4C441D00CDA02F /* basketball_a.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,7 +98,6 @@
 		317057B31E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu_TeamMake_ViewController.swift; sourceTree = "<group>"; };
 		32A244231E4AFE3200CDA02F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
-		32A244281E4C441D00CDA02F /* basketball_a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = basketball_a.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,8 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				30DE6FF41E55C633009F8342 /* Main.storyboard */,
-				317057AC1E4DAFE80091D4F1 /* BGColorDemoViewController.h */,
-				317057AD1E4DAFE80091D4F1 /* BGColorDemoViewController.m */,
 				3110B5A91E49C9F500E43674 /* AppDelegate.swift */,
 				3110B5AB1E49C9F500E43674 /* ViewController.swift */,
 				30E0B9B21E556A9A004E4046 /* Contest_Detail_Setting.swift */,
@@ -162,7 +158,6 @@
 				30EA1FFE1E5B19EB007F0B91 /* Contest_Application_Setting.swift */,
 				3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */,
 				32A244231E4AFE3200CDA02F /* LoginViewController.swift */,
-				3110B5AD1E49C9F500E43674 /* Main.storyboard */,
 				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
 				32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */,
 				3110B5B01E49C9F500E43674 /* Assets.xcassets */,
@@ -208,14 +203,6 @@
 				3110B5D81E49CAC300E43674 /* slidetest1-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		32A244271E4C440B00CDA02F /* imgs */ = {
-			isa = PBXGroup;
-			children = (
-				32A244281E4C441D00CDA02F /* basketball_a.png */,
-			);
-			name = imgs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,7 +355,6 @@
 				3110B5DD1E49CBC200E43674 /* BackTableVC.swift in Sources */,
 				3110B5DB1E49CAC400E43674 /* SWRevealViewController.m in Sources */,
 				317057A61E4D85B90091D4F1 /* SlideMenu_TeamSearch_Focus_ViewController.swift in Sources */,
-				317057AE1E4DAFE80091D4F1 /* BGColorDemoViewController.m in Sources */,
 				30EA1FFD1E5708B6007F0B91 /* Contest_Application_ViewController.swift in Sources */,
 				317057A91E4DA5560091D4F1 /* UINavigationBar+Awesome.m in Sources */,
 			);
