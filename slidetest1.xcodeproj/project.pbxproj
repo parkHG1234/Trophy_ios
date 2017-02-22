@@ -30,6 +30,8 @@
 		317057A61E4D85B90091D4F1 /* SlideMenu_TeamSearch_Focus_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317057A51E4D85B90091D4F1 /* SlideMenu_TeamSearch_Focus_ViewController.swift */; };
 		317057A91E4DA5560091D4F1 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 317057A81E4DA5560091D4F1 /* UINavigationBar+Awesome.m */; };
 		317057B41E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317057B31E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift */; };
+		328534691E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328534681E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift */; };
+		3285346B1E5D9002002FBAE5 /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3285346A1E5D9002002FBAE5 /* WithdrawalViewController.swift */; };
 		32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244231E4AFE3200CDA02F /* LoginViewController.swift */; };
 		32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */; };
 /* End PBXBuildFile section */
@@ -96,6 +98,8 @@
 		317057A71E4DA5560091D4F1 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		317057A81E4DA5560091D4F1 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		317057B31E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu_TeamMake_ViewController.swift; sourceTree = "<group>"; };
+		328534681E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePersonalInfoViewController.swift; sourceTree = "<group>"; };
+		3285346A1E5D9002002FBAE5 /* WithdrawalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawalViewController.swift; sourceTree = "<group>"; };
 		32A244231E4AFE3200CDA02F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,6 +164,8 @@
 				32A244231E4AFE3200CDA02F /* LoginViewController.swift */,
 				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
 				32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */,
+				328534681E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift */,
+				3285346A1E5D9002002FBAE5 /* WithdrawalViewController.swift */,
 				3110B5B01E49C9F500E43674 /* Assets.xcassets */,
 				3110B5DC1E49CBC200E43674 /* BackTableVC.swift */,
 				3110B5D71E49CAA800E43674 /* Supporting Files */,
@@ -337,6 +343,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				328534691E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift in Sources */,
+				3285346B1E5D9002002FBAE5 /* WithdrawalViewController.swift in Sources */,
 				316E37E71E54187900B48FC0 /* SlideMenu_TeamManager_ContestJoin_ViewController.swift in Sources */,
 				32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */,
 				317057B41E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift in Sources */,

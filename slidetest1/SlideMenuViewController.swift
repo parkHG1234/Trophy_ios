@@ -47,13 +47,7 @@ class SlideMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        let url = NSURL(string:"http://210.122.7.193:8080/Trophy_img/profile/18.jpg")
-        let data = NSData(contentsOfURL:url!)
-        dispatch_async(dispatch_get_main_queue(), {
-            self.Profile.image = UIImage(data:data!)
-        });
-        SportType.image = UIImage(named: "basketball_a.png")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,14 +64,24 @@ class SlideMenuViewController: UIViewController {
     }
     
     
+    
     @IBAction func profileButtonTapped(sender: AnyObject) {
-        if(isUserLoggedIn) {
-            // 회원정보변경 페이지 이동
+        print(isUserLoggedIn)
+        if(isUserLoggedIn == true) {
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ChangePersonalInfoViewController")
+
+            
+            
+            self.presentViewController(vc!, animated: true, completion: nil)
         }else {
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController")
+            
             self.presentViewController(vc!, animated: true, completion: nil)
         }
     }
+    
+    
+    
 
     /*
     // MARK: - Navigation
