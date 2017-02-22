@@ -17,12 +17,12 @@
 import UIKit
 
 
-
 class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSource , UISearchResultsUpdating{
-    
-    
-    
+
     @IBOutlet weak var open: UIBarButtonItem!
+    var isUserLoggedIn = NSUserDefaults.standardUserDefaults().boolForKey("isUserLoggedIn")
+    
+    
     
     @IBOutlet var Contest_TableView: UITableView!
     var Contest_list:[Contest_Detail_Setting] = []
@@ -34,6 +34,11 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        print(isUserLoggedIn)
+        if(!isUserLoggedIn) {
+            NSUserDefaults.standardUserDefaults().setValue(".", forKey: "Pk")
+        }
+        
         open.target = self.revealViewController()
         open.action = Selector("revealToggle:")
         
@@ -96,6 +101,8 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         }
         
         task.resume()
+        
+        
         
     }
     
@@ -181,5 +188,5 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     
     
     
-}
 
+}

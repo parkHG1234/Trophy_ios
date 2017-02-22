@@ -12,6 +12,11 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var userPhoneTextField: UITextField!
     @IBOutlet weak var userPasswordTextField: UITextField!
+    
+    var _Pk:String = ""
+    var _resultValue:String = ""
+    var check:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,8 +54,8 @@ class LoginViewController: UIViewController {
                 print("response = \(response)")
             }
             
-            let responseString = String(data: data!, encoding: NSUTF8StringEncoding)
-            print("responseString = \(responseString)")
+            let responseString:String = String(data: data!, encoding: NSUTF8StringEncoding)!
+            //print("responseString = \(responseString)")
             
             
             var json:NSDictionary?;
@@ -62,39 +67,71 @@ class LoginViewController: UIViewController {
             }
             
             if let parseJSON = json {
-                let resultValue = parseJSON["status"] as? String
+                let resultValue:String = (parseJSON["status"] as? String)!
+                self._resultValue = resultValue
                 print("result: \(resultValue)")
                 
-                let Pk = parseJSON["Pk"] as? String
-                print("Pk: \(Pk)")
+                let Pk:String = (parseJSON["Pk"] as? String)!
+                self._Pk = Pk
+                print("Pk: \(self._Pk)")
                 
-                if(resultValue=="success") {
-                    
-                    //Login is successful
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isUserLoggedIn")
-                    NSUserDefaults.standardUserDefaults().setValue(Pk, forKey: "Pk")
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
+                self.check = true
 
-            
             }
+            
+            
+            if(self._resultValue=="success") {
+                //Login is successful
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isUserLoggedIn")
+                NSUserDefaults.standardUserDefaults().setValue(self._Pk, forKey: "Pk")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                self.dismissViewControllerAnimated(true, completion: {
+                    let vc = self.storyboard?.instantiateViewControllerWithIdentifier("SlideMenuViewController")
+                    vc?.reloadInputViews()
+                    vc?.viewDidLoad()
+                    self.presentViewController(vc!, animated: true, completion: nil)
+                })
+
+
+            }else if(self._resultValue=="not exsist") {
+                dispatch_async(dispatch_get_main_queue(),{
+                    
+                    //Display alert message with confirmation.
+                    let myAlert = UIAlertController(title: "트로피", message: "등록되지 않은 휴대전화번호입니다", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                        action in
+                    }
+                    myAlert.addAction(okAction)
+                    self.presentViewController(myAlert, animated: true, completion: nil)
+                });
+            }else {
+                dispatch_async(dispatch_get_main_queue(),{
+                    
+                    //Display alert message with confirmation.
+                    let myAlert = UIAlertController(title: "트로피", message: "정확한 휴대전화번호 및 비밀번호를 입력해 주세요", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
+                        action in
+                    }
+                    myAlert.addAction(okAction)
+                    self.presentViewController(myAlert, animated: true, completion: nil)
+                });
+            }
+            
         }
         task.resume()
-        
-        
-        
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    
+    @IBAction func backButtonTapped(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: {
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("SlideMenuViewController")
+            vc?.reloadInputViews()
+            self.presentViewController(vc!, animated: true, completion: nil)
+        })
     }
-    */
-
+    
+    
+    
 }

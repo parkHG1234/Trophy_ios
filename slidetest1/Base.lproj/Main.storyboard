@@ -9,7 +9,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -368,7 +368,7 @@
         <!--Slide Menu View Controller-->
         <scene sceneID="9DL-pf-HdU">
             <objects>
-                <viewController id="Qlh-AX-M3R" customClass="SlideMenuViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SlideMenuViewController" id="Qlh-AX-M3R" customClass="SlideMenuViewController" customModule="slidetest1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jw0-f8-wcA"/>
                         <viewControllerLayoutGuide type="bottom" id="KzR-I0-5l8"/>
@@ -475,6 +475,7 @@
                     <connections>
                         <outlet property="Profile" destination="Ywk-W3-FVL" id="AId-52-BkD"/>
                         <outlet property="SportType" destination="6dH-gH-QtI" id="xWf-GO-Lac"/>
+                        <outlet property="profileButton" destination="CNG-Q7-IIM" id="jC3-4S-82V"/>
                         <segue destination="BYZ-38-t0r" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="LZJ-FS-E25"/>
                     </connections>
                 </viewController>
@@ -1395,6 +1396,16 @@
                                     <segue destination="SAX-MH-HDm" kind="presentation" id="w2v-XJ-r6M"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEF-Nv-Lfa">
+                                <rect key="frame" x="93" y="456" width="135" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <state key="normal" title="더 둘러보기">
+                                    <color key="titleColor" white="0.0" alpha="0.68999999999999995" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="QHQ-bl-IQS" eventType="touchUpInside" id="OII-a9-o2A"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.9629946452" green="0.96166755690000005" blue="0.98484848479999998" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -1532,7 +1543,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7G-FX-uz4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4667" y="-329"/>
+            <point key="canvasLocation" x="4035" y="-53"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="R5F-1Y-ufD">
