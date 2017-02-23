@@ -399,6 +399,11 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     
+    @IBAction func backButtonTapped(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
     /*
     // MARK: - Navigation
     

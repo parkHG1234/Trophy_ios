@@ -123,14 +123,12 @@ class LoginViewController: UIViewController {
         task.resume()
     }
     
-    
+
     @IBAction func backButtonTapped(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: {
-            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("SlideMenuViewController")
-            vc?.reloadInputViews()
-            self.presentViewController(vc!, animated: true, completion: nil)
-        })
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
     
     
     
