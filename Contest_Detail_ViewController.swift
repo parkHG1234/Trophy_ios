@@ -34,6 +34,7 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
     @IBOutlet var Detail_Place: UILabel!
     @IBOutlet var Detail_DetailInfo: UILabel!
     
+    @IBOutlet var Contest_ScrollView: UIScrollView!
     
     
     var Contest_Pk:String = ""
@@ -63,6 +64,9 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
         Detail_ContestDate.text = Contest_ContestDate
         Detail_Place.text = Contest_Place
         Detail_DetailInfo.text = Contest_DetailInfo
+        
+        
+        Contest_ScrollView.contentSize.height = 1000
         
         let videoString = "http://210.122.7.193:8080/Trophy_img/contest/"+self.Contest_Image+".jpg"
         let videoThumbnailUrl = NSURL(string: videoString)

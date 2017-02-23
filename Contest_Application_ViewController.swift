@@ -13,7 +13,7 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
     var Contest_Pk:String = ""
     var MyTeamName:String = ""
     
-    
+    var Select_List:[String] = []
     var Application_Setting = Contest_Application_Setting()
     var Application_list:[Contest_Application_Setting] = []
     var Member_Setting = Contest_Member_Setting()
@@ -124,6 +124,22 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
         
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        for i in Select_List{
+            for j in Select_List{
+                if(String(Select_List.indexOf(i)) != String(Member_list[Int(j)!].Pk)){
+                    Select_List.append(Member_list[indexPath.row].Pk)
+                }else{
+                    
+                }
+            }
+        }
+            print(Member_list[indexPath.row].Pk)
+        
+        
+        print(Contest_Pk)
+    }
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -161,6 +177,11 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
     }
     
     
+    @IBAction func Contest_Application_Input(sender: AnyObject) {
+        
+        
+        
+    }
     
     override func didReceiveMemoryWarning() {
         
