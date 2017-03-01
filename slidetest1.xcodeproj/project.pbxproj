@@ -39,6 +39,9 @@
 		3285347A1E5EB105002FBAE5 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328534791E5EB105002FBAE5 /* TermsViewController.swift */; };
 		32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244231E4AFE3200CDA02F /* LoginViewController.swift */; };
 		32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */; };
+		32EDBC6F1E66ACA4004D4D55 /* ChangeAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC6E1E66ACA4004D4D55 /* ChangeAddressViewController.swift */; };
+		32EDBC711E66B365004D4D55 /* ChangePhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC701E66B365004D4D55 /* ChangePhoneViewController.swift */; };
+		32EDBC731E66B37D004D4D55 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC721E66B37D004D4D55 /* ChangePasswordViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +115,9 @@
 		328534791E5EB105002FBAE5 /* TermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		32A244231E4AFE3200CDA02F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
+		32EDBC6E1E66ACA4004D4D55 /* ChangeAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeAddressViewController.swift; sourceTree = "<group>"; };
+		32EDBC701E66B365004D4D55 /* ChangePhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewController.swift; sourceTree = "<group>"; };
+		32EDBC721E66B37D004D4D55 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +182,9 @@
 				328534791E5EB105002FBAE5 /* TermsViewController.swift */,
 				32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */,
 				328534681E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift */,
+				32EDBC6E1E66ACA4004D4D55 /* ChangeAddressViewController.swift */,
+				32EDBC701E66B365004D4D55 /* ChangePhoneViewController.swift */,
+				32EDBC721E66B37D004D4D55 /* ChangePasswordViewController.swift */,
 				3285346A1E5D9002002FBAE5 /* WithdrawalViewController.swift */,
 				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
 				3110B5B01E49C9F500E43674 /* Assets.xcassets */,
@@ -375,6 +384,8 @@
 				316E37E71E54187900B48FC0 /* SlideMenu_TeamManager_ContestJoin_ViewController.swift in Sources */,
 				32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */,
 				317057B41E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift in Sources */,
+				32EDBC6F1E66ACA4004D4D55 /* ChangeAddressViewController.swift in Sources */,
+				32EDBC711E66B365004D4D55 /* ChangePhoneViewController.swift in Sources */,
 				316E37EB1E559FCE00B48FC0 /* SlideMenu_TeamManager_PlayerManager_ViewController.swift in Sources */,
 				3110B5EE1E4B191B00E43674 /* SlideMenu_TeamSearch_TableViewController.swift in Sources */,
 				32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */,
@@ -387,6 +398,7 @@
 				3110B5AA1E49C9F500E43674 /* AppDelegate.swift in Sources */,
 				3285347A1E5EB105002FBAE5 /* TermsViewController.swift in Sources */,
 				316E37E51E5294E600B48FC0 /* SlideMenu_TeamManager_TeamIntro_ViewController.swift in Sources */,
+				32EDBC731E66B37D004D4D55 /* ChangePasswordViewController.swift in Sources */,
 				316E37E91E5455FB00B48FC0 /* SlideMenu_TeamManager_ContestJoin_Focus_ViewController.swift in Sources */,
 				3110B5DD1E49CBC200E43674 /* BackTableVC.swift in Sources */,
 				3110B5DB1E49CAC400E43674 /* SWRevealViewController.m in Sources */,
