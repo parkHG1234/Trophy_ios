@@ -13,7 +13,7 @@ class SlideMenu_TeamManager_PlayerManager_ViewController: UIViewController, UITa
     @IBOutlet weak var centerPopUpConstraint: NSLayoutConstraint!
     @IBOutlet weak var Joiner_TableView: UITableView!
     @IBOutlet weak var Player_TableView: UITableView!
-    
+
     var TeamName : String = "AldongTeam"
     var HttpStatue: String = "start"
     
