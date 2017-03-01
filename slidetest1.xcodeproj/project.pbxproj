@@ -30,6 +30,9 @@
 		317057A61E4D85B90091D4F1 /* SlideMenu_TeamSearch_Focus_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317057A51E4D85B90091D4F1 /* SlideMenu_TeamSearch_Focus_ViewController.swift */; };
 		317057A91E4DA5560091D4F1 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 317057A81E4DA5560091D4F1 /* UINavigationBar+Awesome.m */; };
 		317057B41E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317057B31E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift */; };
+		319FFD5F1E61DF590042A8B8 /* SlideMenu_TeamSearch1_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319FFD5E1E61DF590042A8B8 /* SlideMenu_TeamSearch1_ViewController.swift */; };
+		31B7B5E71E653DD7007B3923 /* test1_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B7B5E61E653DD7007B3923 /* test1_ViewController.swift */; };
+		31B7B5E91E654193007B3923 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B7B5E81E654193007B3923 /* CollectionViewController.swift */; };
 		32727C851E5EC29100E40C36 /* 111.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32727C841E5EC29100E40C36 /* 111.jpg */; };
 		328534691E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328534681E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift */; };
 		3285346B1E5D9002002FBAE5 /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3285346A1E5D9002002FBAE5 /* WithdrawalViewController.swift */; };
@@ -106,6 +109,9 @@
 		317057A71E4DA5560091D4F1 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		317057A81E4DA5560091D4F1 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		317057B31E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu_TeamMake_ViewController.swift; sourceTree = "<group>"; };
+		319FFD5E1E61DF590042A8B8 /* SlideMenu_TeamSearch1_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenu_TeamSearch1_ViewController.swift; sourceTree = "<group>"; };
+		31B7B5E61E653DD7007B3923 /* test1_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = test1_ViewController.swift; sourceTree = "<group>"; };
+		31B7B5E81E654193007B3923 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		32727C841E5EC29100E40C36 /* 111.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 111.jpg; sourceTree = "<group>"; };
 		328534681E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePersonalInfoViewController.swift; sourceTree = "<group>"; };
 		3285346A1E5D9002002FBAE5 /* WithdrawalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawalViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +203,9 @@
 				316E37E61E54187900B48FC0 /* SlideMenu_TeamManager_ContestJoin_ViewController.swift */,
 				316E37E81E5455FB00B48FC0 /* SlideMenu_TeamManager_ContestJoin_Focus_ViewController.swift */,
 				316E37EA1E559FCE00B48FC0 /* SlideMenu_TeamManager_PlayerManager_ViewController.swift */,
+				319FFD5E1E61DF590042A8B8 /* SlideMenu_TeamSearch1_ViewController.swift */,
+				31B7B5E61E653DD7007B3923 /* test1_ViewController.swift */,
+				31B7B5E81E654193007B3923 /* CollectionViewController.swift */,
 			);
 			path = slidetest1;
 			sourceTree = "<group>";
@@ -379,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31B7B5E91E654193007B3923 /* CollectionViewController.swift in Sources */,
 				328534691E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift in Sources */,
 				3285346B1E5D9002002FBAE5 /* WithdrawalViewController.swift in Sources */,
 				316E37E71E54187900B48FC0 /* SlideMenu_TeamManager_ContestJoin_ViewController.swift in Sources */,
@@ -395,6 +405,7 @@
 				30EA20011E5B2166007F0B91 /* Contest_Member_Setting.swift in Sources */,
 				3110B5DF1E4ADCD300E43674 /* SlideMenuViewController.swift in Sources */,
 				3110B5AC1E49C9F500E43674 /* ViewController.swift in Sources */,
+				319FFD5F1E61DF590042A8B8 /* SlideMenu_TeamSearch1_ViewController.swift in Sources */,
 				3110B5AA1E49C9F500E43674 /* AppDelegate.swift in Sources */,
 				3285347A1E5EB105002FBAE5 /* TermsViewController.swift in Sources */,
 				316E37E51E5294E600B48FC0 /* SlideMenu_TeamManager_TeamIntro_ViewController.swift in Sources */,
