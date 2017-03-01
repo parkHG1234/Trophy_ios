@@ -106,7 +106,8 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let Contest_Application_View = segue.destinationViewController as! Contest_Application_ViewController
         
-        Contest_Application_View.Contest_Pk = "18"
+        Contest_Application_View.User_Pk = "18"
+        Contest_Application_View.Contest_Pk = "3"
         Contest_Application_View.MyTeamName = "AldongTeam"
     }
 
