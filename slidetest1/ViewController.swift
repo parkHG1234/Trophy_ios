@@ -27,7 +27,6 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     @IBOutlet var Contest_TableView: UITableView!
     var Contest_list:[Contest_Detail_Setting] = []
     var filteredData:[String] = []
-    var Array = [[],[]]
     var Contest_Setting = Contest_Detail_Setting()
 
     override func viewDidLoad() {
