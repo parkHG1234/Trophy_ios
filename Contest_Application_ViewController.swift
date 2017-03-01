@@ -9,11 +9,13 @@
 import UIKit
 
 class Contest_Application_ViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate{
-    
+    var User_Pk:String = ""
     var Contest_Pk:String = ""
     var MyTeamName:String = ""
+    var succed:String=""
     
-    
+    var Select_List:[String] = []
+    var Insert_List:[String] = []
     var Application_Setting = Contest_Application_Setting()
     var Application_list:[Contest_Application_Setting] = []
     var Member_Setting = Contest_Member_Setting()
@@ -33,7 +35,7 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
         
         
         let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/Contest_Detail_Form_Profile.jsp")!)
-        let parameterString = "Data1=\(self.Contest_Pk)";
+        let parameterString = "Data1=\(self.User_Pk)";
         request.HTTPMethod = "POST"
         
         request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -70,7 +72,6 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
         task.resume()
         
         let Member_request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/Contest_Detail_Form_Player.jsp")!)
-       // let Member_parameterString = "Data1=\(self.Application_Setting.Team)";
         let Member_parameterString = "Data1=\(self.MyTeamName)";
         Member_request.HTTPMethod = "POST"
         Member_request.HTTPBody = Member_parameterString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -124,16 +125,19 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
         
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        Select_List.append(String(Member_list[indexPath.row].Pk))
+    }
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("MemberCell", forIndexPath: indexPath)
-                let Member_Duty = cell.viewWithTag(5) as! UILabel
+        let Member_Duty = cell.viewWithTag(5) as! UILabel
         let Member_Name = cell.viewWithTag(6) as! UILabel
         let Member_Birth = cell.viewWithTag(7) as! UILabel
         
-        // Configure the cell...
-        print(Member_list[indexPath.row].Name)
+        // Configure the cell...        
         Member_Duty.text = Member_list[indexPath.row].Duty
         Member_Name.text = Member_list[indexPath.row].Name
         Member_Birth.text = Member_list[indexPath.row].Birth
@@ -161,6 +165,98 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
     }
     
     
+    @IBAction func Contest_Application_Input(sender: AnyObject) {
+        var cnt = 0
+        if(Select_List.isEmpty){
+            
+        }else{
+            for (var i=0;i<Select_List.count;i++){
+                cnt = 0
+                for (var j=0;j<Select_List.count;j++){
+                    if(Select_List[i]==Select_List[j]){
+                        cnt++
+                    }
+                }
+                if(cnt%2==1){
+                    Insert_List.append(Select_List[Int(i)])
+                    for (var k=0;k<Select_List.count;k++){
+                        if(Select_List[i]==Select_List[k]){
+                            Select_List[k].removeAll()
+                        }
+                    }
+                }
+            }
+        }
+        
+        if(!Select_List.isEmpty){
+        
+        let Insert_request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/Contest_Detail_Form_Join.jsp")!)
+        for (var i=0;i<Insert_List.count;i++){
+            let Insert_parameterString = "Data1=\(self.Insert_List[i])"+"&"+"Data2=\(self.Contest_Pk)";
+            print("====="+Insert_parameterString)
+            Insert_request.HTTPMethod = "POST"
+            Insert_request.HTTPBody = Insert_parameterString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        
+        
+        let Insert_Team_task = NSURLSession.sharedSession().dataTaskWithRequest(Insert_request){
+            data, response, error in
+            if error != nil {
+                return
+            }
+            print("response = \(response)")
+            let Member_responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+            print("responseString = \(Member_responseString)")
+            do{
+                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
+                let list = apiDictionary["List"] as! NSArray
+                for row in list{
+                    self.succed = (row["msg1"] as? String)!
+                }
+            }catch{
+            }
+            
+        }
+        Insert_Team_task.resume()
+        }
+        
+        
+        
+        let Join_Team_request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/Contest_Detail_Form_Join_Team.jsp")!)
+            let Join_Team_parameterString = "Data1=\(self.Contest_Pk)"+"&"+"Data2=\(self.MyTeamName)";
+        
+            Join_Team_request.HTTPMethod = "POST"
+            Join_Team_request.HTTPBody = Join_Team_parameterString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        
+        
+        let Join_Team_task = NSURLSession.sharedSession().dataTaskWithRequest(Join_Team_request){
+            data, response, error in
+            if error != nil {
+                return
+            }
+            print("response = \(response)")
+            let Member_responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+            print("responseString = \(Member_responseString)")
+            do{
+                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
+                let list = apiDictionary["List"] as! NSArray
+                for row in list{
+                    self.succed = (row["msg1"] as? String)!
+                }
+            }catch{
+            }
+            
+        }
+        Join_Team_task.resume()
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+        }else{
+            
+        }
+        
+        
+    }
     
     override func didReceiveMemoryWarning() {
         
