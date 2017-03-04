@@ -62,7 +62,7 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     var exNum:Int = 3
     
     // To keep track of user's current selection from the main content array
-    private var _currentSelection: Int = 0
+    fileprivate var _currentSelection: Int = 0
     
     // whenever current selection is modified, we need to reload other pickers as their content depends upon the current selection index only.
     
@@ -85,6 +85,13 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //navigation bar item image load
+        self.navigationController?.navigationBar.tintColor = UIColor.red
+        let yourBackImage = UIImage(named: "cm_arrow_back_white")
+        self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage
+        
         
         // Do any additional setup after loading the view.
         pickerDo.delegate = self
@@ -111,21 +118,21 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         if (textField.tag == 4) {
-            let aSet = NSCharacterSet(charactersInString:"0123456789").invertedSet
-            let compSepByCharInSet = string.componentsSeparatedByCharactersInSet(aSet)
-            let numberFiltered = compSepByCharInSet.joinWithSeparator("")
+            let aSet = CharacterSet(charactersIn:"0123456789").inverted
+            let compSepByCharInSet = string.components(separatedBy: aSet)
+            let numberFiltered = compSepByCharInSet.joined(separator: "")
             
             let maxLength = 4
-            let currentString: NSString = textField.text!
+            let currentString: NSString = textField.text! as NSString
             let newString: NSString =
-            currentString.stringByReplacingCharactersInRange(range, withString: string)
+            currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length <= maxLength && string == numberFiltered) {
                 return true
             }else {
@@ -133,42 +140,42 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
             }
             
         }else if (textField.tag == 5) {
-            let aSet = NSCharacterSet(charactersInString:"0123456789").invertedSet
-            let compSepByCharInSet = string.componentsSeparatedByCharactersInSet(aSet)
-            let numberFiltered = compSepByCharInSet.joinWithSeparator("")
+            let aSet = CharacterSet(charactersIn:"0123456789").inverted
+            let compSepByCharInSet = string.components(separatedBy: aSet)
+            let numberFiltered = compSepByCharInSet.joined(separator: "")
             
             let maxLength = 2
-            let currentString: NSString = textField.text!
+            let currentString: NSString = textField.text! as NSString
             let newString: NSString =
-            currentString.stringByReplacingCharactersInRange(range, withString: string)
+            currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length <= maxLength && string == numberFiltered) {
                 return true
             }else {
                 return false
             }
         }else if(textField.tag == 6) {
-            let aSet = NSCharacterSet(charactersInString:"0123456789").invertedSet
-            let compSepByCharInSet = string.componentsSeparatedByCharactersInSet(aSet)
-            let numberFiltered = compSepByCharInSet.joinWithSeparator("")
+            let aSet = CharacterSet(charactersIn:"0123456789").inverted
+            let compSepByCharInSet = string.components(separatedBy: aSet)
+            let numberFiltered = compSepByCharInSet.joined(separator: "")
             
             let maxLength = 11
-            let currentString: NSString = textField.text!
+            let currentString: NSString = textField.text! as NSString
             let newString: NSString =
-            currentString.stringByReplacingCharactersInRange(range, withString: string)
+            currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length <= maxLength && string == numberFiltered) {
                 return true
             }else {
                 return false
             }
         }else if(textField.tag == 7) {
-            let aSet = NSCharacterSet(charactersInString:"0123456789").invertedSet
-            let compSepByCharInSet = string.componentsSeparatedByCharactersInSet(aSet)
-            let numberFiltered = compSepByCharInSet.joinWithSeparator("")
+            let aSet = CharacterSet(charactersIn:"0123456789").inverted
+            let compSepByCharInSet = string.components(separatedBy: aSet)
+            let numberFiltered = compSepByCharInSet.joined(separator: "")
             
             let maxLength = 6
-            let currentString: NSString = textField.text!
+            let currentString: NSString = textField.text! as NSString
             let newString: NSString =
-            currentString.stringByReplacingCharactersInRange(range, withString: string)
+            currentString.replacingCharacters(in: range, with: string) as NSString
             if (newString.length <= maxLength && string == numberFiltered) {
                 return true
             }else {
@@ -179,7 +186,7 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         if(pickerView.tag == 1) {
             userAddressSiTextField.text = ""
@@ -193,7 +200,7 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if(pickerView.tag == 1) {
             userAddressSiTextField.text = ""
             return "\(addressDo[row])"
@@ -204,7 +211,7 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if(pickerView.tag == 1) {
             currentSelection = row
             
@@ -227,7 +234,7 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     
-    @IBAction func userSexIndexChanged(sender: AnyObject) {
+    @IBAction func userSexIndexChanged(_ sender: AnyObject) {
         switch userSexSegmentationControll.selectedSegmentIndex {
         case 0:
             userSex = "M"
@@ -238,7 +245,7 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         }
     }
     
-    @IBAction func sendAnButtonTapped(sender: AnyObject) {
+    @IBAction func sendAnButtonTapped(_ sender: AnyObject) {
         let length:Int = (userPhoneTextField.text?.characters.count)!
         if(length == 11) {
             isCheckPhone = false
@@ -246,52 +253,52 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
             randomNo = arc4random_uniform(899999) + 100000;
             let msg:String = "트로피 인증번호는 [\(randomNo)] 입니다"
             
-            let now = NSDate()
-            let dateFormatter = NSDateFormatter()
+            let now = Date()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let date = dateFormatter.stringFromDate(now)
+            let date = dateFormatter.string(from: now)
             
-            let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/InetSMSExample/example.jsp")!);
-            request.HTTPMethod = "POST";
-            
-            let postString = "Data1=\(msg)&Data2=\(userPhone)&Data3=\(userPhone)&Data4=\(date)";
-            print(userPhoneTextField.text)
-            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding);
-            
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in guard error == nil && data != nil else {       // check for fundamental networking error
-                print("error=\(error)")
-                return
-                }
-                
-                if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 {           // check for http errors
-                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                    print("response = \(response)")
-                }
-                
-                let responseString:String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                print("responseString = \(responseString)")
-                
-            }
-            task.resume()
+//            let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/InetSMSExample/example.jsp")!);
+//            request.httpMethod = "POST";
+//            
+//            let postString = "Data1=\(msg)&Data2=\(userPhone)&Data3=\(userPhone)&Data4=\(date)";
+//            print(userPhoneTextField.text)
+//            request.httpBody = postString.data(using: String.Encoding.utf8);
+//            
+//            let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in guard error == nil && data != nil else {       // check for fundamental networking error
+//                print("error=\(error)")
+//                return
+//                }
+//                
+//                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+//                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
+//                    print("response = \(response)")
+//                }
+//                
+//                let responseString:String = String(data: data!, encoding: String.Encoding.utf8)!
+//                print("responseString = \(responseString)")
+//                
+//            }) 
+//            task.resume()
             
             // 인증번호 전송, 휴대전화번호 텍스트필드 변경시 랜덤 번호 삭제
         }else {
             let alertController = UIAlertController(title: "여기뭐쓰냐", message:
-                "정확한 휴대전화번호를 입력해 주세요", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default,handler: nil))
+                "정확한 휴대전화번호를 입력해 주세요", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default,handler: nil))
             
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
     
-    @IBAction func confirmAnButtonTapped(sender: AnyObject) {
+    @IBAction func confirmAnButtonTapped(_ sender: AnyObject) {
     
         if(String(randomNo) == userPhoneAnTextField.text!) {
             isCheckPhone = true
             displayMyAlertMessage("인증이 완료되었습니다")
         }else {
-            exNum--
+            exNum -= 1
             displayMyAlertMessage("정확한 인증번호를 입력해 주세요. 남은 횟수:\(exNum)")
         }
         // 불일치할 경우 Alert 횟수제한 3번
@@ -300,7 +307,7 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     
     
-    @IBAction func registerButtonTapped(sender: AnyObject) {
+    @IBAction func registerButtonTapped(_ sender: AnyObject) {
         
         userPhone = userPhoneTextField.text!
         userPassword = userPasswordTextField.text!
@@ -328,79 +335,79 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
             return
         }
      
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part3/Join.jsp")!);
-        request.HTTPMethod = "POST";
+        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part3/Join.jsp")!);
+        request.httpMethod = "POST";
         
         let postString = "Data1=\(userName)&Data2=\(userPassword)&Data3=\(userBirth)&Data4=\(userSex)&Data5=\(userAddressDo)&Data6=\(userAddressSi)&Data7=\(userPhone)";
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding);
+        request.httpBody = postString.data(using: String.Encoding.utf8);
         
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in guard error == nil && data != nil else {       // check for fundamental networking error
-                print("error=\(error)")
-                return
-            }
-            
-            if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
-            }
-            
-            let responseString:String = String(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            
-            
-            var json:NSDictionary?;
-            
-            do {
-                json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary
-            } catch let error as NSError {
-                print("error : \(error)")
-            }
-            
-            if let parseJSON = json {
-                let resultValue = parseJSON["status"] as? String
-                print("result: \(resultValue)")
-                
-                var isUserRegistered:Bool = false
-                if(resultValue=="success") { isUserRegistered = true }
-                
-                var messageToDisplay:String = parseJSON["message"] as! String!;
-                if(!isUserRegistered) {
-                    messageToDisplay = parseJSON["message"] as! String!;
-                }
-                
-                
-                dispatch_async(dispatch_get_main_queue(),{
-                    
-                    //Display alert message with confirmation.
-                    let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) {
-                        action in
-                        self.dismissViewControllerAnimated(true, completion: nil);
-                    }
-                    myAlert.addAction(okAction)
-                    self.presentViewController(myAlert, animated: true, completion: nil)
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                });
-            }
-        }
-        task.resume()
+//        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in guard error == nil && data != nil else {       // check for fundamental networking error
+//                print("error=\(error)")
+//                return
+//            }
+//            
+//            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+//                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+//                print("response = \(response)")
+//            }
+//            
+//            let responseString:String = String(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            
+//            
+//            var json:NSDictionary?;
+//            
+//            do {
+//                json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+//            } catch let error as NSError {
+//                print("error : \(error)")
+//            }
+//            
+//            if let parseJSON = json {
+//                let resultValue = parseJSON["status"] as? String
+//                print("result: \(resultValue)")
+//                
+//                var isUserRegistered:Bool = false
+//                if(resultValue=="success") { isUserRegistered = true }
+//                
+//                var messageToDisplay:String = parseJSON["message"] as! String!;
+//                if(!isUserRegistered) {
+//                    messageToDisplay = parseJSON["message"] as! String!;
+//                }
+//                
+//                
+//                DispatchQueue.main.async(execute: {
+//                    
+//                    //Display alert message with confirmation.
+//                    let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.alert)
+//                    
+//                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+//                        action in
+//                        self.dismiss(animated: true, completion: nil);
+//                    }
+//                    myAlert.addAction(okAction)
+//                    self.present(myAlert, animated: true, completion: nil)
+//                    self.dismiss(animated: true, completion: nil)
+//                });
+//            }
+//        }) 
+//        task.resume()
     }
     
     
-    func displayMyAlertMessage(userMessage:String) {
-        let myAlert = UIAlertController(title: "트로피", message: userMessage, preferredStyle: UIAlertControllerStyle.Alert)
+    func displayMyAlertMessage(_ userMessage:String) {
+        let myAlert = UIAlertController(title: "트로피", message: userMessage, preferredStyle: UIAlertControllerStyle.alert)
         
-        let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil)
+        let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil)
         
         myAlert.addAction(okAction)
         
-        self.presentViewController(myAlert, animated: true, completion: nil)
+        self.present(myAlert, animated: true, completion: nil)
     }
     
     
-    @IBAction func backButtonTapped(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backButtonTapped(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     

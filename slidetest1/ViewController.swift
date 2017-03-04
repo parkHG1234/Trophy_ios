@@ -15,14 +15,14 @@
 
 
 import UIKit
-
+import Alamofire
 
 class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSource , UISearchResultsUpdating{
 
+    
     @IBOutlet weak var open: UIBarButtonItem!
-    var isUserLoggedIn = NSUserDefaults.standardUserDefaults().boolForKey("isUserLoggedIn")
     
-    
+    var isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
     
     @IBOutlet var Contest_TableView: UITableView!
     var Contest_list:[Contest_Detail_Setting] = []
@@ -33,76 +33,89 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        print(isUserLoggedIn)
         if(!isUserLoggedIn) {
-            NSUserDefaults.standardUserDefaults().setValue(".", forKey: "Pk")
+            UserDefaults.standard.setValue(".", forKey: "Pk")
         }
         
-        open.target = self.revealViewController()
-        open.action = Selector("revealToggle:")
+        if self.revealViewController() != nil {
+            self.revealViewController().rearViewRevealWidth = self.view.frame.width - 60
+            open.target = self.revealViewController()
+            open.action = #selector(SWRevealViewController.revealToggle(_:))
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
         
         self.Contest_TableView.dataSource = self
         self.Contest_TableView.delegate = self
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part3/Contest_Customlist.jsp")!)
-        let parameterString = ""
-        request.HTTPMethod = "POST"
-        request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-            data, response, error in
         
-            if error != nil {
-                return
-            }
+        
+        
+        Alamofire.request("http://210.122.7.193:8080/Trophy_part3/Contest_Customlist.jsp").responseJSON { response in
+            print(response.request)  // original URL request
+            print(response.response) // HTTP URL response
+            print(response.data)     // server data
+            print(response.result)   // result of response serialization
             
-            print("response = \(response)")
-            let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            do{
-                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                let list = apiDictionary["List"] as! NSArray
-                for row in list{
-                    
-                    self.Contest_Setting = Contest_Detail_Setting()
-                    self.Contest_Setting.Pk = (row["_Pk"] as? String)!
-                    self.Contest_Setting.Title = (row["_Title"] as? String)!
-                    self.Contest_Setting.Image = (row["_Image"] as? String)!
-                    self.Contest_Setting.CurrentNum = (row["_currentNum"] as? String)!
-                    self.Contest_Setting.MaxNum = (row["_maxNum"] as? String)!
-                    self.Contest_Setting.Payment = (row["_Payment"] as? String)!
-                    self.Contest_Setting.Host = (row["_Host"] as? String)!
-                    self.Contest_Setting.Management = (row["_Management"] as? String)!
-                    self.Contest_Setting.Support = (row["_Support"] as? String)!
-                    self.Contest_Setting.ContestDate = (row["_ContestDate"] as? String)!
-                    self.Contest_Setting.RecruitStartDate = (row["_RecruitStartDate"] as? String)!
-                    self.Contest_Setting.RecruitFinishDate = (row["_RecruitFinishDate"] as? String)!
-                    self.Contest_Setting.DetailInfo = (row["_DetailInfo"] as? String)!
-                    self.Contest_Setting.Place = (row["_Place"] as? String)!
-                    
-                    self.Contest_list.append(self.Contest_Setting)
-                    
-                }
-                
-                print(self.Contest_Setting.ContestDate)
-                
-            }catch{
-                
-                
-                
-            }
-            
-            dispatch_async(dispatch_get_main_queue()){
-                
-                self.Contest_TableView.reloadData()
-                
+            if let JSON = response.result.value {
+                print("JSON: \(JSON)")
             }
             
         }
         
-        task.resume()
-        
-        
-        
+//        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part3/Contest_Customlist.jsp")!)
+//        let parameterString = ""
+//        request.httpMethod = "POST"
+//        request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//        
+//        
+//        let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//            data, response, error in
+//        
+//            if error != nil {
+//                return
+//            }
+//            
+//            print("response = \(response)")
+//            let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            do{
+//                let apiDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
+//                let list = apiDictionary["List"] as! NSArray
+//                for row in list{
+//                    
+//                    self.Contest_Setting = Contest_Detail_Setting()
+//                    self.Contest_Setting.Pk = (row["_Pk"] as? String)!
+//                    self.Contest_Setting.Title = (row["_Title"] as? String)!
+//                    self.Contest_Setting.Image = (row["_Image"] as? String)!
+//                    self.Contest_Setting.CurrentNum = (row["_currentNum"] as? String)!
+//                    self.Contest_Setting.MaxNum = (row["_maxNum"] as? String)!
+//                    self.Contest_Setting.Payment = (row["_Payment"] as? String)!
+//                    self.Contest_Setting.Host = (row["_Host"] as? String)!
+//                    self.Contest_Setting.Management = (row["_Management"] as? String)!
+//                    self.Contest_Setting.Support = (row["_Support"] as? String)!
+//                    self.Contest_Setting.ContestDate = (row["_ContestDate"] as? String)!
+//                    self.Contest_Setting.RecruitStartDate = (row["_RecruitStartDate"] as? String)!
+//                    self.Contest_Setting.RecruitFinishDate = (row["_RecruitFinishDate"] as? String)!
+//                    self.Contest_Setting.DetailInfo = (row["_DetailInfo"] as? String)!
+//                    self.Contest_Setting.Place = (row["_Place"] as? String)!
+//                    
+//                    self.Contest_list.append(self.Contest_Setting)
+//                    
+//                }
+//                
+//                print(self.Contest_Setting.ContestDate)
+//                
+//            }catch{
+//                
+//                
+//                
+//            }
+//            
+//            DispatchQueue.main.async{
+//                self.Contest_TableView.reloadData()
+//            }
+//        })
+//        task.resume()
     }
     
     
@@ -115,7 +128,7 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     
     
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -123,7 +136,7 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // #warning Incomplete implementation, return the number of rows
         return self.Contest_list.count
@@ -134,9 +147,9 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContestCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContestCell", for: indexPath)
         let Contest_Title = cell.viewWithTag(2) as! UILabel
         let Contest_Date = cell.viewWithTag(3) as! UILabel
         let Contest_Place = cell.viewWithTag(4) as! UILabel
@@ -147,22 +160,22 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         Contest_Place.text = Contest_list[indexPath.row].Place
         
         let videoString = "http://210.122.7.193:8080/Trophy_img/contest/"+self.Contest_list[indexPath.row].Image+".jpg"
-        let videoThumbnailUrl = NSURL(string: videoString)
+        let videoThumbnailUrl = URL(string: videoString)
     if videoThumbnailUrl != nil{
             
-        let request = NSURLRequest(URL:videoThumbnailUrl!)
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+        let request = URLRequest(url:videoThumbnailUrl!)
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) -> Void in
             
         let imageView = cell.viewWithTag(1) as! UIImageView
             imageView.image = UIImage(data: data!)
-        })
+        } as! (Data?, URLResponse?, Error?) -> Void)
         dataTask.resume()
     }
     return cell
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let Contest_Detail_View = segue.destinationViewController as! Contest_Detail_ViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let Contest_Detail_View = segue.destination as! Contest_Detail_ViewController
         let myIndexPath = self.Contest_TableView.indexPathForSelectedRow!
         let row = myIndexPath.row
         
@@ -181,7 +194,7 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         Contest_Detail_View.Contest_DetailInfo = Contest_list[row].DetailInfo
         Contest_Detail_View.Contest_Place = Contest_list[row].Place
     }
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
     
     }
     

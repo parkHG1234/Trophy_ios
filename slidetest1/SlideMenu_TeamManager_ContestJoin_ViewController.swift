@@ -24,49 +24,49 @@ class SlideMenu_TeamManager_ContestJoin_ViewController: UIViewController, UITabl
         super.viewDidLoad()
         ContestJoin_TableView.delegate = self
         ContestJoin_TableView.dataSource = self
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/TeamManager_ContestJoin.jsp")!)
-        let parameterString = "Data1="+TeamName
-        
-        request.HTTPMethod = "POST"
-        request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-            data, response, error in
-            
-            if error != nil {
-                return
-            }
-            print("response = \(response)")
-            
-            let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            
-            do{
-                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                let list = apiDictionary["List"] as! NSArray
-                for row in list{
-                    self.Http_ContestPk.append((row["msg1"] as? String)!)
-                    self.Http_ContestImg.append((row["msg2"] as? String)!)
-                    self.Http_ContestTitle.append((row["msg3"] as? String)!)
-                    self.Http_ContestStatus.append((row["msg4"] as? String)!)
-                    self.Http_AcountName.append((row["msg5"] as? String)!)
-                    self.Http_AcountNumber.append((row["msg6"] as? String)!)
-                }
-            }catch{
-                
-            }
-            
-            dispatch_async(dispatch_get_main_queue()){
-                self.ContestJoin_TableView.reloadData()
-            }
-        }
-        task.resume()
+//        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part1/TeamManager_ContestJoin.jsp")!)
+//        let parameterString = "Data1="+TeamName
+//        
+//        request.httpMethod = "POST"
+//        request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//        let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//            data, response, error in
+//            
+//            if error != nil {
+//                return
+//            }
+//            print("response = \(response)")
+//            
+//            let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            
+//            do{
+//                let apiDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
+//                let list = apiDictionary["List"] as! NSArray
+//                for row in list{
+//                    self.Http_ContestPk.append((row["msg1"] as? String)!)
+//                    self.Http_ContestImg.append((row["msg2"] as? String)!)
+//                    self.Http_ContestTitle.append((row["msg3"] as? String)!)
+//                    self.Http_ContestStatus.append((row["msg4"] as? String)!)
+//                    self.Http_AcountName.append((row["msg5"] as? String)!)
+//                    self.Http_AcountNumber.append((row["msg6"] as? String)!)
+//                }
+//            }catch{
+//                
+//            }
+//            
+//            DispatchQueue.main.async{
+//                self.ContestJoin_TableView.reloadData()
+//            }
+//        })
+//        task.resume()
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return Http_ContestPk.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContestJoinCell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContestJoinCell", for: indexPath)
 
 //        let ContestImage1 = cell.viewWithTag(1) as! UIImageView
         let ContestTitle = cell.viewWithTag(2) as! UILabel
@@ -80,24 +80,24 @@ class SlideMenu_TeamManager_ContestJoin_ViewController: UIViewController, UITabl
         ContestStatus.text = self.Http_ContestStatus[indexPath.row]
         
         let ContestUrlString = "http://210.122.7.193:8080/Trophy_img/team/AldongTeam.jpg"
-        let ContestUrl = NSURL(string: ContestUrlString)
+        let ContestUrl = URL(string: ContestUrlString)
         if ContestUrl != nil {
-            let request = NSURLRequest(URL: ContestUrl!)
-            let session = NSURLSession.sharedSession()
-            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let request = URLRequest(url: ContestUrl!)
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: request, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     let imageView = cell.viewWithTag(4) as! UIImageView
                     imageView.image = UIImage(data: data!)
                 })
-            })
+            } as! (Data?, URLResponse?, Error?) -> Void)
             
             dataTask.resume()
         }
         return cell
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ContestJoin_Focus_Segue" {
-            let SlideMenu_TeamManager_ContestJoin_Focus = segue.destinationViewController as! SlideMenu_TeamManager_ContestJoin_Focus_ViewController
+            let SlideMenu_TeamManager_ContestJoin_Focus = segue.destination as! SlideMenu_TeamManager_ContestJoin_Focus_ViewController
             let myIndexPath = self.ContestJoin_TableView.indexPathForSelectedRow!
             let row = myIndexPath.row
             SlideMenu_TeamManager_ContestJoin_Focus.TeamName = TeamName
@@ -114,8 +114,8 @@ class SlideMenu_TeamManager_ContestJoin_ViewController: UIViewController, UITabl
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func Back_Button_Action(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Back_Button_Action(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation

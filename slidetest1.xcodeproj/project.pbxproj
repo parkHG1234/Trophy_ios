@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0EB3FDB3F4A734A4328CFE /* Pods_slidetest1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F6936710F62AEC515B9159 /* Pods_slidetest1.framework */; };
 		30DE6FF61E55C633009F8342 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30DE6FF41E55C633009F8342 /* Main.storyboard */; };
 		30E0B9B31E556A9A004E4046 /* Contest_Detail_Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0B9B21E556A9A004E4046 /* Contest_Detail_Setting.swift */; };
 		30E0B9B51E556AD0004E4046 /* Contest_Detail_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0B9B41E556AD0004E4046 /* Contest_Detail_ViewController.swift */; };
@@ -31,7 +32,6 @@
 		317057A91E4DA5560091D4F1 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 317057A81E4DA5560091D4F1 /* UINavigationBar+Awesome.m */; };
 		317057B41E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317057B31E5199FF0091D4F1 /* SlideMenu_TeamMake_ViewController.swift */; };
 		319FFD5F1E61DF590042A8B8 /* SlideMenu_TeamSearch1_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319FFD5E1E61DF590042A8B8 /* SlideMenu_TeamSearch1_ViewController.swift */; };
-		31B7B5E71E653DD7007B3923 /* test1_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B7B5E61E653DD7007B3923 /* test1_ViewController.swift */; };
 		31B7B5E91E654193007B3923 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B7B5E81E654193007B3923 /* CollectionViewController.swift */; };
 		32727C851E5EC29100E40C36 /* 111.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32727C841E5EC29100E40C36 /* 111.jpg */; };
 		328534691E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328534681E5D8FF7002FBAE5 /* ChangePersonalInfoViewController.swift */; };
@@ -42,6 +42,8 @@
 		3285347A1E5EB105002FBAE5 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328534791E5EB105002FBAE5 /* TermsViewController.swift */; };
 		32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244231E4AFE3200CDA02F /* LoginViewController.swift */; };
 		32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */; };
+		32B0B7B81E67F618007A0314 /* cm_arrow_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B0B7B71E67F618007A0314 /* cm_arrow_back_white.png */; };
+		32B0B7BA1E67F980007A0314 /* back_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B0B7B91E67F980007A0314 /* back_2x.png */; };
 		32EDBC6F1E66ACA4004D4D55 /* ChangeAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC6E1E66ACA4004D4D55 /* ChangeAddressViewController.swift */; };
 		32EDBC711E66B365004D4D55 /* ChangePhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC701E66B365004D4D55 /* ChangePhoneViewController.swift */; };
 		32EDBC731E66B37D004D4D55 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC721E66B37D004D4D55 /* ChangePasswordViewController.swift */; };
@@ -77,6 +79,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		287F7CE8F0DC7C125F2BD5CA /* Pods-slidetest1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidetest1.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidetest1/Pods-slidetest1.release.xcconfig"; sourceTree = "<group>"; };
 		30DE6FF51E55C633009F8342 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		30E0B9B21E556A9A004E4046 /* Contest_Detail_Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contest_Detail_Setting.swift; sourceTree = "<group>"; };
 		30E0B9B41E556AD0004E4046 /* Contest_Detail_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contest_Detail_ViewController.swift; path = ../Contest_Detail_ViewController.swift; sourceTree = "<group>"; };
@@ -121,9 +124,13 @@
 		328534791E5EB105002FBAE5 /* TermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		32A244231E4AFE3200CDA02F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
+		32B0B7B71E67F618007A0314 /* cm_arrow_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cm_arrow_back_white.png; path = Assets.xcassets/cm_arrow_back_white.imageset/cm_arrow_back_white.png; sourceTree = "<group>"; };
+		32B0B7B91E67F980007A0314 /* back_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_2x.png; sourceTree = "<group>"; };
 		32EDBC6E1E66ACA4004D4D55 /* ChangeAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeAddressViewController.swift; sourceTree = "<group>"; };
 		32EDBC701E66B365004D4D55 /* ChangePhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewController.swift; sourceTree = "<group>"; };
 		32EDBC721E66B37D004D4D55 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		9241DD91D824BB38521789CB /* Pods-slidetest1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidetest1.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidetest1/Pods-slidetest1.debug.xcconfig"; sourceTree = "<group>"; };
+		E7F6936710F62AEC515B9159 /* Pods_slidetest1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidetest1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F0EB3FDB3F4A734A4328CFE /* Pods_slidetest1.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +166,8 @@
 				3110B5BD1E49C9F600E43674 /* slidetest1Tests */,
 				3110B5C81E49C9F600E43674 /* slidetest1UITests */,
 				3110B5A71E49C9F500E43674 /* Products */,
+				B162FA1C7B16BC8439755055 /* Pods */,
+				855CCA1196BF0C11EBF184F1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -178,12 +188,12 @@
 				30DE6FF41E55C633009F8342 /* Main.storyboard */,
 				3110B5A91E49C9F500E43674 /* AppDelegate.swift */,
 				3110B5AB1E49C9F500E43674 /* ViewController.swift */,
+				3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */,
 				30E0B9B21E556A9A004E4046 /* Contest_Detail_Setting.swift */,
 				30E0B9B41E556AD0004E4046 /* Contest_Detail_ViewController.swift */,
 				30EA1FFC1E5708B6007F0B91 /* Contest_Application_ViewController.swift */,
 				30EA20001E5B2166007F0B91 /* Contest_Member_Setting.swift */,
 				30EA1FFE1E5B19EB007F0B91 /* Contest_Application_Setting.swift */,
-				3110B5DE1E4ADCD300E43674 /* SlideMenuViewController.swift */,
 				32A244231E4AFE3200CDA02F /* LoginViewController.swift */,
 				328534791E5EB105002FBAE5 /* TermsViewController.swift */,
 				32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */,
@@ -192,6 +202,8 @@
 				32EDBC701E66B365004D4D55 /* ChangePhoneViewController.swift */,
 				32EDBC721E66B37D004D4D55 /* ChangePasswordViewController.swift */,
 				3285346A1E5D9002002FBAE5 /* WithdrawalViewController.swift */,
+				31B7B5E61E653DD7007B3923 /* test1_ViewController.swift */,
+				31B7B5E81E654193007B3923 /* CollectionViewController.swift */,
 				3110B5B21E49C9F500E43674 /* LaunchScreen.storyboard */,
 				3110B5B01E49C9F500E43674 /* Assets.xcassets */,
 				3110B5DC1E49CBC200E43674 /* BackTableVC.swift */,
@@ -204,8 +216,6 @@
 				316E37E81E5455FB00B48FC0 /* SlideMenu_TeamManager_ContestJoin_Focus_ViewController.swift */,
 				316E37EA1E559FCE00B48FC0 /* SlideMenu_TeamManager_PlayerManager_ViewController.swift */,
 				319FFD5E1E61DF590042A8B8 /* SlideMenu_TeamSearch1_ViewController.swift */,
-				31B7B5E61E653DD7007B3923 /* test1_ViewController.swift */,
-				31B7B5E81E654193007B3923 /* CollectionViewController.swift */,
 			);
 			path = slidetest1;
 			sourceTree = "<group>";
@@ -245,11 +255,30 @@
 			isa = PBXGroup;
 			children = (
 				32727C841E5EC29100E40C36 /* 111.jpg */,
+				32B0B7B71E67F618007A0314 /* cm_arrow_back_white.png */,
+				32B0B7B91E67F980007A0314 /* back_2x.png */,
 				328534731E5E9AC7002FBAE5 /* check.png */,
 				328534741E5E9AC7002FBAE5 /* unckeck.png */,
 				328534751E5E9AC7002FBAE5 /* back.png */,
 			);
 			name = imgs;
+			sourceTree = "<group>";
+		};
+		855CCA1196BF0C11EBF184F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E7F6936710F62AEC515B9159 /* Pods_slidetest1.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B162FA1C7B16BC8439755055 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9241DD91D824BB38521789CB /* Pods-slidetest1.debug.xcconfig */,
+				287F7CE8F0DC7C125F2BD5CA /* Pods-slidetest1.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,10 +288,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3110B5CE1E49C9F600E43674 /* Build configuration list for PBXNativeTarget "slidetest1" */;
 			buildPhases = (
+				D773078E41A9B9AF37241C96 /* [CP] Check Pods Manifest.lock */,
 				3110B5A21E49C9F500E43674 /* Sources */,
 				3110B5A31E49C9F500E43674 /* Frameworks */,
 				3110B5A41E49C9F500E43674 /* Resources */,
 				31F40E1A1E5BEF83007EB0A2 /* CopyFiles */,
+				A18CD84E8CDF4DEC37A15848 /* [CP] Embed Pods Frameworks */,
+				805B27B7DCEFA64E77F57165 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -321,13 +353,16 @@
 				TargetAttributes = {
 					3110B5A51E49C9F500E43674 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0820;
 					};
 					3110B5B91E49C9F600E43674 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 3110B5A51E49C9F500E43674;
 					};
 					3110B5C41E49C9F600E43674 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 3110B5A51E49C9F500E43674;
 					};
 				};
@@ -361,8 +396,10 @@
 				32727C851E5EC29100E40C36 /* 111.jpg in Resources */,
 				328534771E5E9AC7002FBAE5 /* unckeck.png in Resources */,
 				328534781E5E9AC7002FBAE5 /* back.png in Resources */,
+				32B0B7B81E67F618007A0314 /* cm_arrow_back_white.png in Resources */,
 				3110B5B41E49C9F500E43674 /* LaunchScreen.storyboard in Resources */,
 				328534761E5E9AC7002FBAE5 /* check.png in Resources */,
+				32B0B7BA1E67F980007A0314 /* back_2x.png in Resources */,
 				3110B5B11E49C9F500E43674 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +419,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		805B27B7DCEFA64E77F57165 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-slidetest1/Pods-slidetest1-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A18CD84E8CDF4DEC37A15848 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-slidetest1/Pods-slidetest1-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D773078E41A9B9AF37241C96 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3110B5A21E49C9F500E43674 /* Sources */ = {
@@ -555,6 +640,7 @@
 		};
 		3110B5CF1E49C9F600E43674 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9241DD91D824BB38521789CB /* Pods-slidetest1.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -564,11 +650,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "slidetest1/slidetest1-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		3110B5D01E49C9F600E43674 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 287F7CE8F0DC7C125F2BD5CA /* Pods-slidetest1.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -577,6 +665,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.slidetest1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "slidetest1/slidetest1-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -588,6 +677,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.slidetest1Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slidetest1.app/slidetest1";
 			};
 			name = Debug;
@@ -600,6 +690,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.slidetest1Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slidetest1.app/slidetest1";
 			};
 			name = Release;
@@ -611,6 +702,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.slidetest1UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = slidetest1;
 				USES_XCTRUNNER = YES;
 			};
@@ -623,6 +715,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.slidetest1UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = slidetest1;
 				USES_XCTRUNNER = YES;
 			};

@@ -51,103 +51,103 @@ class SlideMenu_TeamManager_ContestJoin_Focus_ViewController: UIViewController ,
         scroll.contentSize.height = 2000
         
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/TeamManager_ContestJoin_ContestFocus_ContestInfo.jsp")!)
-        let parameterString = "Data1="+Contest_Pk
-        
-        request.HTTPMethod = "POST"
-        request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-            data, response, error in
-            
-            if error != nil {
-                return
-            }
-            print("response = \(response)")
-            
-            let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            
-            do{
-                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                let list = apiDictionary["List"] as! NSArray
-                for row in list{
-                    self.Http_ContestJoinDate_Start.append((row["msg1"] as? String)!)
-                    self.Http_ContestJoinDate_End.append((row["msg2"] as? String)!)
-                    self.Http_ContestDate.append((row["msg3"] as? String)!)
-                    self.Http_ContestDetail.append((row["msg4"] as? String)!)
-                }
-            }catch{
-                
-            }
-            
-        }
-        task.resume()
+//        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part1/TeamManager_ContestJoin_ContestFocus_ContestInfo.jsp")!)
+//        let parameterString = "Data1="+Contest_Pk
+//        
+//        request.httpMethod = "POST"
+//        request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//        let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//            data, response, error in
+//            
+//            if error != nil {
+//                return
+//            }
+//            print("response = \(response)")
+//            
+//            let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            
+//            do{
+//                let apiDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
+//                let list = apiDictionary["List"] as! NSArray
+//                for row in list{
+//                    self.Http_ContestJoinDate_Start.append((row["msg1"] as? String)!)
+//                    self.Http_ContestJoinDate_End.append((row["msg2"] as? String)!)
+//                    self.Http_ContestDate.append((row["msg3"] as? String)!)
+//                    self.Http_ContestDetail.append((row["msg4"] as? String)!)
+//                }
+//            }catch{
+//                
+//            }
+//            
+//        })
+//        task.resume()
 //////////////////////////////////////////////////////////////////////
-        let request2 = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/TeamManager_ContestJoin_ContestFocus_Represent.jsp")!)
-        let parameterString2 = "Data1="+TeamName
-        
-        request2.HTTPMethod = "POST"
-        request2.HTTPBody = parameterString2.dataUsingEncoding(NSUTF8StringEncoding)
-        let task2 = NSURLSession.sharedSession().dataTaskWithRequest(request2){
-            data, response, error in
-            
-            if error != nil {
-                return
-            }
-            print("response = \(response)")
-            
-            let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            
-            do{
-                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                let list = apiDictionary["List"] as! NSArray
-                for row in list{
-                    self.Http_ContestRepresent.append((row["msg1"] as? String)!)
-                    self.Http_ContestRepresent_Phone.append((row["msg2"] as? String)!)
-                }
-            }catch{
-                
-            }
-            
-        }
-        task2.resume()
+//        let request2 = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part1/TeamManager_ContestJoin_ContestFocus_Represent.jsp")!)
+//        let parameterString2 = "Data1="+TeamName
+//        
+//        request2.httpMethod = "POST"
+//        request2.httpBody = parameterString2.data(using: String.Encoding.utf8)
+//        let task2 = URLSession.shared.dataTask(with: request2, completionHandler: {
+//            data, response, error in
+//            
+//            if error != nil {
+//                return
+//            }
+//            print("response = \(response)")
+//            
+//            let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            
+//            do{
+//                let apiDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
+//                let list = apiDictionary["List"] as! NSArray
+//                for row in list{
+//                    self.Http_ContestRepresent.append((row["msg1"] as? String)!)
+//                    self.Http_ContestRepresent_Phone.append((row["msg2"] as? String)!)
+//                }
+//            }catch{
+//                
+//            }
+//            
+//        })
+//        task2.resume()
     //////////////////////////////////////////////////////////////////////
-        let request3 = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/TeamManager_ContestJoin_ContestFocus_Joiner.jsp")!)
-        let parameterString3 = "Data1="+TeamName+"&"+"Data2="+Contest_Pk
-        
-        request3.HTTPMethod = "POST"
-        request3.HTTPBody = parameterString3.dataUsingEncoding(NSUTF8StringEncoding)
-        let task3 = NSURLSession.sharedSession().dataTaskWithRequest(request3){
-            data, response, error in
-            
-            if error != nil {
-                return
-            }
-            print("response = \(response)")
-            
-            let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            
-            do{
-                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                let list = apiDictionary["List"] as! NSArray
-                for row in list{
-                    self.Http_Joiner_Name.append((row["msg1"] as? String)!)
-                    self.Http_Joiner_Date.append((row["msg2"] as? String)!)
-                    self.Http_Joiner_Profile.append((row["msg3"] as? String)!)
-                    self.Http_Joiner_Pk.append((row["msg4"] as? String)!)
-                    self.Http_Joiner_Duty.append((row["msg4"] as? String)!)
-                }
-            }catch{
-                
-            }
-            
-        }
-        task3.resume()
+//        let request3 = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part1/TeamManager_ContestJoin_ContestFocus_Joiner.jsp")!)
+//        let parameterString3 = "Data1="+TeamName+"&"+"Data2="+Contest_Pk
+//        
+//        request3.httpMethod = "POST"
+//        request3.httpBody = parameterString3.data(using: String.Encoding.utf8)
+//        let task3 = URLSession.shared.dataTask(with: request3, completionHandler: {
+//            data, response, error in
+//            
+//            if error != nil {
+//                return
+//            }
+//            print("response = \(response)")
+//            
+//            let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            
+//            do{
+//                let apiDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
+//                let list = apiDictionary["List"] as! NSArray
+//                for row in list{
+//                    self.Http_Joiner_Name.append((row["msg1"] as? String)!)
+//                    self.Http_Joiner_Date.append((row["msg2"] as? String)!)
+//                    self.Http_Joiner_Profile.append((row["msg3"] as? String)!)
+//                    self.Http_Joiner_Pk.append((row["msg4"] as? String)!)
+//                    self.Http_Joiner_Duty.append((row["msg4"] as? String)!)
+//                }
+//            }catch{
+//                
+//            }
+//            
+//        })
+//        task3.resume()
         //////////////////////////////////////////////////////////////
-        let url = NSURL(string:"http://210.122.7.193:8080/Trophy_img/team/AldongTeam.jpg")
-        let data = NSData(contentsOfURL:url!)
+        let url = URL(string:"http://210.122.7.193:8080/Trophy_img/team/AldongTeam.jpg")
+        let data = try? Data(contentsOf: url!)
         self.ContestImage_ImageView.image = UIImage(data:data!)
         
         
@@ -163,12 +163,12 @@ class SlideMenu_TeamManager_ContestJoin_Focus_ViewController: UIViewController ,
         ContestRepresent_Phone_Label.text = Http_ContestRepresent_Phone[0]
         
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return Http_Joiner_Pk.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContestJoin_Focus_Joiner", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContestJoin_Focus_Joiner", for: indexPath)
         
         let JoinerDuty = cell.viewWithTag(2) as! UILabel
         let JoinerName = cell.viewWithTag(3) as! UILabel
@@ -179,16 +179,16 @@ class SlideMenu_TeamManager_ContestJoin_Focus_ViewController: UIViewController ,
         JoinerDate.text = self.Http_Joiner_Date[indexPath.row]
         
         let ContestUrlString = "http://210.122.7.193:8080/Trophy_img/team/AldongTeam.jpg"
-        let ContestUrl = NSURL(string: ContestUrlString)
+        let ContestUrl = URL(string: ContestUrlString)
         if ContestUrl != nil {
-            let request = NSURLRequest(URL: ContestUrl!)
-            let session = NSURLSession.sharedSession()
-            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let request = URLRequest(url: ContestUrl!)
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: request, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     let imageView = cell.viewWithTag(5) as! UIImageView
                     imageView.image = UIImage(data: data!)
                 })
-            })
+            } as! (Data?, URLResponse?, Error?) -> Void)
             
             dataTask.resume()
         }
@@ -200,8 +200,8 @@ class SlideMenu_TeamManager_ContestJoin_Focus_ViewController: UIViewController ,
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction internal func Back_Button_Action(sender: AnyObject){
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction internal func Back_Button_Action(_ sender: AnyObject){
+        self.dismiss(animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation

@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchResultsUpdating {
 
@@ -20,38 +44,38 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
 //            self.tableData.insert("123", atIndex: i)
 //        }
         //http 통신
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part1/TeamSearch.jsp")!)
-      
-        let parameterString = ""
+//        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part1/TeamSearch.jsp")!)
+//      
+//        let parameterString = ""
         
-        request.HTTPMethod = "POST"
-        request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-            data, response, error in
-            
-            if error != nil {
-                return
-            }
-            print("response = \(response)")
-            
-            let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            
-            do{
-                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                let list = apiDictionary["List"] as! NSArray
-                for row in list{
-                    self.tableData.append((row["msg1"] as? String)!)
-                }
-                print(self.tableData[2])
-            }catch{
-                
-            }
-            dispatch_async(dispatch_get_main_queue()){
-                self.tableView.reloadData()
-            }
-        }
-        task.resume()
+//        request.httpMethod = "POST"
+//        request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//        let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//            data, response, error in
+//            
+//            if error != nil {
+//                return
+//            }
+//            print("response = \(response)")
+//            
+//            let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            
+//            do{
+//                let apiDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
+//                let list = apiDictionary["List"] as! NSArray
+//                for row in list{
+//                    self.tableData.append((row["msg1"] as? String)!)
+//                }
+//                print(self.tableData[2])
+//            }catch{
+//                
+//            }
+//            DispatchQueue.main.async{
+//                self.tableView.reloadData()
+//            }
+//        })
+//        task.resume()
         //http 통신 파싱
         
         //검색어 구현
@@ -59,7 +83,7 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
         resultSearchController.searchResultsUpdater = self
         resultSearchController.hidesNavigationBarDuringPresentation = false
         resultSearchController.dimsBackgroundDuringPresentation = false
-        resultSearchController.searchBar.searchBarStyle = UISearchBarStyle.Prominent
+        resultSearchController.searchBar.searchBarStyle = UISearchBarStyle.prominent
         resultSearchController.searchBar.sizeToFit()
         self.tableView.tableHeaderView = resultSearchController.searchBar
         //////
@@ -77,17 +101,17 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
     }
 
     // MARK: - Table view data source
-    @IBAction func Back_Button_Action(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Back_Button_Action(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if resultSearchController.active {
+        if resultSearchController.isActive {
             return filteredData.count
         }
         else{
@@ -96,11 +120,11 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("tableCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath)
         let label = cell.viewWithTag(2) as! UILabel
         // Configure the cell...
-        if resultSearchController.active {
+        if resultSearchController.isActive {
             //cell.textLabel?.text = filteredData[indexPath.row]
             label.text = filteredData[indexPath.row]
         }
@@ -110,33 +134,33 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
         }
         
         let ContestUrlString = "http://210.122.7.193:8080/Trophy_img/team/AldongTeam.jpg"
-        let ContestUrl = NSURL(string: ContestUrlString)
+        let ContestUrl = URL(string: ContestUrlString)
         if ContestUrl != nil {
-            let request = NSURLRequest(URL: ContestUrl!)
-            let session = NSURLSession.sharedSession()
-            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let request = URLRequest(url: ContestUrl!)
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: request, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     let imageView = cell.viewWithTag(1) as! UIImageView
                     imageView.image = UIImage(data: data!)
                 })
-            })
+            } as! (Data?, URLResponse?, Error?) -> Void)
             
             dataTask.resume()
         }
         
         return cell
     }
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         if searchController.searchBar.text?.characters.count > 0 {
             
-            filteredData.removeAll(keepCapacity: false)
+            filteredData.removeAll(keepingCapacity: false)
             let searchPredicate = NSPredicate(format: "SELF CONTAINS %@", searchController.searchBar.text!)
-            let array = (tableData as NSArray).filteredArrayUsingPredicate(searchPredicate)
+            let array = (tableData as NSArray).filtered(using: searchPredicate)
             filteredData = array as! [String]
             tableView.reloadData()
         }
         else{
-            filteredData.removeAll(keepCapacity: false)
+            filteredData.removeAll(keepingCapacity: false)
             filteredData = tableData
             tableView.reloadData()
         }
@@ -181,9 +205,9 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SegueTeamName" {
-            let SlideMenu_TeamSearch_Focus_ViewController1 = segue.destinationViewController as! SlideMenu_TeamSearch_Focus_ViewController
+            let SlideMenu_TeamSearch_Focus_ViewController1 = segue.destination as! SlideMenu_TeamSearch_Focus_ViewController
             let myIndexPath = self.tableView.indexPathForSelectedRow!
             let row = myIndexPath.row
             SlideMenu_TeamSearch_Focus_ViewController1.teamname = tableData[row]

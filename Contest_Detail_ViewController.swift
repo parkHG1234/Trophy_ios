@@ -69,17 +69,17 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
         Contest_ScrollView.contentSize.height = 1000
         
         let videoString = "http://210.122.7.193:8080/Trophy_img/contest/"+self.Contest_Image+".jpg"
-        let videoThumbnailUrl = NSURL(string: videoString)
+        let videoThumbnailUrl = URL(string: videoString)
         
         if videoThumbnailUrl != nil{
-            let request = NSURLRequest(URL:videoThumbnailUrl!)
-            let session = NSURLSession.sharedSession()
-            let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+            let request = URLRequest(url:videoThumbnailUrl!)
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: request, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) -> Void in
                 
                 let imageView = self.Detail_Image
-                imageView.image = UIImage(data: data!)
+                imageView?.image = UIImage(data: data!)
                 
-            })
+            } as! (Data?, URLResponse?, Error?) -> Void)
             
             dataTask.resume()
             
@@ -92,8 +92,8 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
         // Dispose of any resources that can be recreated.
         
     }
-    func Done(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func Done(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
         
     }
         
@@ -103,21 +103,21 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
 }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let Contest_Application_View = segue.destinationViewController as! Contest_Application_ViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let Contest_Application_View = segue.destination as! Contest_Application_ViewController
         
         Contest_Application_View.User_Pk = "18"
         Contest_Application_View.Contest_Pk = "3"
         Contest_Application_View.MyTeamName = "AldongTeam"
     }
 
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         
     }
-    @IBAction func Contest_PopUp_More(sender: AnyObject) {
+    @IBAction func Contest_PopUp_More(_ sender: AnyObject) {
     }
-    @IBAction func Contest_PopUp_Close(sender: AnyObject) {
-        Contest_PopUp_View.hidden = true
+    @IBAction func Contest_PopUp_Close(_ sender: AnyObject) {
+        Contest_PopUp_View.isHidden = true
         Background_Button.alpha = 0
     }
 }

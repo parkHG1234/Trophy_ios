@@ -36,97 +36,97 @@ class SlideMenu_TeamManager_TeamIntro_ViewController: UIViewController, UIImageP
         super.viewDidLoad()
         scroll.contentSize.height = 1000
         
-        Emblem_ImageView.userInteractionEnabled = true
-        Emblem_ImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "Emblem_ImageView_Action:"))
-        TeamImage1_ImageView.userInteractionEnabled = true
-        TeamImage1_ImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "Image1_ImageView_Action:"))
-        TeamImage2_ImageView.userInteractionEnabled = true
-        TeamImage2_ImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "Image2_ImageView_Action:"))
-        TeamImage3_ImageView.userInteractionEnabled = true
-        TeamImage3_ImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "Image3_ImageView_Action:"))
+        Emblem_ImageView.isUserInteractionEnabled = true
+        Emblem_ImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SlideMenu_TeamManager_TeamIntro_ViewController.Emblem_ImageView_Action(_:))))
+        TeamImage1_ImageView.isUserInteractionEnabled = true
+        TeamImage1_ImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SlideMenu_TeamManager_TeamIntro_ViewController.Image1_ImageView_Action(_:))))
+        TeamImage2_ImageView.isUserInteractionEnabled = true
+        TeamImage2_ImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SlideMenu_TeamManager_TeamIntro_ViewController.Image2_ImageView_Action(_:))))
+        TeamImage3_ImageView.isUserInteractionEnabled = true
+        TeamImage3_ImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SlideMenu_TeamManager_TeamIntro_ViewController.Image3_ImageView_Action(_:))))
         //http 통신
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce.jsp")!)
-        let parameterString = "Data1="+TeamName
-        
-        request.HTTPMethod = "POST"
-        request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-            data, response, error in
-            
-            if error != nil {
-                return
-            }
-            print("response = \(response)")
-            
-            let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            
-            do{
-                let apiDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                let list = apiDictionary["List"] as! NSArray
-                for row in list{
-                    
-                    self.Http_TeamName.append((row["msg1"] as? String)!)
-                    self.Http_TeamAddress_Do.append((row["msg2"] as? String)!)
-                    self.Http_TeamAddress_Se.append((row["msg3"] as? String)!)
-                    self.Http_HomeCourt.append((row["msg4"] as? String)!)
-                    self.Http_Introduce.append((row["msg5"] as? String)!)
-                    self.Http_Emblem.append((row["msg6"] as? String)!)
-                    self.Http_Image1.append((row["msg7"] as? String)!)
-                    self.Http_Image2.append((row["msg8"] as? String)!)
-                    self.Http_Image3.append((row["msg9"] as? String)!)
-
-                }
-            }catch{
-                
-            }
-            self.TeamName_Label.text = self.Http_TeamName[0]
-            self.TeamAddress.text = self.Http_TeamAddress_Do[0] + " " + self.Http_TeamAddress_Se[0]
-            self.HomeCourt_TextField.text = self.Http_HomeCourt[0]
-            self.TeamIntro_TextField.text = self.Http_Introduce[0]
-            
-            if self.Http_Emblem[0] == "." {
-                self.Emblem_ImageView.image = UIImage(named: "basketball_a.png")
-            }
-            else{
-                let url = NSURL(string:"http://210.122.7.193:8080/Trophy_img/team/"+self.Http_Emblem[0]+".jpg")
-                let data = NSData(contentsOfURL:url!)
-                self.Emblem_ImageView.image = UIImage(data:data!)
-
-            }
-            if self.Http_Image1[0] == "." {
-                self.TeamImage1_ImageView.image = UIImage(named: "basketball_a.png")
-            }
-            else{
-                let url = NSURL(string:"http://210.122.7.193:8080/Trophy_img/team/"+self.Http_Image1[0]+".jpg")
-                let data = NSData(contentsOfURL:url!)
-                self.TeamImage1_ImageView.image = UIImage(data:data!)
-                
-            }
-            if self.Http_Image2[0] == "." {
-                self.TeamImage2_ImageView.image = UIImage(named: "basketball_a.png")
-            }
-            else{
-                let url = NSURL(string:"http://210.122.7.193:8080/Trophy_img/team/"+self.Http_Image2[0]+".jpg")
-                let data = NSData(contentsOfURL:url!)
-                self.TeamImage2_ImageView.image = UIImage(data:data!)
-                
-            }
-            if self.Http_Image3[0] == "." {
-                self.TeamImage3_ImageView.image = UIImage(named: "basketball_a.png")
-            }
-            else{
-                let url = NSURL(string:"http://210.122.7.193:8080/Trophy_img/team/"+self.Http_Image3[0]+".jpg")
-                let data = NSData(contentsOfURL:url!)
-                self.TeamImage3_ImageView.image = UIImage(data:data!)
-                
-            }
-            //팀 소개 이미지1
-            
-            self.view.setNeedsDisplay()
-
-        }
-        task.resume()
+//        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce.jsp")!)
+//        let parameterString = "Data1="+TeamName
+//        
+//        request.httpMethod = "POST"
+//        request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//        let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//            data, response, error in
+//            
+//            if error != nil {
+//                return
+//            }
+//            print("response = \(response)")
+//            
+//            let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            
+//            do{
+//                let apiDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
+//                let list = apiDictionary["List"] as! NSArray
+//                for row in list{
+//                    
+//                    self.Http_TeamName.append((row["msg1"] as? String)!)
+//                    self.Http_TeamAddress_Do.append((row["msg2"] as? String)!)
+//                    self.Http_TeamAddress_Se.append((row["msg3"] as? String)!)
+//                    self.Http_HomeCourt.append((row["msg4"] as? String)!)
+//                    self.Http_Introduce.append((row["msg5"] as? String)!)
+//                    self.Http_Emblem.append((row["msg6"] as? String)!)
+//                    self.Http_Image1.append((row["msg7"] as? String)!)
+//                    self.Http_Image2.append((row["msg8"] as? String)!)
+//                    self.Http_Image3.append((row["msg9"] as? String)!)
+//
+//                }
+//            }catch{
+//                
+//            }
+//            self.TeamName_Label.text = self.Http_TeamName[0]
+//            self.TeamAddress.text = self.Http_TeamAddress_Do[0] + " " + self.Http_TeamAddress_Se[0]
+//            self.HomeCourt_TextField.text = self.Http_HomeCourt[0]
+//            self.TeamIntro_TextField.text = self.Http_Introduce[0]
+//            
+//            if self.Http_Emblem[0] == "." {
+//                self.Emblem_ImageView.image = UIImage(named: "basketball_a.png")
+//            }
+//            else{
+//                let url = URL(string:"http://210.122.7.193:8080/Trophy_img/team/"+self.Http_Emblem[0]+".jpg")
+//                let data = try? Data(contentsOf: url!)
+//                self.Emblem_ImageView.image = UIImage(data:data!)
+//
+//            }
+//            if self.Http_Image1[0] == "." {
+//                self.TeamImage1_ImageView.image = UIImage(named: "basketball_a.png")
+//            }
+//            else{
+//                let url = URL(string:"http://210.122.7.193:8080/Trophy_img/team/"+self.Http_Image1[0]+".jpg")
+//                let data = try? Data(contentsOf: url!)
+//                self.TeamImage1_ImageView.image = UIImage(data:data!)
+//                
+//            }
+//            if self.Http_Image2[0] == "." {
+//                self.TeamImage2_ImageView.image = UIImage(named: "basketball_a.png")
+//            }
+//            else{
+//                let url = URL(string:"http://210.122.7.193:8080/Trophy_img/team/"+self.Http_Image2[0]+".jpg")
+//                let data = try? Data(contentsOf: url!)
+//                self.TeamImage2_ImageView.image = UIImage(data:data!)
+//                
+//            }
+//            if self.Http_Image3[0] == "." {
+//                self.TeamImage3_ImageView.image = UIImage(named: "basketball_a.png")
+//            }
+//            else{
+//                let url = URL(string:"http://210.122.7.193:8080/Trophy_img/team/"+self.Http_Image3[0]+".jpg")
+//                let data = try? Data(contentsOf: url!)
+//                self.TeamImage3_ImageView.image = UIImage(data:data!)
+//                
+//            }
+//            //팀 소개 이미지1
+//            
+//            self.view.setNeedsDisplay()
+//
+//        })
+//        task.resume()
 
         
         // Do any additional setup after loading the view.
@@ -136,252 +136,252 @@ class SlideMenu_TeamManager_TeamIntro_ViewController: UIViewController, UIImageP
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func Emblem_ImageView_Action(sender: UITapGestureRecognizer){
-        if(sender.state == .Ended){
+    func Emblem_ImageView_Action(_ sender: UITapGestureRecognizer){
+        if(sender.state == .ended){
             ImageChoice = "emblem"
-            let alert_emblem = UIAlertController(title: "사진 수정", message: "", preferredStyle: .Alert)
-            let alert_emblem_basic = UIAlertAction(title: "기본 이미지로 변경", style: .Default, handler: {(action:UIAlertAction) in
+            let alert_emblem = UIAlertController(title: "사진 수정", message: "", preferredStyle: .alert)
+            let alert_emblem_basic = UIAlertAction(title: "기본 이미지로 변경", style: .default, handler: {(action:UIAlertAction) in
                 self.Emblem_ImageView.image = UIImage(named: "basketball_a.png")
                 //http 통신
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
-                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2=."+"&"+"Data3=Emblem"
-                
-                request.HTTPMethod = "POST"
-                request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-                    data, response, error in
-                    
-                    if error != nil {
-                        return
-                    }
-                    print("response = \(response)")
-                    
-                    let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-                    print("responseString = \(responseString)")
-                }
-                task.resume()
+//                let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
+//                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2=."+"&"+"Data3=Emblem"
+//                
+//                request.httpMethod = "POST"
+//                request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//                let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//                    data, response, error in
+//                    
+//                    if error != nil {
+//                        return
+//                    }
+//                    print("response = \(response)")
+//                    
+//                    let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//                    print("responseString = \(responseString)")
+//                })
+//                task.resume()
             })
-            let alert_emblem_album = UIAlertAction(title: "앨범에서 가져오기", style: .Default, handler: {(action:UIAlertAction) in
+            let alert_emblem_album = UIAlertAction(title: "앨범에서 가져오기", style: .default, handler: {(action:UIAlertAction) in
                 self.Emblem_ImageView.reloadInputViews()
                 let myPickerController = UIImagePickerController()
                 myPickerController.delegate = self
-                myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-                self.presentViewController(myPickerController, animated: true, completion: nil)
+                myPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.present(myPickerController, animated: true, completion: nil)
                 //http 통신
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
+                let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
                 let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamName[0]+"&"+"Data3=Emblem"
                 
-                request.HTTPMethod = "POST"
-                request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-                    data, response, error in
-                    
-                    if error != nil {
-                        return
-                    }
-                    print("response = \(response)")
-                    
-                    let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-                    print("responseString = \(responseString)")
-                }
-                task.resume()
+//                request.httpMethod = "POST"
+//                request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//                let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//                    data, response, error in
+//                    
+//                    if error != nil {
+//                        return
+//                    }
+//                    print("response = \(response)")
+//                    
+//                    let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//                    print("responseString = \(responseString)")
+//                })
+//                task.resume()
                 
             })
-            let alert_emblem_ok = UIAlertAction(title: "확 인", style: .Default, handler: nil)
+            let alert_emblem_ok = UIAlertAction(title: "확 인", style: .default, handler: nil)
             
             alert_emblem.addAction(alert_emblem_basic)
             alert_emblem.addAction(alert_emblem_album)
             alert_emblem.addAction(alert_emblem_ok)
             
-            presentViewController(alert_emblem, animated: true, completion: nil)
+            present(alert_emblem, animated: true, completion: nil)
             
         }
     }
-    func Image1_ImageView_Action(sender: UITapGestureRecognizer){
-        if(sender.state == .Ended){
+    func Image1_ImageView_Action(_ sender: UITapGestureRecognizer){
+        if(sender.state == .ended){
             ImageChoice = "Image1"
-            let alert_Image1 = UIAlertController(title: "사진 수정", message: "", preferredStyle: .Alert)
-            let alert_Image1_basic = UIAlertAction(title: "기본 이미지로 변경", style: .Default, handler: {(action:UIAlertAction) in
+            let alert_Image1 = UIAlertController(title: "사진 수정", message: "", preferredStyle: .alert)
+            let alert_Image1_basic = UIAlertAction(title: "기본 이미지로 변경", style: .default, handler: {(action:UIAlertAction) in
                 self.TeamImage1_ImageView.image = UIImage(named: "basketball_a.png")
                 //http 통신
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
+                let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
                 let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2=."+"&"+"Data3=Image1"
                 
-                request.HTTPMethod = "POST"
-                request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-                    data, response, error in
-                    
-                    if error != nil {
-                        return
-                    }
-                    print("response = \(response)")
-                    
-                    let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-                    print("responseString = \(responseString)")
-                }
-                task.resume()
+//                request.httpMethod = "POST"
+//                request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//                let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//                    data, response, error in
+//                    
+//                    if error != nil {
+//                        return
+//                    }
+//                    print("response = \(response)")
+//                    
+//                    let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//                    print("responseString = \(responseString)")
+//                })
+//                task.resume()
             })
-            let alert_Image1_album = UIAlertAction(title: "앨범에서 가져오기", style: .Default, handler: {(action:UIAlertAction) in
+            let alert_Image1_album = UIAlertAction(title: "앨범에서 가져오기", style: .default, handler: {(action:UIAlertAction) in
                 self.TeamImage1_ImageView.reloadInputViews()
                 let myPickerController = UIImagePickerController()
                 myPickerController.delegate = self
-                myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-                self.presentViewController(myPickerController, animated: true, completion: nil)
+                myPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.present(myPickerController, animated: true, completion: nil)
                 //http 통신
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
-                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamName[0]+"1"+"&"+"Data3=Image1"
-                
-                request.HTTPMethod = "POST"
-                request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-                    data, response, error in
-                    
-                    if error != nil {
-                        return
-                    }
-                    print("response = \(response)")
-                    
-                    let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-                    print("responseString = \(responseString)")
-                }
-                task.resume()
+//                let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
+//                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamName[0]+"1"+"&"+"Data3=Image1"
+//                
+//                request.httpMethod = "POST"
+//                request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//                let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//                    data, response, error in
+//                    
+//                    if error != nil {
+//                        return
+//                    }
+//                    print("response = \(response)")
+//                    
+//                    let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//                    print("responseString = \(responseString)")
+//                })
+//                task.resume()
                 
             })
-            let alert_Image1_ok = UIAlertAction(title: "확 인", style: .Default, handler: nil)
+            let alert_Image1_ok = UIAlertAction(title: "확 인", style: .default, handler: nil)
             
             alert_Image1.addAction(alert_Image1_basic)
             alert_Image1.addAction(alert_Image1_album)
             alert_Image1.addAction(alert_Image1_ok)
             
-            presentViewController(alert_Image1, animated: true, completion: nil)
+            present(alert_Image1, animated: true, completion: nil)
             
         }
     }
-    func Image2_ImageView_Action(sender: UITapGestureRecognizer){
-        if(sender.state == .Ended){
+    func Image2_ImageView_Action(_ sender: UITapGestureRecognizer){
+        if(sender.state == .ended){
             ImageChoice = "Image2"
-            let alert_emblem = UIAlertController(title: "사진 수정", message: "", preferredStyle: .Alert)
-            let alert_emblem_basic = UIAlertAction(title: "기본 이미지로 변경", style: .Default, handler: {(action:UIAlertAction) in
+            let alert_emblem = UIAlertController(title: "사진 수정", message: "", preferredStyle: .alert)
+            let alert_emblem_basic = UIAlertAction(title: "기본 이미지로 변경", style: .default, handler: {(action:UIAlertAction) in
                 self.TeamImage2_ImageView.image = UIImage(named: "basketball_a.png")
                 //http 통신
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
-                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2=."+"&"+"Data3=Image2"
-                
-                request.HTTPMethod = "POST"
-                request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-                    data, response, error in
-                    
-                    if error != nil {
-                        return
-                    }
-                    print("response = \(response)")
-                    
-                    let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-                    print("responseString = \(responseString)")
-                }
-                task.resume()
+//                let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
+//                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2=."+"&"+"Data3=Image2"
+//                
+//                request.httpMethod = "POST"
+//                request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//                let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//                    data, response, error in
+//                    
+//                    if error != nil {
+//                        return
+//                    }
+//                    print("response = \(response)")
+//                    
+//                    let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//                    print("responseString = \(responseString)")
+//                })
+//                task.resume()
             })
-            let alert_emblem_album = UIAlertAction(title: "앨범에서 가져오기", style: .Default, handler: {(action:UIAlertAction) in
+            let alert_emblem_album = UIAlertAction(title: "앨범에서 가져오기", style: .default, handler: {(action:UIAlertAction) in
                 self.TeamImage2_ImageView.reloadInputViews()
                 let myPickerController = UIImagePickerController()
                 myPickerController.delegate = self
-                myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-                self.presentViewController(myPickerController, animated: true, completion: nil)
+                myPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.present(myPickerController, animated: true, completion: nil)
                 //http 통신
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
-                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamName[0]+"2"+"&"+"Data3=Image2"
-                
-                request.HTTPMethod = "POST"
-                request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-                    data, response, error in
-                    
-                    if error != nil {
-                        return
-                    }
-                    print("response = \(response)")
-                    
-                    let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-                    print("responseString = \(responseString)")
-                }
-                task.resume()
+//                let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
+//                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamName[0]+"2"+"&"+"Data3=Image2"
+//                
+//                request.httpMethod = "POST"
+//                request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//                let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//                    data, response, error in
+//                    
+//                    if error != nil {
+//                        return
+//                    }
+//                    print("response = \(response)")
+//                    
+//                    let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//                    print("responseString = \(responseString)")
+//                })
+//                task.resume()
                 
             })
-            let alert_emblem_ok = UIAlertAction(title: "확 인", style: .Default, handler: nil)
+            let alert_emblem_ok = UIAlertAction(title: "확 인", style: .default, handler: nil)
             
             alert_emblem.addAction(alert_emblem_basic)
             alert_emblem.addAction(alert_emblem_album)
             alert_emblem.addAction(alert_emblem_ok)
             
-            presentViewController(alert_emblem, animated: true, completion: nil)
+            present(alert_emblem, animated: true, completion: nil)
             
         }
     }
-    func Image3_ImageView_Action(sender: UITapGestureRecognizer){
-        if(sender.state == .Ended){
+    func Image3_ImageView_Action(_ sender: UITapGestureRecognizer){
+        if(sender.state == .ended){
             ImageChoice = "Image3"
-            let alert_emblem = UIAlertController(title: "사진 수정", message: "", preferredStyle: .Alert)
-            let alert_emblem_basic = UIAlertAction(title: "기본 이미지로 변경", style: .Default, handler: {(action:UIAlertAction) in
+            let alert_emblem = UIAlertController(title: "사진 수정", message: "", preferredStyle: .alert)
+            let alert_emblem_basic = UIAlertAction(title: "기본 이미지로 변경", style: .default, handler: {(action:UIAlertAction) in
                 self.TeamImage3_ImageView.image = UIImage(named: "basketball_a.png")
                 //http 통신
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
-                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2=."+"&"+"Data3=Image3"
-                
-                request.HTTPMethod = "POST"
-                request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-                    data, response, error in
-                    
-                    if error != nil {
-                        return
-                    }
-                    print("response = \(response)")
-                    
-                    let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-                    print("responseString = \(responseString)")
-                }
-                task.resume()
+//                let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
+//                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2=."+"&"+"Data3=Image3"
+//                
+//                request.httpMethod = "POST"
+//                request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//                let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//                    data, response, error in
+//                    
+//                    if error != nil {
+//                        return
+//                    }
+//                    print("response = \(response)")
+//                    
+//                    let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//                    print("responseString = \(responseString)")
+//                })
+//                task.resume()
             })
-            let alert_emblem_album = UIAlertAction(title: "앨범에서 가져오기", style: .Default, handler: {(action:UIAlertAction) in
+            let alert_emblem_album = UIAlertAction(title: "앨범에서 가져오기", style: .default, handler: {(action:UIAlertAction) in
                 self.TeamImage3_ImageView.reloadInputViews()
                 let myPickerController = UIImagePickerController()
                 myPickerController.delegate = self
-                myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-                self.presentViewController(myPickerController, animated: true, completion: nil)
+                myPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.present(myPickerController, animated: true, completion: nil)
                 //http 통신
-                let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
-                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamName[0]+"3"+"&"+"Data3=Image3"
-                
-                request.HTTPMethod = "POST"
-                request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-                    data, response, error in
-                    
-                    if error != nil {
-                        return
-                    }
-                    print("response = \(response)")
-                    
-                    let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-                    print("responseString = \(responseString)")
-                }
-                task.resume()
+//                let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image.jsp")!)
+//                let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamName[0]+"3"+"&"+"Data3=Image3"
+//                
+//                request.httpMethod = "POST"
+//                request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//                let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//                    data, response, error in
+//                    
+//                    if error != nil {
+//                        return
+//                    }
+//                    print("response = \(response)")
+//                    
+//                    let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//                    print("responseString = \(responseString)")
+//                })
+//                task.resume()
                 
             })
-            let alert_emblem_ok = UIAlertAction(title: "확 인", style: .Default, handler: nil)
+            let alert_emblem_ok = UIAlertAction(title: "확 인", style: .default, handler: nil)
             
             alert_emblem.addAction(alert_emblem_basic)
             alert_emblem.addAction(alert_emblem_album)
             alert_emblem.addAction(alert_emblem_ok)
             
-            presentViewController(alert_emblem, animated: true, completion: nil)
+            present(alert_emblem, animated: true, completion: nil)
             
         }
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if ImageChoice == "emblem" {
             Emblem_ImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         }
@@ -395,12 +395,12 @@ class SlideMenu_TeamManager_TeamIntro_ViewController: UIViewController, UIImageP
             TeamImage3_ImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         }
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
-    @IBAction func Back_Button(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func Back_Button(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
-    @IBAction func Modify_Button_Action(sender: AnyObject) {
+    @IBAction func Modify_Button_Action(_ sender: AnyObject) {
         
         self.Http_TeamName[0] = self.TeamName_Label.text!
         self.Http_TeamAddress_Do[0] = self.TeamAddress.text!
@@ -411,36 +411,36 @@ class SlideMenu_TeamManager_TeamIntro_ViewController: UIViewController, UIImageP
         self.myImageUploadRequest(self.TeamImage2_ImageView, NameImage: self.TeamName+"2")
         self.myImageUploadRequest(self.TeamImage3_ImageView, NameImage: self.TeamName+"3")
         //http 통신
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Upload.jsp")!)
-       let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamAddress_Do[0]+"&"+"Data3="+self.Http_TeamAddress_Do[0]+"&"+"Data4="+self.Http_HomeCourt[0]+"&"+"Data5="+self.Http_Introduce[0]
-        
-        request.HTTPMethod = "POST"
-        request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){
-            data, response, error in
-            
-            if error != nil {
-                return
-            }
-            print("response = \(response)")
-            
-            let responseString:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-            print("responseString = \(responseString)")
-            
-            do{
-                let alert_modify = UIAlertController(title: "확 인", message: "팀 정보가 수정되었습니다.", preferredStyle: .Alert)
-                let alert_modify_ok = UIAlertAction(title: "확인", style: .Default, handler: {(action:UIAlertAction) in
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                })
-                alert_modify.addAction(alert_modify_ok)
-                dispatch_async(dispatch_get_main_queue(), { self.presentViewController(alert_modify, animated: true, completion: nil)})
-                
-            }catch{
-                
-            }
-            
-        }
-        task.resume()
+//        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Upload.jsp")!)
+//       let parameterString = "Data1="+self.Http_TeamName[0]+"&"+"Data2="+self.Http_TeamAddress_Do[0]+"&"+"Data3="+self.Http_TeamAddress_Do[0]+"&"+"Data4="+self.Http_HomeCourt[0]+"&"+"Data5="+self.Http_Introduce[0]
+//        
+//        request.httpMethod = "POST"
+//        request.httpBody = parameterString.data(using: String.Encoding.utf8)
+//        let task = URLSession.shared.dataTask(with: request, completionHandler: {
+//            data, response, error in
+//            
+//            if error != nil {
+//                return
+//            }
+//            print("response = \(response)")
+//            
+//            let responseString:NSString = NSString(data: data!, encoding: String.Encoding.utf8)!
+//            print("responseString = \(responseString)")
+//            
+//            do{
+//                let alert_modify = UIAlertController(title: "확 인", message: "팀 정보가 수정되었습니다.", preferredStyle: .alert)
+//                let alert_modify_ok = UIAlertAction(title: "확인", style: .default, handler: {(action:UIAlertAction) in
+//                    self.dismiss(animated: true, completion: nil)
+//                })
+//                alert_modify.addAction(alert_modify_ok)
+//                DispatchQueue.main.async(execute: { self.present(alert_modify, animated: true, completion: nil)})
+//                
+//            }catch{
+//                
+//            }
+//            
+//        })
+//        task.resume()
         
         
     }
@@ -453,38 +453,38 @@ class SlideMenu_TeamManager_TeamIntro_ViewController: UIViewController, UIImageP
         // Pass the selected object to the new view controller.
     }
     */
-    func myImageUploadRequest(choiceImage:UIImageView, NameImage:String)
+    func myImageUploadRequest(_ choiceImage:UIImageView, NameImage:String)
     {
         //request
-        var request = NSMutableURLRequest(URL: NSURL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image_Upload.jsp")!)
-        var session = NSURLSession.sharedSession()
-        request.HTTPMethod = "POST"
+        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part2/TeamManager_TeamIntroduce_Image_Upload.jsp")!)
+        var session = URLSession.shared
+        request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=1234567890", forHTTPHeaderField: "Content-Type")
         
         //post data
-        var body: NSMutableData = NSMutableData();
+        let body: NSMutableData = NSMutableData();
         //data
-        var imgdata: NSData = UIImageJPEGRepresentation(choiceImage.image!, 1)!
-        var imgname: String = "Content-Disposition: form-data; name=\"Filedata\"; filename=\""+NameImage+".jpg\"\r\n"
+        var imgdata: Data = UIImageJPEGRepresentation(choiceImage.image!, 1)!
+        let imgname: String = "Content-Disposition: form-data; name=\"Filedata\"; filename=\""+NameImage+".jpg\"\r\n"
         
-        if (imgdata.length > 0) {
-            body.appendData("--1234567890\r\n".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
-            body.appendData(imgname.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
-            body.appendData("Content-Type: image/jpeg\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
-            body.appendData(imgdata)
-            body.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
+        if (imgdata.count > 0) {
+            body.append("--1234567890\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+            body.append(imgname.data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+            body.append("Content-Type: image/jpeg\r\n\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+            body.append(imgdata)
+            body.append("\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
         }
         
-        body.appendData("--1234567890--\r\n".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
+        body.append("--1234567890--\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
         
         //set body
-        request.HTTPBody = body;
+        request.httpBody = body as Data;
         request.setValue(NSString(format: "%d", body.length) as String, forHTTPHeaderField: "Content-Length")
         
         //var err: NSError?
         //request.setValue("form-data; name=Filedata; filename=temp.jpg", )
         //request.setValue("form-data; name=Filedata; filename=temp.jpg", forHTTPHeaderField: "Content-Disposition")
         //request.HTTPBody = param
-        NSURLConnection(request: request, delegate: self)
+        NSURLConnection(request: request as URLRequest, delegate: self)
     }
 }
