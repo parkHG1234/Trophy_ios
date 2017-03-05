@@ -43,7 +43,6 @@
 		32A244241E4AFE3200CDA02F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244231E4AFE3200CDA02F /* LoginViewController.swift */; };
 		32A244261E4AFE3B00CDA02F /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */; };
 		32B0B7B81E67F618007A0314 /* cm_arrow_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B0B7B71E67F618007A0314 /* cm_arrow_back_white.png */; };
-		32B0B7BA1E67F980007A0314 /* back_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B0B7B91E67F980007A0314 /* back_2x.png */; };
 		32EDBC6F1E66ACA4004D4D55 /* ChangeAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC6E1E66ACA4004D4D55 /* ChangeAddressViewController.swift */; };
 		32EDBC711E66B365004D4D55 /* ChangePhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC701E66B365004D4D55 /* ChangePhoneViewController.swift */; };
 		32EDBC731E66B37D004D4D55 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EDBC721E66B37D004D4D55 /* ChangePasswordViewController.swift */; };
@@ -125,7 +124,6 @@
 		32A244231E4AFE3200CDA02F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		32A244251E4AFE3B00CDA02F /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
 		32B0B7B71E67F618007A0314 /* cm_arrow_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cm_arrow_back_white.png; path = Assets.xcassets/cm_arrow_back_white.imageset/cm_arrow_back_white.png; sourceTree = "<group>"; };
-		32B0B7B91E67F980007A0314 /* back_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_2x.png; sourceTree = "<group>"; };
 		32EDBC6E1E66ACA4004D4D55 /* ChangeAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeAddressViewController.swift; sourceTree = "<group>"; };
 		32EDBC701E66B365004D4D55 /* ChangePhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewController.swift; sourceTree = "<group>"; };
 		32EDBC721E66B37D004D4D55 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 			children = (
 				32727C841E5EC29100E40C36 /* 111.jpg */,
 				32B0B7B71E67F618007A0314 /* cm_arrow_back_white.png */,
-				32B0B7B91E67F980007A0314 /* back_2x.png */,
 				328534731E5E9AC7002FBAE5 /* check.png */,
 				328534741E5E9AC7002FBAE5 /* unckeck.png */,
 				328534751E5E9AC7002FBAE5 /* back.png */,
@@ -399,7 +396,6 @@
 				32B0B7B81E67F618007A0314 /* cm_arrow_back_white.png in Resources */,
 				3110B5B41E49C9F500E43674 /* LaunchScreen.storyboard in Resources */,
 				328534761E5E9AC7002FBAE5 /* check.png in Resources */,
-				32B0B7BA1E67F980007A0314 /* back_2x.png in Resources */,
 				3110B5B11E49C9F500E43674 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

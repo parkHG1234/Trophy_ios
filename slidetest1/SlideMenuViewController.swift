@@ -81,8 +81,8 @@ class SlideMenuViewController: UIViewController {
             
             self.present(vc!, animated: true, completion: nil)
         }else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginNavigationController")
-            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "changePersonalInfoNavigationController")
+            //loginNavigationController
             self.present(vc!, animated: true, completion: nil)
         }
     }

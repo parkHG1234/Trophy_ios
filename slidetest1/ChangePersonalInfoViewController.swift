@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ChangePersonalInfoViewController: UIViewController {
     
@@ -19,8 +21,11 @@ class ChangePersonalInfoViewController: UIViewController {
     @IBOutlet weak var addressSiLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
     
-    var Pk:String = UserDefaults.standard.string(forKey: "Pk")!
-
+    var arrRes: [[String:AnyObject]] = []
+    
+    //var Pk:String = UserDefaults.standard.string(forKey: "Pk")!
+    var Pk:String = "19"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,12 +34,24 @@ class ChangePersonalInfoViewController: UIViewController {
             self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width/2
             self.profileImageView.clipsToBounds = true
         })
-
-        // Do any additional setup after loading the view.
+        
+        Alamofire.request("http://210.122.7.193:8080/Trophy_part3/ChangePersonalInfo_ios.jsp?Data1=\(Pk)").responseJSON { (responseData) -> Void in
+            if((responseData.result.value) != nil) {
+                let swiftyJsonVar = JSON(responseData.result.value!)
+                print(swiftyJsonVar)
+                
+                if let resData = swiftyJsonVar[""].arrayObject {
+                    self.arrRes = resData as! [[String:AnyObject]]
+                }
+                
+                print(self.arrRes)
+            }
+            
+        }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-//        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part3/ChangePersonalInfo_ios.jsp")!);
+//    override func viewDidAppear(_ animated: Bool) {
+//        let request = NSMutableURLRequest(url: URL(string: "")!);
 //        request.httpMethod = "POST";
 //        
 //        let postString = "Data1=\(Pk)";
@@ -102,7 +119,7 @@ class ChangePersonalInfoViewController: UIViewController {
 //        task.resume()
         
         
-    }
+    //}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
