@@ -9,7 +9,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AlamofireImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-slidetest1.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SCLAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,7 +32,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>7676DD9D2F73AE57378A4A7F6D9B262E</key>
+		<key>02CD7DA678D8EDFA0838529925A4EC6A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5B31D0B751A049963F22D30FCD7DB41A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6BC525CB9846C947FA522A2EC43567C6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -32,7 +52,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9B3A9A9D1091FE502B19541870A1C549</key>
+		<key>9EFE4C70245EE2857D336B8B9FA4E825</key>
 		<dict>
 			<key>primary</key>
 			<true/>

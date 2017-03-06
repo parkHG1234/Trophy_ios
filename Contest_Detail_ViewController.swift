@@ -15,7 +15,8 @@
 
 
 import UIKit
-
+import AlamofireImage
+import Alamofire
 
 
 class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating {
@@ -36,7 +37,8 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
     
     @IBOutlet var Contest_ScrollView: UIScrollView!
     
-    
+    var isUserLoggedIn:Bool = false
+
     var Contest_Pk:String = ""
     var Contest_Title:String = ""
     var Contest_Image:String = ""
@@ -51,6 +53,7 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
     var Contest_RecruitFinishDate:String = ""
     var Contest_DetailInfo:String = ""
     var Contest_Place:String = ""
+    
     override func viewDidLoad() {
         
         //Make BackGround Detail Information
@@ -65,42 +68,28 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
         Detail_Place.text = Contest_Place
         Detail_DetailInfo.text = Contest_DetailInfo
         
-        
         Contest_ScrollView.contentSize.height = 1000
         
-        let videoString = "http://210.122.7.193:8080/Trophy_img/contest/"+self.Contest_Image+".jpg"
-        let videoThumbnailUrl = URL(string: videoString)
+        isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
         
-        if videoThumbnailUrl != nil{
-            let request = URLRequest(url:videoThumbnailUrl!)
-            let session = URLSession.shared
-            let dataTask = session.dataTask(with: request, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) -> Void in
+        Alamofire.request("http://210.122.7.193:8080/Trophy_img/contest/\(self.Contest_Image).jpg")
+            .responseImage { response in
                 
-                let imageView = self.Detail_Image
-                imageView?.image = UIImage(data: data!)
-                
-            } as! (Data?, URLResponse?, Error?) -> Void)
-            
-            dataTask.resume()
-            
+                if let image = response.result.value {
+                    DispatchQueue.main.async(execute: {
+                        self.Detail_Image.image = image
+                    });
+                }
+        }
+        
+        func didReceiveMemoryWarning() {
+            super.didReceiveMemoryWarning()
+        }
+        
+        func Done(_ sender: AnyObject) {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
-    
-    func didReceiveMemoryWarning() {
-        
-        super.didReceiveMemoryWarning()
-        
-        // Dispose of any resources that can be recreated.
-        
-    }
-    func Done(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil)
-        
-    }
-        
-        
-        
-        
-}
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -110,7 +99,7 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
         Contest_Application_View.Contest_Pk = "3"
         Contest_Application_View.MyTeamName = "AldongTeam"
     }
-
+    
     func updateSearchResults(for searchController: UISearchController) {
         
     }

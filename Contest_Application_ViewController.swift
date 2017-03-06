@@ -27,6 +27,8 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
     @IBOutlet var Contest_Application_TeamLeader: UILabel!
     @IBOutlet var Contest_Application_TeamPhone: UILabel!
     @IBOutlet var Contest_Application_Person: UILabel!
+    
+    
     override func viewDidLoad() {
         
         

@@ -20,34 +20,19 @@ import UIKit
 
 class Contest_Detail_Setting: NSObject {
     
-    
-    
     var Pk:String = ""
-    
     var Title:String = ""
-    
     var Image:String = ""
-    
     var CurrentNum:String = ""
-    
     var MaxNum:String = ""
-    
     var Payment:String = ""
-    
     var Host:String = ""
-    
     var Management:String = ""
-    
     var Support:String = ""
-    
     var ContestDate:String = ""
-    
     var RecruitStartDate:String = ""
-    
     var RecruitFinishDate:String = ""
-    
     var DetailInfo:String = ""
-    
     var Place:String = ""
     
 }

@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import SCLAlertView
 
 class SlideMenuViewController: UIViewController {
 
@@ -25,15 +28,24 @@ class SlideMenuViewController: UIViewController {
         if(isUserLoggedIn) {
             // Do any additional setup after loading the view.
             Pk = UserDefaults.standard.string(forKey: "Pk")!
-            let url = URL(string:"http://210.122.7.193:8080/Trophy_img/profile/\(Pk).jpg")
-            let data = try? Data(contentsOf: url!)
             
-            DispatchQueue.main.async(execute: {
-                self.Profile.image = UIImage(data:data!)
-                
-                self.profileButton.setTitle("\(self.Pk)", for: UIControlState())
-                self.profileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
-            });
+            
+            Alamofire.request("http://210.122.7.193:8080/Trophy_img/profile/\(Pk).jpg")
+                .responseImage { response in
+                    
+                    if let image = response.result.value {
+                        //print("image downloaded: \(image)")
+                        // Store the commit date in to our cache
+                        // Update the cell
+                        DispatchQueue.main.async(execute: {
+                            self.Profile.image = image
+                            
+                            self.profileButton.setTitle("\(self.Pk)님 접속을 환영합니다", for: UIControlState())
+                            self.profileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+                            
+                        });
+                    }
+            }
             
         }else {
             // Do any additional setup after loading the view.
@@ -54,9 +66,6 @@ class SlideMenuViewController: UIViewController {
             self.Profile.layer.cornerRadius = self.Profile.frame.size.width/2
             self.Profile.clipsToBounds = true
         })
-        
-
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,24 +74,29 @@ class SlideMenuViewController: UIViewController {
     }
     
     @IBAction func logoutButtonTapped(_ sender: AnyObject) {
-        UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
-        UserDefaults.standard.setValue(".", forKey: "Pk")
-        UserDefaults.standard.synchronize()
-    
-        viewDidAppear(true)
+        
+        
+        if(isUserLoggedIn) {
+            SCLAlertView().showNotice("로그아웃 되었습니다", subTitle: "감사합니다")
+            UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
+            UserDefaults.standard.setValue(".", forKey: "Pk")
+            UserDefaults.standard.synchronize()
+            
+            viewDidAppear(true)
+        }else {
+            SCLAlertView().showError("아직 로그인을 하지 않았네요!", subTitle: "로그인창에서 로그인을 해주세요")
+        }
+        
     }
     
     
     
     @IBAction func profileButtonTapped(_ sender: AnyObject) {
-        print(isUserLoggedIn)
         if(isUserLoggedIn == true) {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "changePersonalInfoNavigationController")
-            
             self.present(vc!, animated: true, completion: nil)
         }else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "changePersonalInfoNavigationController")
-            //loginNavigationController
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginNavigationController")
             self.present(vc!, animated: true, completion: nil)
         }
     }
