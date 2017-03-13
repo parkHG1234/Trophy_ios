@@ -21,14 +21,12 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     @IBAction func loginButtonTapped(_ sender: AnyObject) {
         let userPhone:String = userPhoneTextField.text!;
@@ -49,6 +47,7 @@ class LoginViewController: UIViewController {
                     self._Pk = self.arrRes[0]["msg2"] as! String
                     UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
                     UserDefaults.standard.setValue(self._Pk, forKey: "Pk")
+                    print(self._Pk)
                     UserDefaults.standard.synchronize()
                     
                     self.dismiss(animated: true, completion: {

@@ -38,12 +38,19 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "Trophy_ic")
+        navigationItem.titleView = imageView
+        
         if(!isUserLoggedIn) {
             UserDefaults.standard.setValue(".", forKey: "Pk")
         }
         
         if self.revealViewController() != nil {
-            self.revealViewController().rearViewRevealWidth = self.view.frame.width - 60
+            //self.revealViewController().rearViewRevealWidth = self.view.frame.width - 60
             open.target = self.revealViewController()
             open.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
@@ -60,36 +67,35 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
                 if let resData = swiftyJsonVar["List"].arrayObject {
                     self.arrRes = resData as! [[String:AnyObject]]
                 }
+                
                 if self.arrRes.count > 0 {
-                    self.Contest_TableView.reloadData()
-                    self.Contest_Setting = Contest_Detail_Setting()
-                    
-                    for row in self.arrRes {
-                        self.Contest_Setting.Pk = (row["_Pk"] as? String)!
-                        self.Contest_Setting.Title = (row["_Title"] as? String)!
-                        self.Contest_Setting.Image = (row["_Image"] as? String)!
-                        self.Contest_Setting.CurrentNum = (row["_currentNum"] as? String)!
-                        self.Contest_Setting.MaxNum = (row["_maxNum"] as? String)!
-                        self.Contest_Setting.Payment = (row["_Payment"] as? String)!
-                        self.Contest_Setting.Host = (row["_Host"] as? String)!
-                        self.Contest_Setting.Management = (row["_Management"] as? String)!
-                        self.Contest_Setting.Support = (row["_Support"] as? String)!
-                        self.Contest_Setting.ContestDate = (row["_ContestDate"] as? String)!
-                        self.Contest_Setting.RecruitStartDate = (row["_RecruitStartDate"] as? String)!
-                        self.Contest_Setting.RecruitFinishDate = (row["_RecruitFinishDate"] as? String)!
-                        self.Contest_Setting.DetailInfo = (row["_DetailInfo"] as? String)!
-                        self.Contest_Setting.Place = (row["_Place"] as? String)!
+                    for i in 0 ..< self.arrRes.count {
+                        var dict = self.arrRes[i]
+                        
+                        self.Contest_Setting = Contest_Detail_Setting()
+                        self.Contest_Setting.Pk = dict["_Pk"] as! String
+                        self.Contest_Setting.Title = dict["_Title"] as! String
+                        self.Contest_Setting.Image = dict["_Image"] as! String
+                        self.Contest_Setting.CurrentNum = dict["_currentNum"] as! String
+                        self.Contest_Setting.MaxNum = dict["_maxNum"] as! String
+                        self.Contest_Setting.Payment = dict["_Payment"] as! String
+                        self.Contest_Setting.Host = dict["_Host"] as! String
+                        self.Contest_Setting.Management = dict["_Management"] as! String
+                        self.Contest_Setting.Support = dict["_Support"] as! String
+                        self.Contest_Setting.ContestDate = dict["_ContestDate"] as! String
+                        self.Contest_Setting.RecruitStartDate = dict["_RecruitStartDate"] as! String
+                        self.Contest_Setting.RecruitFinishDate = dict["_RecruitFinishDate"] as! String
+                        self.Contest_Setting.DetailInfo = dict["_DetailInfo"] as! String
+                        self.Contest_Setting.Place = dict["_Place"] as! String
                         
                         self.Contest_list.append(self.Contest_Setting)
                     }
+                    
+                    self.Contest_TableView.reloadData()
                 }
-                
-                print(self.arrRes)
             }
         }
     }
-    
-    
     
     override func didReceiveMemoryWarning() {
         
@@ -97,24 +103,17 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // #warning Incomplete implementation, return the number of rows
         return self.arrRes.count
-        
     }
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -126,7 +125,6 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         let Contest_Place = cell.viewWithTag(4) as! UILabel
         
         var dict = arrRes[indexPath.row]
-        var Contest_Pk = dict["_Pk"] as? String
         Contest_Title.text = dict["_Title"] as? String
         Contest_Date.text = dict["_ContestData"] as? String
         Contest_Place.text = dict["_Place"] as? String
@@ -134,7 +132,7 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         
         Alamofire.request("http://210.122.7.193:8080/Trophy_img/contest/\(imageName).jpg")
             .responseImage { response in
-                debugPrint(response)
+                //debugPrint(response)
                 //print(response.request)
                 //print(response.response)
                 //debugPrint(response.result)
@@ -154,9 +152,6 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let Contest_Detail_View = segue.destination as! Contest_Detail_ViewController
@@ -177,14 +172,12 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         Contest_Detail_View.Contest_RecruitFinishDate = Contest_list[row].RecruitFinishDate
         Contest_Detail_View.Contest_DetailInfo = Contest_list[row].DetailInfo
         Contest_Detail_View.Contest_Place = Contest_list[row].Place
-        
+    
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
     }
     func updateSearchResults(for searchController: UISearchController) {
         
     }
-    
-    
-    
-    
-    
 }

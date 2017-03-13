@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireImage
 import SCLAlertView
 
-class SlideMenuViewController: UIViewController {
+class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
     @IBOutlet weak var Profile: UIImageView!
@@ -53,14 +53,12 @@ class SlideMenuViewController: UIViewController {
             profileButton.setTitle("로그인을 해주세요", for: UIControlState())
             profileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
         }
-        
-        DispatchQueue.main.async(execute: {
-            self.SportType.image = UIImage(named: "basketball_a.png")
-        });
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         self.revealViewController().rearViewRevealWidth = self.view.frame.width - 100
         DispatchQueue.main.async(execute: {
             self.Profile.layer.cornerRadius = self.Profile.frame.size.width/2
@@ -99,6 +97,26 @@ class SlideMenuViewController: UIViewController {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginNavigationController")
             self.present(vc!, animated: true, completion: nil)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath)
+        
+        let menuImage = cell.viewWithTag(1) as! UIImageView
+        let menuTitle = cell.viewWithTag(2) as! UILabel
+        
+        menuImage.image = UIImage(named: "111.jpg")
+        menuTitle.text = "aa"
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        return
     }
     
     

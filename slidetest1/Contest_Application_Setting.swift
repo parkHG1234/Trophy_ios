@@ -11,8 +11,6 @@ import UIKit
 class Contest_Application_Setting: NSObject {
 
     var Name:String = ""
-    
     var Team:String = ""
-    
     var Phone:String = ""
 }

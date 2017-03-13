@@ -87,7 +87,6 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         super.viewDidLoad()
         
         //navigation bar item image load
-        self.navigationController?.navigationBar.tintColor = UIColor.red
         let yourBackImage = UIImage(named: "cm_arrow_back_white")
         self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
         self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage

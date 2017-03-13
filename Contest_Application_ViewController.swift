@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import SwiftyJSON
+
 
 class Contest_Application_ViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate{
     var User_Pk:String = ""
     var Contest_Pk:String = ""
-    var MyTeamName:String = ""
+    var Team_Pk:String = ""
     var succed:String=""
     
     var Select_List:[String] = []
@@ -20,7 +24,7 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
     var Application_list:[Contest_Application_Setting] = []
     var Member_Setting = Contest_Member_Setting()
     var Member_list:[Contest_Member_Setting] = []
-    
+    var arrRes = [[String:AnyObject]]()
     
     @IBOutlet var Contest_Member_TableView: UITableView!
     @IBOutlet var Contest_Application_TeamName: UILabel!
@@ -28,12 +32,22 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
     @IBOutlet var Contest_Application_TeamPhone: UILabel!
     @IBOutlet var Contest_Application_Person: UILabel!
     
-    
     override func viewDidLoad() {
-        
         
         self.Contest_Member_TableView.dataSource = self
         self.Contest_Member_TableView.delegate = self
+        
+        let url:URL = URL(string: "http://210.122.7.193:8080/Trophy_part3/ChangePersonalInfo.jsp?Data1=\(User_Pk)")!;
+        Alamofire.request(url).responseJSON { (responseData) -> Void in
+            if((responseData.result.value) != nil) {
+                let swiftyJsonVar = JSON(responseData.result.value!)
+                
+                if let resData = swiftyJsonVar["List"].arrayObject {
+                    self.arrRes = resData as! [[String:AnyObject]]
+                    print(self.arrRes)
+                }
+            }
+        }
         
         
 //        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part1/Contest_Detail_Form_Profile.jsp")!)
@@ -72,6 +86,9 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
 //        })
 //        
 //        task.resume()
+        
+        
+        
         
 //        let Member_request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part1/Contest_Detail_Form_Player.jsp")!)
 //        let Member_parameterString = "Data1=\(self.MyTeamName)";
@@ -226,7 +243,7 @@ class Contest_Application_ViewController: UIViewController ,UITableViewDataSourc
         
         
         let Join_Team_request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part1/Contest_Detail_Form_Join_Team.jsp")!)
-            let Join_Team_parameterString = "Data1=\(self.Contest_Pk)"+"&"+"Data2=\(self.MyTeamName)";
+            let Join_Team_parameterString = "Data1=\(self.Contest_Pk)"+"&"+"Data2=\(self.Team_Pk)";
         
             Join_Team_request.httpMethod = "POST"
             Join_Team_request.httpBody = Join_Team_parameterString.data(using: String.Encoding.utf8)

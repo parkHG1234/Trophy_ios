@@ -13,12 +13,10 @@ class ChangePasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.tintColor = UIColor.red
+        //navigation bar item image load
         let yourBackImage = UIImage(named: "cm_arrow_back_white")
         self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
         self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
