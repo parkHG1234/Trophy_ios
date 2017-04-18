@@ -9,7 +9,6 @@
 import UIKit
 
 class SlideMenu_TeamMake_ViewController: UIViewController {
-    @IBOutlet weak var Back_Button: UIButton!
 
     @IBOutlet weak var TeamName_TextField: UITextField!
     @IBOutlet weak var TeamIntroduce_TextField: UITextField!
@@ -98,9 +97,6 @@ class SlideMenu_TeamMake_ViewController: UIViewController {
                 }
             }
         }
-    }
-    @IBAction func Back_Button_Action(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

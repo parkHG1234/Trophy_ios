@@ -20,5 +20,6 @@ class TeamSearchSetting: NSObject {
     var teamImage1:String = ""
     var teamImage2:String = ""
     var teamImage3:String = ""
-    
+    var teamRank:String = ""
+    var teamPoint:String = ""
 }

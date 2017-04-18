@@ -1,10 +1,11 @@
 //
-//  SlideMenu_TeamSearch_TableViewController.swift
+//  SlideMenuTeamRankViewController.swift
 //  slidetest1
 //
-//  Created by MD313-008 on 2017. 2. 8..
+//  Created by ldong on 2017. 4. 11..
 //  Copyright © 2017년 MD313-008. All rights reserved.
 //
+
 
 import UIKit
 import Alamofire
@@ -36,10 +37,9 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchResultsUpdating {
-    
+class SlideMenuTeamRankViewController: UITableViewController, UISearchResultsUpdating {
+
     @IBOutlet weak var open: UIBarButtonItem!
-    
     
     var Team_List:[TeamSearchSetting] = []
     var Team_Setting = TeamSearchSetting()
@@ -48,11 +48,11 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
     var filteredData:[String] = []
     var resultSearchController:UISearchController!
     var arrRes:[[String:AnyObject]] = [[String:AnyObject]]()
+    var rank = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // drawer 설정
         if self.revealViewController() != nil {
             //self.revealViewController().rearViewRevealWidth = self.view.frame.width - 60
             open.target = self.revealViewController()
@@ -60,7 +60,7 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
-        Alamofire.request("http://210.122.7.193:8080/Trophy_part3/TeamList.jsp").responseJSON { (responseData) -> Void in
+        Alamofire.request("http://210.122.7.193:8080/Trophy_part3/TeamRankList.jsp").responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
                 print(responseData.result)
                 let swiftyJsonVar = JSON(responseData.result.value!)
@@ -70,19 +70,16 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
                 }
                 for row in self.arrRes{
                     
+                    self.rank += 1
+                    
                     self.Team_Setting = TeamSearchSetting()
                     self.Team_Setting.teamName = ((row["teamName"] as? String)!)
                     self.Team_Setting.teamEmblem = (row["teamEmblem"] as? String)!
                     self.Team_Setting.teamPk = ((row["teamPk"] as? String)!)
-                    self.Team_Setting.teamAddressDo = ((row["teamAddressDo"] as? String)!)
-                    self.Team_Setting.teamAddressSi = ((row["teamAddressSi"] as? String)!)
-                    self.Team_Setting.teamHomeCourt = ((row["teamHomeCourt"] as? String)!)
-                    self.Team_Setting.teamIntroduce = ((row["teamIntroduce"] as? String)!)
-                    self.Team_Setting.teamImage1 = ((row["teamImage1"] as? String)!)
-                    self.Team_Setting.teamImage2 = ((row["teamImage2"] as? String)!)
-                    self.Team_Setting.teamImage3 = ((row["teamImage3"] as? String)!)
+                    self.Team_Setting.teamPoint = ((row["teamPoint"] as? String)!)
+                    self.Team_Setting.teamRank = String(self.rank)
                     
-                    
+            
                     self.Team_List.append(self.Team_Setting)
                     self.tableData.append((row["teamName"] as? String)!)
                     self.tableView.reloadData()
@@ -100,19 +97,26 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
         resultSearchController.searchBar.searchBarStyle = UISearchBarStyle.prominent
         resultSearchController.searchBar.sizeToFit()
         self.tableView.tableHeaderView = resultSearchController.searchBar
-        //////
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        // Do any additional setup after loading the view.
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
     
     // MARK: - Table view data source
     @IBAction func Back_Button_Action(_ sender: AnyObject) {
@@ -123,7 +127,7 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if resultSearchController.isActive {
@@ -133,32 +137,30 @@ class SlideMenu_TeamSearch_TableViewController: UITableViewController, UISearchR
         }
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath)
         let titleLabel = cell.viewWithTag(2) as! UILabel
-        let addressDoLabel = cell.viewWithTag(3) as! UILabel
-        let addressSiLabel = cell.viewWithTag(4) as! UILabel
+        let rankLabel = cell.viewWithTag(3) as! UILabel
+        let pointLabel = cell.viewWithTag(4) as! UILabel
         // Configure the cell...
         if resultSearchController.isActive {
             //cell.textLabel?.text = filteredData[indexPath.row]
             titleLabel.text = filteredData[indexPath.row]
             for i in 0 ..< Team_List.count {
                 if(filteredData[indexPath.row] == Team_List[i].teamName) {
-                    addressDoLabel.text = Team_List[i].teamAddressDo
-                    addressSiLabel.text = Team_List[i].teamAddressSi
+                    rankLabel.text = Team_List[i].teamRank
+                    pointLabel.text = Team_List[i].teamPoint
                 }
             }
-            
         }
         else {
             //cell.textLabel?.text = tableData[indexPath.row]
             titleLabel.text = tableData[indexPath.row]
-            addressDoLabel.text = Team_List[indexPath.row].teamAddressDo
-            addressSiLabel.text = Team_List[indexPath.row].teamAddressSi
+            rankLabel.text = Team_List[indexPath.row].teamRank
+            pointLabel.text = Team_List[indexPath.row].teamPoint
         }
         let imageName:String = Team_List[indexPath.row].teamEmblem
-
+        
         let url = "http://210.122.7.193:8080/Trophy_img/team/\(imageName).jpg".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
         Alamofire.request(url!).responseImage { response in
                 if let image = response.result.value {

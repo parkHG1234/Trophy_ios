@@ -216,10 +216,10 @@ class SlideMenu_TeamSearch1_ViewController: UIViewController,UISearchResultsUpda
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SegueTeamName" {
-            let SlideMenu_TeamSearch_Focus_ViewController1 = segue.destination as! SlideMenu_TeamSearch_Focus_ViewController
+            //let SlideMenu_TeamSearch_Focus_ViewController1 = segue.destination as! SlideMenu_TeamSearch_Focus_ViewController
             let myIndexPath = self.TeamSearch_Table.indexPathForSelectedRow!
             let row = myIndexPath.row
-            SlideMenu_TeamSearch_Focus_ViewController1.teamname = tableData[row]
+            //SlideMenu_TeamSearch_Focus_ViewController1.teamname = tableData[row]
         }
     }
 

@@ -49,12 +49,10 @@ class LoginViewController: UIViewController {
                     UserDefaults.standard.setValue(self._Pk, forKey: "Pk")
                     print(self._Pk)
                     UserDefaults.standard.synchronize()
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "SlideMenuViewController") as! SlideMenuViewController
                     
-                    self.dismiss(animated: true, completion: {
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SlideMenuViewController")
-                        
-                        vc?.reloadInputViews()
-                    })
+                    vc.viewDidAppear(true)
+                    self.dismiss(animated: true, completion: nil)
                 }else {
                     DispatchQueue.main.async(execute: {
                         let myAlert = UIAlertController(title: "트로피", message: "정확한 휴대전화번호 및 비밀번호를 입력해 주세요", preferredStyle: UIAlertControllerStyle.alert)

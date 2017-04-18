@@ -21,6 +21,8 @@ class ChangePersonalInfoViewController: UIViewController {
     @IBOutlet weak var addressSiLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
     
+    var pw:String = ""
+    
     var arrRes: [[String:AnyObject]] = []
     var Pk:String = UserDefaults.standard.string(forKey: "Pk")!
     
@@ -33,6 +35,10 @@ class ChangePersonalInfoViewController: UIViewController {
             self.profileImageView.clipsToBounds = true
         })
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         Alamofire.request("http://210.122.7.193:8080/Trophy_part3/ChangePersonalInfo.jsp?Data1=\(Pk)").responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
                 let swiftyJsonVar = JSON(responseData.result.value!)
@@ -42,10 +48,9 @@ class ChangePersonalInfoViewController: UIViewController {
                     self.arrRes = resData as! [[String:AnyObject]]
                 }
                 
-                print(self.arrRes)
                 let name:String = (self.arrRes[0]["Name"] as? String)!
                 let phone:String = (self.arrRes[0]["Phone"] as? String)!
-                //let pw:String = (self.arrRes[0]["Pw"] as? String)!
+                self.pw = (self.arrRes[0]["Pw"] as? String)!
                 let address_Do:String = (self.arrRes[0]["Do"] as? String)!
                 let address_Si:String = (self.arrRes[0]["Si"] as? String)!
                 let birth:String = (self.arrRes[0]["Birth"] as? String)!
@@ -64,22 +69,18 @@ class ChangePersonalInfoViewController: UIViewController {
                 
                 Alamofire.request("http://210.122.7.193:8080/Trophy_img/profile/\(self.Pk).jpg")
                     .responseImage { response in
-                        
                         if let image = response.result.value {
                             print("image downloaded: \(image)")
                             // Store the commit date in to our cache
                             // Update the cell
                             DispatchQueue.main.async(execute: {
                                 self.profileImageView.image = image
-                                
                             });
                         }
                 }
             }
         }
     }
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -94,7 +95,15 @@ class ChangePersonalInfoViewController: UIViewController {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
+        if(segue.identifier == "goChangePassword") {
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let ChangePasswordViewController = storyBoard.instantiateViewController(withIdentifier: "ChangePasswordViewController") as! ChangePasswordViewController
+            
+            ChangePasswordViewController.currentPassword = pw
+        }
     }
+    
+    
     
     
     /*

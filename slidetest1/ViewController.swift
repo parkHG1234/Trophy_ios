@@ -19,46 +19,242 @@ import Alamofire
 import AlamofireImage
 import SwiftyJSON
 
-class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSource , UISearchResultsUpdating{
-    
+
+
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var open: UIBarButtonItem!
     
-    var isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
+    @IBOutlet weak var scrollViewTop: UIScrollView!
     
-    @IBOutlet var Contest_TableView: UITableView!
-    var Contest_list:[Contest_Detail_Setting] = []
+    
+    @IBOutlet weak var collectionViewRecentContest: UICollectionView!
+    @IBOutlet weak var collectionViewMyRank: UICollectionView!
+    @IBOutlet weak var collectionViewMyRankHeight: NSLayoutConstraint!
+    
+    var isUserLoggedIn:Bool = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
+    var userPk:String = UserDefaults.standard.string(forKey: "Pk")!
+    var teamPk:String = ""
+    var timer:Timer?
+    
     var filteredData:[String] = []
     var Contest_Setting = Contest_Detail_Setting()
+    var Contest_list:[Contest_Detail_Setting] = []
+    
+    var Rank_Setting = TeamRankSetting()
+    var Rank_list:[TeamRankSetting] = []
     
     var arrRes = [[String: AnyObject]]()
     
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        getRecentContest()
+        getTeamRank()
+        
+        // 상단 스크롤 뷰 자동 넘기기
+        self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(ViewController.autoScroll), userInfo: nil, repeats: true)
+    }
+    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        if(userPk.isEmpty) {
+            UserDefaults.standard.setValue(".", forKey: "Pk")
+            UserDefaults.standard.synchronize()
+        }
+        
+        collectionViewRecentContest.delegate = self
+        collectionViewMyRank.delegate = self
+        collectionViewRecentContest.dataSource = self
+        collectionViewMyRank.dataSource = self
+        collectionViewMyRankHeight.constant = (view.frame.width / 4) + 20
         
         
+        // 상단 트로피 그림
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "Trophy_ic")
         navigationItem.titleView = imageView
         
-        if(!isUserLoggedIn) {
-            UserDefaults.standard.setValue(".", forKey: "Pk")
-        }
         
+        // drawer 설정
         if self.revealViewController() != nil {
             //self.revealViewController().rearViewRevealWidth = self.view.frame.width - 60
             open.target = self.revealViewController()
             open.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+    }
+    
+    
+    func autoScroll() {
+        if(scrollViewTop.contentOffset.x == self.view.frame.width * 3) {
+            DispatchQueue.main.async(execute: {
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self.scrollViewTop.contentOffset.x = 0
+                    print(self.scrollViewTop.contentOffset.x)
+                }, completion: nil)
+            });
+        }else {
+            DispatchQueue.main.async(execute: {
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self.scrollViewTop.contentOffset.x += self.view.frame.width
+                    print(self.scrollViewTop.contentOffset.x)
+                }, completion: nil)
+            });
+        }
         
-        self.Contest_TableView.dataSource = self
-        self.Contest_TableView.delegate = self
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == self.collectionViewRecentContest {
+            return 6
+        }else {
+            return 4
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        if collectionView == self.collectionViewRecentContest {
+            let cellRecentContest = collectionView.dequeueReusableCell(withReuseIdentifier: "recentConstestCell", for: indexPath)
+            
+            let contestImage = cellRecentContest.viewWithTag(1) as! UIImageView
+            let contestPayment = cellRecentContest.viewWithTag(2) as! UILabel
+            let contestRecruit = cellRecentContest.viewWithTag(3) as! UILabel
+            let contestPlace = cellRecentContest.viewWithTag(4) as! UILabel
+            
+            if(Contest_list.count > 0) {
+                contestPayment.text = Contest_list[indexPath.row].Payment
+                contestRecruit.text = Contest_list[indexPath.row].ContestDate
+                contestPlace.text = Contest_list[indexPath.row].Place
+                
+                if(Contest_list[indexPath.row].Image != ".") {
+                    let imageName = Contest_list[indexPath.row].Image
+                    Alamofire.request("http://210.122.7.193:8080/Trophy_img/contest/\(imageName).jpg".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
+                        .responseImage { response in
+                            //debugPrint(response)
+                            //print(response.request)
+                            //print(response.response)
+                            //debugPrint(response.result)
+                            if let image = response.result.value {
+                                print("image downloaded: \(image)")
+                                // Store the commit date in to our cache
+                                // Update the cell
+                                DispatchQueue.main.async(execute: {
+                                    contestImage.image = image
+                                });
+                            }
+                    }
+                }
+            }
+            return cellRecentContest
+        }else {
+            let cellMyRank = collectionView.dequeueReusableCell(withReuseIdentifier: "myRankCell", for: indexPath)
+            
+            let rankTeamEmblem = cellMyRank.viewWithTag(1) as! UIImageView
+            let rankTeamName = cellMyRank.viewWithTag(2) as! UILabel
+            let rankTeamRank = cellMyRank.viewWithTag(3) as! UILabel
+            
+            if(Rank_list.count > 0) {
+                rankTeamName.text = Rank_list[indexPath.row].teamName
+                rankTeamRank.text = Rank_list[indexPath.row].teamRank
+                
+                if(Rank_list[indexPath.row].teamEmblem != ".") {
+                    let imageName = Rank_list[indexPath.row].teamEmblem
+                    Alamofire.request("http://210.122.7.193:8080/Trophy_img/team/\(imageName).jpg".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
+                        .responseImage { response in
+                            //debugPrint(response)
+                            //print(response.request)
+                            //print(response.response)
+                            //debugPrint(response.result)
+                            if let image = response.result.value {
+                                print("image downloaded: \(image)")
+                                // Store the commit date in to our cache
+                                // Update the cell
+                                DispatchQueue.main.async(execute: {
+                                    rankTeamEmblem.image = image
+                                });
+                            }
+                    }
+                }else {
+                    rankTeamEmblem.image = UIImage(named: "ic_team")
+                }
+            }
+            
+            DispatchQueue.main.async(execute: {
+                rankTeamEmblem.layer.cornerRadius = rankTeamEmblem.frame.size.width/2
+                rankTeamEmblem.clipsToBounds = true
+            })
+            
+            return cellMyRank
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if(collectionView == self.collectionViewRecentContest) {
+            
+            return CGSize(width: CGFloat(view.frame.size.width/2), height: CGFloat(250))
+        }else {
+            
+            return CGSize(width: CGFloat(view.frame.size.width/4), height: CGFloat(view.frame.size.width/4) + 20)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if(collectionView == self.collectionViewRecentContest) {
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let contestDetailViewController = storyBoard.instantiateViewController(withIdentifier: "Contest_Detail_ViewController") as! Contest_Detail_ViewController
+            contestDetailViewController.Contest_Pk = Contest_list[indexPath.row].Pk
+            contestDetailViewController.Contest_Title = Contest_list[indexPath.row].Title
+            contestDetailViewController.Contest_Image = Contest_list[indexPath.row].Image
+            contestDetailViewController.Contest_CurrentNum = Contest_list[indexPath.row].CurrentNum
+            contestDetailViewController.Contest_MaxNum = Contest_list[indexPath.row].MaxNum
+            contestDetailViewController.Contest_Payment = Contest_list[indexPath.row].Payment
+            contestDetailViewController.Contest_Host = Contest_list[indexPath.row].Host
+            contestDetailViewController.Contest_Management = Contest_list[indexPath.row].Management
+            contestDetailViewController.Contest_Support = Contest_list[indexPath.row].Support
+            contestDetailViewController.Contest_ContestDate = Contest_list[indexPath.row].ContestDate
+            contestDetailViewController.Contest_RecruitStartDate = Contest_list[indexPath.row].RecruitStartDate
+            contestDetailViewController.Contest_RecruitFinishDate = Contest_list[indexPath.row].RecruitFinishDate
+            contestDetailViewController.Contest_DetailInfo = Contest_list[indexPath.row].DetailInfo
+            contestDetailViewController.Contest_Place = Contest_list[indexPath.row].Place
+            
+            let backItem = UIBarButtonItem()
+            backItem.title = ""
+            navigationItem.backBarButtonItem = backItem
+            
+            self.navigationController?.pushViewController(contestDetailViewController, animated: true)
+            //self.present(contestDetailViewController, animated: true, completion: nil)
+            //Contest_Detail_ViewController
+        }else {
+            
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    override func didReceiveMemoryWarning() {
+        
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+    }
+    
+    func getRecentContest() {
+        // 최근대회정보 가져오기
         let url:URL = URL(string: "http://210.122.7.193:8080/Trophy_part3/Contest_Customlist.jsp")!;
         Alamofire.request(url).responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
@@ -90,94 +286,38 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
                         
                         self.Contest_list.append(self.Contest_Setting)
                     }
-                    
-                    self.Contest_TableView.reloadData()
                 }
             }
+            self.collectionViewRecentContest.reloadData()
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        // #warning Incomplete implementation, return the number of rows
-        return self.arrRes.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ContestCell", for: indexPath)
-        
-        
-        let Contest_Title = cell.viewWithTag(2) as! UILabel
-        let Contest_Date = cell.viewWithTag(3) as! UILabel
-        let Contest_Place = cell.viewWithTag(4) as! UILabel
-        
-        var dict = arrRes[indexPath.row]
-        Contest_Title.text = dict["_Title"] as? String
-        Contest_Date.text = dict["_ContestData"] as? String
-        Contest_Place.text = dict["_Place"] as? String
-        let imageName:String = dict["_Image"] as! String
-        
-        Alamofire.request("http://210.122.7.193:8080/Trophy_img/contest/\(imageName).jpg")
-            .responseImage { response in
-                //debugPrint(response)
-                //print(response.request)
-                //print(response.response)
-                //debugPrint(response.result)
-                if let image = response.result.value {
-                    print("image downloaded: \(image)")
-                    // Store the commit date in to our cache
-                    // Update the cell
-                    DispatchQueue.main.async(execute: {
-                        if let cellToUpdate = tableView.cellForRow(at: indexPath) {
-                            let dishImageView:UIImageView = cellToUpdate.viewWithTag(1) as! UIImageView
-                            dishImageView.image = image
-                            
-                        }
-                    });
+    func getTeamRank() {
+        // 팀 랭킹 가져오기
+        let rankUrl:URL = URL(string: "http://210.122.7.193:8080/Trophy_part3/Main_Ranking.jsp?Data1=\(userPk)")!;
+        Alamofire.request(rankUrl).responseJSON { (responseData) -> Void in
+            if((responseData.result.value) != nil) {
+                let swiftyJsonVar = JSON(responseData.result.value!)
+                
+                if let resData = swiftyJsonVar["List"].arrayObject {
+                    self.arrRes = resData as! [[String:AnyObject]]
                 }
+                
+                if self.arrRes.count > 0 {
+                    for i in 0 ..< self.arrRes.count {
+                        var dict = self.arrRes[i]
+                        
+                        self.Rank_Setting = TeamRankSetting()
+                        self.Rank_Setting.teamPk = dict["msg1"] as! String
+                        self.Rank_Setting.teamEmblem = dict["msg2"] as! String
+                        self.Rank_Setting.teamName = dict["msg3"] as! String
+                        self.Rank_Setting.teamRank = String(dict["msg4"] as! Int)
+                        
+                        self.Rank_list.append(self.Rank_Setting)
+                    }
+                }
+            }
+            self.collectionViewMyRank.reloadData()
         }
-        return cell
-    }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let Contest_Detail_View = segue.destination as! Contest_Detail_ViewController
-        let myIndexPath = self.Contest_TableView.indexPathForSelectedRow!
-        let row = myIndexPath.row
-        
-        Contest_Detail_View.Contest_Pk = Contest_list[row].Pk
-        Contest_Detail_View.Contest_Title = Contest_list[row].Title
-        Contest_Detail_View.Contest_Image = Contest_list[row].Image
-        Contest_Detail_View.Contest_CurrentNum = Contest_list[row].CurrentNum
-        Contest_Detail_View.Contest_MaxNum = Contest_list[row].MaxNum
-        Contest_Detail_View.Contest_Payment = Contest_list[row].Payment
-        Contest_Detail_View.Contest_Host = Contest_list[row].Host
-        Contest_Detail_View.Contest_Management = Contest_list[row].Management
-        Contest_Detail_View.Contest_Support = Contest_list[row].Support
-        Contest_Detail_View.Contest_ContestDate = Contest_list[row].ContestDate
-        Contest_Detail_View.Contest_RecruitStartDate = Contest_list[row].RecruitStartDate
-        Contest_Detail_View.Contest_RecruitFinishDate = Contest_list[row].RecruitFinishDate
-        Contest_Detail_View.Contest_DetailInfo = Contest_list[row].DetailInfo
-        Contest_Detail_View.Contest_Place = Contest_list[row].Place
-    
-        let backItem = UIBarButtonItem()
-        backItem.title = ""
-        navigationItem.backBarButtonItem = backItem
-    }
-    func updateSearchResults(for searchController: UISearchController) {
-        
     }
 }

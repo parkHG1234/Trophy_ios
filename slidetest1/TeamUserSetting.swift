@@ -10,9 +10,11 @@ import UIKit
 
 class TeamUserSetting: NSObject {
     var userPk:String = ""
+    var userPhone:String = ""
     var userName:String = ""
+    var userBirth:String = ""
     var userTeamDuty:String = ""
-    var userImage:UIImage = UIImage(named: "user_basic")!
+    var userImage:String = ""
     var userAddressDo:String = ""
     var userAddressSi:String = ""
     var userSex:String = ""

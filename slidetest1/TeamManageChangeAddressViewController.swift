@@ -1,8 +1,8 @@
 //
-//  ChangeAddressViewController.swift
+//  TeamManageChangeAddressViewController.swift
 //  slidetest1
 //
-//  Created by ldong on 2017. 3. 1..
+//  Created by ldong on 2017. 4. 15..
 //  Copyright © 2017년 MD313-008. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class ChangeAddressViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class TeamManageChangeAddressViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var userAddressDoTextField: UITextField!
     @IBOutlet weak var userAddressSiTextField: UITextField!
@@ -21,9 +21,10 @@ class ChangeAddressViewController: UIViewController, UIPickerViewDelegate, UIPic
     var userAddressDo:String = ""
     var userAddressSi:String = ""
     var userPk:String = ""
+    var teamPk:String = ""
     
-    var arrRes = [[String: AnyObject]]()
-    
+    var arrRes = [[String:AnyObject]]()
+
     var addressDo = ["서울", "인천","광주","대구", "울산", "대전", "부산", "강원도", "경기도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"]
     var addressSi = [
         ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"],// 서울
@@ -42,35 +43,30 @@ class ChangeAddressViewController: UIViewController, UIPickerViewDelegate, UIPic
         ["기장군", "고령군", "구미시", "경주시", "김천시", "경산시", "군위군", "문경시", "봉화군", "상주시", "안동시", "영주시", "영천시", "의성군", "영양군", "영덕군", "울주군", "예천군", "울진군", "울릉군", "청송군", "청도군", "칭곡군", "포항시"], // 경상북도
         ["고성군", "김해시", "거제시", "남해군", "마산시", "밀양시", "사천시", "의령군", "양산시", "진주시", "진해시", "창원시", "창녕군", "통영시", "함안군", "하동군"], // 경상남도
         ["서귀포시", "제주시"]] // 제주도
-
+    
     
     fileprivate var _currentSelection: Int = 0
     
     var currentSelection: Int {
         get {
-            print(_currentSelection)
             return _currentSelection
         }
         set {
             _currentSelection = newValue
             pickerDo .reloadAllComponents()
             pickerSi .reloadAllComponents()
-            print(_currentSelection)
             
             userAddressDoTextField.text = addressDo[_currentSelection]
             userAddressSiTextField.text = addressSi[_currentSelection][0]
         }
     }
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //navigation bar item image load
-        let yourBackImage = UIImage(named: "cm_arrow_back_white")
-        self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
-        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage
 
+        userPk = UserDefaults.standard.string(forKey: "Pk")!
+        
         pickerDo.delegate = self
         pickerDo.dataSource = self
         pickerSi.delegate = self
@@ -80,12 +76,10 @@ class ChangeAddressViewController: UIViewController, UIPickerViewDelegate, UIPic
         userAddressSiTextField.inputView = pickerSi
         pickerDo.tag = 1
         pickerSi.tag = 2
-        
-        userPk = UserDefaults.standard.string(forKey: "Pk")!
+
         
         // Do any additional setup after loading the view.
     }
-
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -120,7 +114,11 @@ class ChangeAddressViewController: UIViewController, UIPickerViewDelegate, UIPic
             userAddressSiTextField.resignFirstResponder()
         }
     }
-    
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
     @IBAction func confirmButtonTapped(_ sender: Any) {
         userAddressDo = userAddressDoTextField.text!
@@ -129,45 +127,70 @@ class ChangeAddressViewController: UIViewController, UIPickerViewDelegate, UIPic
             displayMyAlertMessage("모든 칸을 채워주세요")
         }else {
             
-            let url = "http://210.122.7.193:8080/Trophy_part3/Change_Area.jsp?Data1=\(userAddressDo)&Data2=\(userAddressSi)&Data3=\(userPk)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-            Alamofire.request(url!).responseJSON { (responseData) -> Void in}
-            
-            //self.navigationController?.popToRootViewController(animated: true)
-            let myAlert = UIAlertController(title: "트로피", message: "변경이 완료되었습니다", preferredStyle: UIAlertControllerStyle.alert)
-            
-            let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: { action in
-                self.goBack()
-            })
-            
-            myAlert.addAction(okAction)
-            self.present(myAlert, animated: true, completion: nil)
+            Alamofire.request("http://210.122.7.193:8080/Trophy_part3/getTeamPk.jsp?Data1=\(userPk)").responseJSON { (responseData) -> Void in
+                if((responseData.result.value) != nil) {
+                    let swiftyJsonVar = JSON(responseData.result.value!)
+                    
+                    if let resData = swiftyJsonVar["List"].arrayObject {
+                        self.arrRes = resData as! [[String:AnyObject]]
+                        print("\(self.arrRes)")
+                    }
+                    
+                    if self.arrRes.count > 0 {
+                        var dict = self.arrRes[0]
+                        
+                        let status = dict["status"] as! String
+                        self.teamPk = dict["teamPk"] as! String
+                        
+                        if (status == "succed") {
+                            self.updateArea()
+                        }
+                    }
+                }
+            }
         }
     }
     
     func goBack() {
         navigationController?.popViewController(animated: true)
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
     
     func displayMyAlertMessage(_ userMessage:String) {
-        let myAlert = UIAlertController(title: "트로피", message: userMessage, preferredStyle: UIAlertControllerStyle.alert)
+        let myAlert = UIAlertController(title: "팀주소변경", message: userMessage, preferredStyle: UIAlertControllerStyle.alert)
         let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil)
         myAlert.addAction(okAction)
         self.present(myAlert, animated: true, completion: nil)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func updateArea() {
+        let url = "http://210.122.7.193:8080/Trophy_part3/TeamChangeArea.jsp?Data1=\(userAddressDo)&Data2=\(userAddressSi)&Data3=\(teamPk)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        Alamofire.request(url!).responseJSON { (responseData) -> Void in
+            if((responseData.result.value) != nil) {
+                let swiftyJsonVar = JSON(responseData.result.value!)
+                
+                if let resData = swiftyJsonVar["List"].arrayObject {
+                    self.arrRes = resData as! [[String:AnyObject]]
+                    print("\(self.arrRes)")
+                }
+                
+                if self.arrRes.count > 0 {
+                    var dict = self.arrRes[0]
+                    
+                    let status = dict["status"] as! String
+                    if (status == "succed") {
+                        //self.navigationController?.popToRootViewController(animated: true)
+                        let myAlert = UIAlertController(title: "팀주소변경", message: "변경이 완료되었습니다", preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: { action in
+                            self.goBack()
+                        })
+                        
+                        myAlert.addAction(okAction)
+                        self.present(myAlert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
-    */
-
 }

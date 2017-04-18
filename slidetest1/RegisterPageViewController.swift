@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import SwiftyJSON
 
-class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource  {
     
     
     @IBOutlet weak var userPhoneTextField: UITextField!
@@ -61,6 +64,8 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     var randomNo: UInt32 = 0
     var exNum:Int = 3
     
+    var arrRes = [[String:AnyObject]]()
+    
     // To keep track of user's current selection from the main content array
     fileprivate var _currentSelection: Int = 0
     
@@ -68,14 +73,12 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     var currentSelection: Int {
         get {
-            print(_currentSelection)
             return _currentSelection
         }
         set {
             _currentSelection = newValue
             pickerDo .reloadAllComponents()
             pickerSi .reloadAllComponents()
-            print(_currentSelection)
             
             userAddressDoTextField.text = addressDo[_currentSelection]
             userAddressSiTextField.text = addressSi[_currentSelection][0]
@@ -90,7 +93,6 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         let yourBackImage = UIImage(named: "cm_arrow_back_white")
         self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
         self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage
-        
         
         // Do any additional setup after loading the view.
         pickerDo.delegate = self
@@ -190,7 +192,6 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         if(pickerView.tag == 1) {
             userAddressSiTextField.text = ""
             return addressDo.count
-            
         }else if(pickerView.tag == 2) {
             return addressSi[currentSelection].count
         }else {
@@ -236,11 +237,11 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
     @IBAction func userSexIndexChanged(_ sender: AnyObject) {
         switch userSexSegmentationControll.selectedSegmentIndex {
         case 0:
-            userSex = "M"
+            userSex = "남자"
         case 1:
-            userSex = "W"
+            userSex = "여자"
         default:
-            break;
+            userSex = "남자";
         }
     }
     
@@ -249,44 +250,39 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         if(length == 11) {
             isCheckPhone = false
             userPhone = userPhoneTextField.text!
-            randomNo = arc4random_uniform(899999) + 100000;
-            let msg:String = "트로피 인증번호는 [\(randomNo)] 입니다"
             
-            let now = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let date = dateFormatter.string(from: now)
-            
-//            let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/InetSMSExample/example.jsp")!);
-//            request.httpMethod = "POST";
-//            
-//            let postString = "Data1=\(msg)&Data2=\(userPhone)&Data3=\(userPhone)&Data4=\(date)";
-//            print(userPhoneTextField.text)
-//            request.httpBody = postString.data(using: String.Encoding.utf8);
-//            
-//            let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in guard error == nil && data != nil else {       // check for fundamental networking error
-//                print("error=\(error)")
-//                return
-//                }
-//                
-//                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-//                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
-//                    print("response = \(response)")
-//                }
-//                
-//                let responseString:String = String(data: data!, encoding: String.Encoding.utf8)!
-//                print("responseString = \(responseString)")
-//                
-//            }) 
-//            task.resume()
-            
+            let url1:URL = URL(string: "http://210.122.7.193:8080/Trophy_part3/CheckPhone.jsp?Data1=\(userPhone)")!;
+            Alamofire.request(url1).responseJSON { (responseData) -> Void in
+                if((responseData.result.value) != nil) {
+                    let swiftyJsonVar = JSON(responseData.result.value!)
+                    
+                    if let resData = swiftyJsonVar["List"].arrayObject {
+                        self.arrRes = resData as! [[String:AnyObject]]
+                    }
+                    if(self.arrRes.count > 0) {
+                        if(self.arrRes[0]["isDuplicate"]! as! String == "false") {
+                            self.randomNo = arc4random_uniform(899999) + 100000;
+                            let msg:String = "트로피 인증번호는 [\(self.randomNo)] 입니다"
+                            print(msg)
+                            
+                            let now = Date()
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let date = dateFormatter.string(from: now)
+                            
+                            let url2 = "http://210.122.7.193:8080/InetSMSExample/example.jsp?Data1=\(msg)&Data2=\(self.userPhone)&Data3=\(self.userPhone)&Data4=\(date)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+                            //Alamofire.request(url2!).responseJSON { (responseData) -> Void in }
+                            self.displayMyAlertMessage("인증번호가 발송되었습니다")
+                        }else {
+                            self.displayMyAlertMessage("중복된 휴대전화번호입니다")
+                        }
+                    }
+                }
+            }
+
             // 인증번호 전송, 휴대전화번호 텍스트필드 변경시 랜덤 번호 삭제
         }else {
-            let alertController = UIAlertController(title: "여기뭐쓰냐", message:
-                "정확한 휴대전화번호를 입력해 주세요", preferredStyle: UIAlertControllerStyle.alert)
-            alertController.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default,handler: nil))
-            
-            self.present(alertController, animated: true, completion: nil)
+            displayMyAlertMessage("정확한 휴대전화번호를 입력해 주세요")
         }
     }
     
@@ -303,21 +299,22 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         // 불일치할 경우 Alert 횟수제한 3번
     }
     
-    
-    
-    
     @IBAction func registerButtonTapped(_ sender: AnyObject) {
         
-        userPhone = userPhoneTextField.text!
+        //userPhone = userPhoneTextField.text!
         userPassword = userPasswordTextField.text!
         let userRepeatPassword:String = repeatPasswordTextField.text!
         userAddressDo = userAddressDoTextField.text!
         userAddressSi = userAddressSiTextField.text!
         userName = userNameTextField.text!
+        userBirthYear = userYearTextField.text!
+        userBirthMonth = userMonthTextField.text!
+        userBirthDay = userDayTextField.text!
+        
         let userBirth:String = "\(userBirthYear) / \(userBirthMonth) / \(userBirthDay)"
         
         //Check for Empty fields
-        if(userPhone.isEmpty || userPassword.isEmpty || userRepeatPassword.isEmpty || userSex.isEmpty) {
+        if(userPhone.isEmpty || userPassword.isEmpty || userRepeatPassword.isEmpty || userSex.isEmpty || userBirthYear.isEmpty || userBirthMonth.isEmpty || userBirthDay.isEmpty) {
             displayMyAlertMessage("모든 칸을 채워주세요")
             return
         }
@@ -334,65 +331,37 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
             return
         }
      
-        let request = NSMutableURLRequest(url: URL(string: "http://210.122.7.193:8080/Trophy_part3/Join.jsp")!);
-        request.httpMethod = "POST";
-        
-        let postString = "Data1=\(userName)&Data2=\(userPassword)&Data3=\(userBirth)&Data4=\(userSex)&Data5=\(userAddressDo)&Data6=\(userAddressSi)&Data7=\(userPhone)";
-        request.httpBody = postString.data(using: String.Encoding.utf8);
-        
-//        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in guard error == nil && data != nil else {       // check for fundamental networking error
-//                print("error=\(error)")
-//                return
-//            }
-//            
-//            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-//                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-//                print("response = \(response)")
-//            }
-//            
-//            let responseString:String = String(data: data!, encoding: String.Encoding.utf8)!
-//            print("responseString = \(responseString)")
-//            
-//            
-//            var json:NSDictionary?;
-//            
-//            do {
-//                json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
-//            } catch let error as NSError {
-//                print("error : \(error)")
-//            }
-//            
-//            if let parseJSON = json {
-//                let resultValue = parseJSON["status"] as? String
-//                print("result: \(resultValue)")
-//                
-//                var isUserRegistered:Bool = false
-//                if(resultValue=="success") { isUserRegistered = true }
-//                
-//                var messageToDisplay:String = parseJSON["message"] as! String!;
-//                if(!isUserRegistered) {
-//                    messageToDisplay = parseJSON["message"] as! String!;
-//                }
-//                
-//                
-//                DispatchQueue.main.async(execute: {
-//                    
-//                    //Display alert message with confirmation.
-//                    let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.alert)
-//                    
-//                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-//                        action in
-//                        self.dismiss(animated: true, completion: nil);
-//                    }
-//                    myAlert.addAction(okAction)
-//                    self.present(myAlert, animated: true, completion: nil)
-//                    self.dismiss(animated: true, completion: nil)
-//                });
-//            }
-//        }) 
-//        task.resume()
+        print("전송되는 데이터 : Data1=\(userName)&Data2=\(userPassword)&Data3=\(userBirth)&Data4=\(userSex)&Data5=\(userAddressDo)&Data6=\(userAddressSi)&Data7=\(userPhone)")
+        let url3 = "http://210.122.7.193:8080/Trophy_part1/User_Join.jsp?Data1=\(userName)&Data2=\(userPassword)&Data3=\(userBirth)&Data4=\(userSex)&Data5=\(userAddressDo)&Data6=\(userAddressSi)&Data7=\(userPhone)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        Alamofire.request(url3!).responseJSON { (responseData) -> Void in
+            if((responseData.result.value) != nil) {
+                let swiftyJsonVar = JSON(responseData.result.value!)
+                
+                if let resData = swiftyJsonVar["List"].arrayObject {
+                    self.arrRes = resData as! [[String:AnyObject]]
+                    print(self.arrRes)
+                    if(self.arrRes.count > 0) {
+                        if(self.arrRes[0]["msg1"]! as! String == "success") {
+                            let myAlert = UIAlertController(title: "회원가입", message: "회원가입이 완료되었습니다 로그인을 진행해 주세요", preferredStyle: UIAlertControllerStyle.alert)
+                            let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: { action in
+                                self.navigationController?.popToRootViewController(animated: true)
+                            })
+                            myAlert.addAction(okAction)
+                            self.present(myAlert, animated: true, completion: nil)
+                        }else {
+                            let myAlert = UIAlertController(title: "에러", message: "잠시후 다시 시도해 주세요", preferredStyle: UIAlertControllerStyle.alert)
+                            
+                            let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: { action in
+                                self.navigationController?.popToRootViewController(animated: true)
+                            })
+                            myAlert.addAction(okAction)
+                            self.present(myAlert, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
     }
-    
     
     func displayMyAlertMessage(_ userMessage:String) {
         let myAlert = UIAlertController(title: "트로피", message: userMessage, preferredStyle: UIAlertControllerStyle.alert)
@@ -404,20 +373,7 @@ class RegisterPageViewController: UIViewController, UIPickerViewDelegate, UIPick
         self.present(myAlert, animated: true, completion: nil)
     }
     
-    
     @IBAction func backButtonTapped(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
