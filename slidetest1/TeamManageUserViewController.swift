@@ -41,10 +41,17 @@ class TeamManageUserViewController: UIViewController, UICollectionViewDelegate, 
         collectionViewTeamUser.delegate = self
         collectionViewJoinUser.dataSource = self
         collectionViewTeamUser.dataSource = self
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         joinUserCollectionViewHeight.constant = 0
         teamUserCollectionViewHeight.constant = 0
         subViewHeight.constant = 228
+        
+        userPk = UserDefaults.standard.string(forKey: "Pk")!
+        
+        joinUserList = []
+        teamUserList = []
         
         Alamofire.request("http://210.122.7.193:8080/Trophy_part3/getTeamPk.jsp?Data1=\(userPk)").responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
@@ -67,13 +74,18 @@ class TeamManageUserViewController: UIViewController, UICollectionViewDelegate, 
                 }
             }
         }
-        // Do any additional setup after loading the view.
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.dismiss(animated: false, completion: nil)
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.collectionViewJoinUser {
@@ -103,6 +115,8 @@ class TeamManageUserViewController: UIViewController, UICollectionViewDelegate, 
                             }
                         });
                 }
+            }else {
+                joinUserImageView.image = UIImage(named: "user_basic")
             }
             joinUserNameLabel.text = joinUserList[indexPath.row].userName
             
@@ -127,6 +141,8 @@ class TeamManageUserViewController: UIViewController, UICollectionViewDelegate, 
                             }
                         });
                 }
+            }else {
+                teamUserImageView.image = UIImage(named: "user_basic")
             }
             teamUserNameLabel.text = teamUserList[indexPath.row].userName
             
@@ -152,6 +168,9 @@ class TeamManageUserViewController: UIViewController, UICollectionViewDelegate, 
         
         if collectionView == self.collectionViewJoinUser {
             let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "teamManageUserRegisterPopUp") as! TeamManageUserRegisterPopUpViewController
+            popOverVC.teamPk = self.teamPk
+            
+            popOverVC.teamUserPk = joinUserList[indexPath.row].userPk
             popOverVC.teamUserName = joinUserList[indexPath.row].userName
             popOverVC.teamUserAge = joinUserList[indexPath.row].userBirth
             popOverVC.teamUserSex = joinUserList[indexPath.row].userSex
@@ -164,6 +183,9 @@ class TeamManageUserViewController: UIViewController, UICollectionViewDelegate, 
             popOverVC.didMove(toParentViewController: self)
         }else {
             let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "teamManageUserPopUp") as! TeamManageUserPopUpViewController
+            popOverVC.teamPk = self.teamPk
+            
+            popOverVC.teamUserPk = teamUserList[indexPath.row].userPk
             popOverVC.teamUserName = teamUserList[indexPath.row].userName
             popOverVC.teamUserAge = teamUserList[indexPath.row].userBirth
             popOverVC.teamUserSex = teamUserList[indexPath.row].userSex

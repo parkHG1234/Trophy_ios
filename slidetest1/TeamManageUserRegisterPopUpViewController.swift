@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class TeamManageUserRegisterPopUpViewController: UIViewController {
 
@@ -17,6 +19,9 @@ class TeamManageUserRegisterPopUpViewController: UIViewController {
     @IBOutlet weak var teamUserAddressDoLabel: UILabel!
     @IBOutlet weak var teamUserAddressSiLabel: UILabel!
     
+    var teamPk:String = ""
+    
+    var teamUserPk:String = ""
     var teamUserName:String = ""
     var teamUserAge:String = ""
     var teamUserSex:String = ""
@@ -42,13 +47,21 @@ class TeamManageUserRegisterPopUpViewController: UIViewController {
     
     @IBAction func closeButtonTapped(_ sender: Any) {
         self.view.removeFromSuperview()
+        super.viewDidAppear(false)
     }
     
     @IBAction func commitButtonTapped(_ sender: Any) {
-        
+        let url = "http://210.122.7.193:8080/Trophy_part3/TeamManageCommitUser.jsp?Data1=\(teamUserPk)&Data2=\(teamPk)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        Alamofire.request(url!).responseJSON { (responseData) -> Void in}
+        self.view.removeFromSuperview()
+        super.viewDidAppear(false)
     }
     
     @IBAction func rejcetButtonTapped(_ sender: Any) {
+        let url = "http://210.122.7.193:8080/Trophy_part3/TeamManageRejectUser.jsp?Data1=\(teamUserPk)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        Alamofire.request(url!).responseJSON { (responseData) -> Void in}
+        self.view.removeFromSuperview()
+        super.viewDidAppear(false)
     }
     
     

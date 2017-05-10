@@ -108,6 +108,32 @@ class SlideMenuViewController: UIViewController {
         let newFrontViewController = UINavigationController.init(rootViewController:desController)
         revealViewController.pushFrontViewController(newFrontViewController, animated: true)
     }
+    
+    @IBAction func goNotice(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NoticeNavigationController")
+        self.present(vc!, animated: true, completion: nil)
+    }
+    
+    @IBAction func goRecommend(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "RecommendViewController")
+        self.present(vc!, animated: true, completion: nil)
+    }
+    
+    @IBAction func goMatch(_ sender: Any) {
+//        let revealViewController:SWRevealViewController = self.revealViewController()
+//        let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let desController = mainStoryboard.instantiateViewController(withIdentifier: "MatchViewController")
+//        let newFrontViewController = UINavigationController.init(rootViewController:desController)
+//        revealViewController.pushFrontViewController(newFrontViewController, animated: true)
+        let revealViewController:SWRevealViewController = self.revealViewController()
+        let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desController = mainStoryboard.instantiateViewController(withIdentifier: "CourtViewController")
+        let newFrontViewController = UINavigationController.init(rootViewController:desController)
+        revealViewController.pushFrontViewController(newFrontViewController, animated: true)
+    }
+    
+    
+    
     func setProfile() {
         isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
         if(isUserLoggedIn) {

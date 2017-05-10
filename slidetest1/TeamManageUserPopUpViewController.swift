@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import SwiftyJSON
 
 class TeamManageUserPopUpViewController: UIViewController {
 
@@ -17,6 +20,9 @@ class TeamManageUserPopUpViewController: UIViewController {
     @IBOutlet weak var teamUserAddressSiLabel: UILabel!
     @IBOutlet weak var teamUserPhoneLabel: UILabel!
     
+    var teamPk:String = ""
+    
+    var teamUserPk:String = ""
     var teamUserName:String = ""
     var teamUserAge:String = ""
     var teamUserSex:String = ""
@@ -46,10 +52,16 @@ class TeamManageUserPopUpViewController: UIViewController {
         self.view.removeFromSuperview()
     }
     @IBAction func callButtonTapped(_ sender: Any) {
+        let url = URL(string: "tel://\(teamUserPhone)")!
+        UIApplication.shared.openURL(url)
     }
     @IBAction func delegateButtonTapped(_ sender: Any) {
     }
     @IBAction func removeButtonTapped(_ sender: Any) {
+        let url = "http://210.122.7.193:8080/Trophy_part3/TeamManageRejectUser.jsp?Data1=\(teamUserPk)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        Alamofire.request(url!).responseJSON { (responseData) -> Void in}
+        self.view.removeFromSuperview()
+        super.viewDidAppear(false)
     }
 
     

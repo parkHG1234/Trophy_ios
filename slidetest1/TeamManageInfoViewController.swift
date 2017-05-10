@@ -52,9 +52,6 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
         
         teamImageButtonList = [teamImageButton1, teamImageButton2, teamImageButton3]
         
-        userPk = UserDefaults.standard.string(forKey: "Pk")!
-        
-        
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(TeamManageInfoViewController.emblemTapped))
         singleTap.numberOfTapsRequired = 1 // you can change this value
         teamEmblemImageView.isUserInteractionEnabled = true
@@ -62,6 +59,11 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
         
         self.teamEmblemImageView.layer.cornerRadius = self.teamEmblemImageView.frame.size.width/2
         self.teamEmblemImageView.clipsToBounds = true
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        userPk = UserDefaults.standard.string(forKey: "Pk")!
         
         // Do any additional setup after loading the view.
         Alamofire.request("http://210.122.7.193:8080/Trophy_part3/getTeamPk.jsp?Data1=\(userPk)").responseJSON { (responseData) -> Void in
@@ -82,14 +84,10 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
                     if (status == "succed") {
                         self.getTeamInfo()
                     }
-                    self.setTeamImages()
+                    
                 }
             }
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,35 +95,63 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
         // Dispose of any resources that can be recreated.
     }
     
-    func setTeamImages() {
-        if(self.teamImageList.count > 0) {
-            for i in 0 ..< 3 {
-                if (self.teamImageList[i] != ".") {
-                    let url = "http://210.122.7.193:8080/Trophy_img/team/\(self.teamImageList[i]).jpg".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-                    Alamofire.request(url!)
-                        .responseImage { response in
-                            //debugPrint(response)
-                            //print(response.request)
-                            //print(response.response)
-                            //debugPrint(response.result)
-                            DispatchQueue.main.async(execute: {
-                                if let image = response.result.value {
-                                    self.teamImageButtonList[i].setImage(image, for: UIControlState.normal)
-                                }
-                            });
-                    }
-                }else {
-                    self.teamImageButtonList[i].setImage(UIImage(named: "ic_team"), for: UIControlState.normal)
-                }
-            }
-        }
-    }
-    
-    @IBAction func dismissButtonTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.dismiss(animated: false, completion: nil)
     }
     
     @IBAction func dismissTeamButtonTapped(_ sender: Any) {
+        let myAlert = UIAlertController(title: "팀해산", message: "정말로 팀 해산을 진행하시겠습니까?", preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "예", style: UIAlertActionStyle.default, handler: { action in
+            let url = "http://210.122.7.193:8080/Trophy_part3/TeamManageDismiss.jsp?Data1=\(self.userPk)&Data2=\(self.teamPk)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            Alamofire.request(url!).responseJSON { (responseData) -> Void in
+                if((responseData.result.value) != nil) {
+                    let swiftyJsonVar = JSON(responseData.result.value!)
+                    if let resData = swiftyJsonVar["List"].arrayObject {
+                        self.arrRes = resData as! [[String:AnyObject]]
+                        print(self.arrRes)
+                        if(self.arrRes.count > 0) {
+                            if(self.arrRes[0]["status"]! as! String == "succed") {
+                                let myAlert = UIAlertController(title: "팀해산", message: "팀해산이 완료되었습니다", preferredStyle: UIAlertControllerStyle.alert)
+                                let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: { action in
+                                    UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
+                                    UserDefaults.standard.setValue(".", forKey: "Pk")
+                                    UserDefaults.standard.synchronize()
+                                    self.dismiss(animated: true, completion: nil)
+                                })
+                                myAlert.addAction(okAction)
+                                self.present(myAlert, animated: true, completion: nil)
+                            }else if(self.arrRes[0]["status"]! as! String == "Exist_Player") {
+                                let myAlert = UIAlertController(title: "팀해산", message: "팀원이 존재합니다", preferredStyle: UIAlertControllerStyle.alert)
+                                let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil)
+                                myAlert.addAction(okAction)
+                                self.present(myAlert, animated: true, completion: nil)
+                            }else if(self.arrRes[0]["status"]! as! String == "Exist_Joiner") {
+                                let myAlert = UIAlertController(title: "팀해산", message: "참가중인 교류전이 존재합니다", preferredStyle: UIAlertControllerStyle.alert)
+                                let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil)
+                                myAlert.addAction(okAction)
+                                self.present(myAlert, animated: true, completion: nil)
+                            }else if(self.arrRes[0]["status"]! as! String == "Exist_Contest") {
+                                let myAlert = UIAlertController(title: "팀해산", message: "참가중인 대회가 존재합니다", preferredStyle: UIAlertControllerStyle.alert)
+                                let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil)
+                                myAlert.addAction(okAction)
+                                self.present(myAlert, animated: true, completion: nil)
+                            }else {
+                                let myAlert = UIAlertController(title: "팀해산", message: "에러가 발생했습니다 잠시후 다시 시도해주세요", preferredStyle: UIAlertControllerStyle.alert)
+                                let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil)
+                                myAlert.addAction(okAction)
+                                self.present(myAlert, animated: true, completion: nil)
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        let cancelAction = UIAlertAction(title: "아니오", style: UIAlertActionStyle.cancel, handler: nil)
+        myAlert.addAction(okAction)
+        myAlert.addAction(cancelAction)
+        self.present(myAlert, animated: true, completion: nil)
+        
         
     }
     
@@ -142,7 +168,7 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
         setTeamImage()
     }
     func emblemTapped() {
-        i = 4
+        i = 3
         setTeamImage()
     }
     func setTeamImage() {
@@ -180,12 +206,15 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if (i == 4) {
+        if (i == 3) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 self.teamEmblemImageView.image = image
                 
                 self.teamEmblemImage = UIImageJPEGRepresentation(image, 1)!
                 uploadWithAlamofire("\(self.teamName)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
+                let url = "http://210.122.7.193:8080/Trophy_part3/TeamChangeImage.jsp?Data1=Emblem&Data2=\(teamName)&Data3=\(teamPk)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+                Alamofire.request(url!).responseJSON { (responseData) -> Void in}
+
             }else {
                 print("error")
             }
@@ -198,6 +227,9 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
                 self.teamEmblemImage = UIImageJPEGRepresentation(image, 1)!
                 let _teamName = ("\(self.teamName)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
                 uploadWithAlamofire(_teamName+String(i+1))
+                let url = "http://210.122.7.193:8080/Trophy_part3/TeamChangeImage.jsp?Data1=Image\(String(i+1))&Data2=\(teamName+String(i+1))&Data3=\(teamPk)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+                Alamofire.request(url!).responseJSON { (responseData) -> Void in}
+
             }else {
                 print("error")
             }
@@ -269,7 +301,7 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
                                 if let image = response.result.value {
                                     print ("image download : \(image)")
                                     DispatchQueue.main.async(execute: {
-                                        debugPrint(response)
+                                        //debugPrint(response)
                                         self.teamEmblemImageView.image = image
                                         self.teamEmblemImageView.reloadInputViews()
                                     });
@@ -277,6 +309,23 @@ class TeamManageInfoViewController: UIViewController, UIImagePickerControllerDel
                             }
                         }else {
                             self.teamEmblemImageView.image = UIImage(named: "ic_team")
+                        }
+                        
+                        for i in 0 ..< 3 {
+                            if (self.teamImageList[i] != ".") {
+                                print("\(String(i)+self.teamImageList[i])")
+                                let url = "http://210.122.7.193:8080/Trophy_img/team/\(self.teamImageList[i]).jpg".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+                                Alamofire.request(url!)
+                                    .responseImage { response in
+                                        DispatchQueue.main.async(execute: {
+                                            if let image = response.result.value {
+                                                self.teamImageButtonList[i].setImage(image, for: UIControlState.normal)
+                                            }
+                                        });
+                                }
+                            }else {
+                                self.teamImageButtonList[i].setImage(UIImage(named: "ic_team"), for: UIControlState.normal)
+                            }
                         }
                     }
                 }

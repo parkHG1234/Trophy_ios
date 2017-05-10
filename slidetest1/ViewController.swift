@@ -36,6 +36,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var userPk:String = UserDefaults.standard.string(forKey: "Pk")!
     var teamPk:String = ""
     var timer:Timer?
+    var indicatorTimer:Timer?
     
     var filteredData:[String] = []
     var Contest_Setting = Contest_Detail_Setting()
@@ -46,7 +47,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var arrRes = [[String: AnyObject]]()
     
-    
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidAppear(_ animated: Bool) {
         getRecentContest()
@@ -54,6 +55,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         // 상단 스크롤 뷰 자동 넘기기
         self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(ViewController.autoScroll), userInfo: nil, repeats: true)
+        
     }
     
     override func viewDidLoad() {
@@ -63,6 +65,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             UserDefaults.standard.setValue(".", forKey: "Pk")
             UserDefaults.standard.synchronize()
         }
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        self.indicatorTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(ViewController.stopIndicator), userInfo: nil, repeats: false)
         
         collectionViewRecentContest.delegate = self
         collectionViewMyRank.delegate = self
@@ -87,7 +97,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    
+    func stopIndicator() {
+        activityIndicator.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
+    }
     func autoScroll() {
         if(scrollViewTop.contentOffset.x == self.view.frame.width * 3) {
             DispatchQueue.main.async(execute: {

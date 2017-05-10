@@ -61,6 +61,11 @@ class SlideMenu_TeamManager_ContestJoin_ViewController: UIViewController, UITabl
 //        })
 //        task.resume()
     }
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.dismiss(animated: false, completion: nil)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return Http_ContestPk.count
