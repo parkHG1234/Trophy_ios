@@ -50,8 +50,16 @@ class SlideMenuTeamRankViewController: UITableViewController, UISearchResultsUpd
     var arrRes:[[String:AnyObject]] = [[String:AnyObject]]()
     var rank = 0
     
+    var isMain:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if(isMain) {
+            self.navigationItem.leftBarButtonItem = nil
+        }else {
+            self.navigationItem.leftBarButtonItem = open
+        }
         
         if self.revealViewController() != nil {
             //self.revealViewController().rearViewRevealWidth = self.view.frame.width - 60

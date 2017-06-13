@@ -21,18 +21,31 @@ class MatchViewController: UIViewController, UITableViewDataSource, UITableViewD
     var matchSetting = MatchSetting()
     var matchList:[MatchSetting] = []
     
+    var isMain:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         matchTableView.dataSource = self
         matchTableView.delegate = self
 
+        if(isMain) {
+            self.navigationItem.leftBarButtonItem = nil
+        }else {
+            self.navigationItem.leftBarButtonItem = open
+        }
+        
+        
         if self.revealViewController() != nil {
-            //self.revealViewController().rearViewRevealWidth = self.view.frame.width - 60
             open.target = self.revealViewController()
             open.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        
+        matchList = []
         
         Alamofire.request("http://210.122.7.193:8080/Trophy_part1/Match.jsp").responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
@@ -51,8 +64,8 @@ class MatchViewController: UIViewController, UITableViewDataSource, UITableViewD
                         self.matchSetting.teamEmblem = dict["msg2"] as! String
                         self.matchSetting.teamName = dict["msg3"] as! String
                         self.matchSetting.matchTitle = dict["msg4"] as! String
-                        self.matchSetting.matchPlace = dict["msg5"] as! String
-                        self.matchSetting.matchTime = dict["msg6"] as! String
+                        self.matchSetting.matchPlace = dict["msg6"] as! String
+                        self.matchSetting.matchStartTime = dict["msg5"] as! String
                         self.matchSetting.matchStatus = dict["msg7"] as! String
                         
                         self.matchList.append(self.matchSetting)
@@ -61,11 +74,6 @@ class MatchViewController: UIViewController, UITableViewDataSource, UITableViewD
                 }
             }
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,10 +89,11 @@ class MatchViewController: UIViewController, UITableViewDataSource, UITableViewD
         let matchPlace = cell.viewWithTag(4) as! UILabel
         let matchTime = cell.viewWithTag(5) as! UILabel
         
+        
         teamNameLabel.text = matchList[indexPath.row].teamName
         matchTitleLabel.text = matchList[indexPath.row].matchTitle
         matchPlace.text = matchList[indexPath.row].matchPlace
-        matchTime.text = matchList[indexPath.row].matchTime
+        matchTime.text = matchList[indexPath.row].matchStartTime
         
         if(matchList[indexPath.row].teamEmblem != ".") {
             let url = "http://210.122.7.193:8080/Trophy_img/team/\(matchList[indexPath.row].teamEmblem).jpg".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
@@ -105,8 +114,6 @@ class MatchViewController: UIViewController, UITableViewDataSource, UITableViewD
             teamEmblemImageView.clipsToBounds = true
             teamEmblemImageView.image = UIImage(named: "ic_team")
         }
-
-        
         return cell
     }
     
@@ -117,7 +124,7 @@ class MatchViewController: UIViewController, UITableViewDataSource, UITableViewD
             let row = myIndexPath.row
             
             matchDetailViewController.matchPk = self.matchList[row].matchPk
-            
+            print("aaa : \(self.matchList[row].matchPk)")
         }
         let backItem = UIBarButtonItem()
         backItem.title = ""

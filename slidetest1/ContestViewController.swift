@@ -31,6 +31,8 @@ class ContestViewController: UIViewController , UITableViewDelegate, UITableView
     var filteredData:[String] = []
     var Contest_Setting = Contest_Detail_Setting()
     
+    var isMain:Bool = false
+    
     var arrRes = [[String: AnyObject]]()
     
     
@@ -45,8 +47,10 @@ class ContestViewController: UIViewController , UITableViewDelegate, UITableView
 //        imageView.image = UIImage(named: "Trophy_ic")
 //        navigationItem.titleView = imageView
         
-        if(!isUserLoggedIn) {
-            UserDefaults.standard.setValue(".", forKey: "Pk")
+        if(isMain) {
+            self.navigationItem.leftBarButtonItem = nil
+        }else {
+            self.navigationItem.leftBarButtonItem = open
         }
         
         if self.revealViewController() != nil {

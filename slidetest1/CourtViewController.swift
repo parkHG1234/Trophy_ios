@@ -97,22 +97,22 @@ class CourtViewController: UIViewController, UITableViewDataSource, UITableViewD
             index = indexPath.row
             addressSiTableView.reloadData()
             
-            tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.white
+//            tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.white
+        }else {
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if tableView == self.addressDoTableView {
-            tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.clear
-        }
-    }
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        if tableView == self.addressDoTableView {
+//            tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.clear
+//        }
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
-        
-        
         
         let CourtAddressDetailViewController = segue.destination as! CourtAddressDetailViewController
         let myIndexPath2 = self.addressSiTableView.indexPathForSelectedRow!
@@ -123,7 +123,8 @@ class CourtViewController: UIViewController, UITableViewDataSource, UITableViewD
         for si in addressSiArr {
             CourtAddressDetailViewController.addressSi.append(si)
         }
-        navigationItem.title = addressSiList[index][row2]
+        CourtAddressDetailViewController.isMain = false
+        CourtAddressDetailViewController.navigationItem.title = addressSiList[index][row2]
     }
     
 

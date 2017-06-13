@@ -18,6 +18,11 @@ class CourtAddressDetailViewController: UIViewController, UITableViewDelegate, U
     var addressDo:String = ""
     var addressSi:[String] = []
     
+    var isUserLoggedIn:Bool = false
+    var userPk:String = ""
+    
+    var isMain:Bool = false
+    
     var arrRes = [[String:AnyObject]]()
     var courtSetting = CourtSetting()
     var courtList:[CourtSetting] = []
@@ -28,8 +33,6 @@ class CourtAddressDetailViewController: UIViewController, UITableViewDelegate, U
         courtTableView.dataSource = self
         courtTableView.delegate = self
         
-        self.navigationController?.title = addressDo
-        
         getData()
     }
     
@@ -38,7 +41,19 @@ class CourtAddressDetailViewController: UIViewController, UITableViewDelegate, U
         for i in 0 ..< count {
             
             print("도 : \(addressDo) 시 : \(addressSi[i])")
-            let url = "http://210.122.7.193:8080/Trophy_part3/Court.jsp?Data1=\(addressDo)&Data2=\(addressSi[i])".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            
+            let nowDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy / MM / dd:::HH : mm"
+            let nowDateString = dateFormatter.string(from: nowDate)
+            
+            var url = "".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            if(isMain) {
+                url = "http://210.122.7.193:8080/Trophy_part3/CourtRecommend.jsp?Data1=\(addressDo)&Data2=.&Data3=\(nowDateString)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            }else {
+                url = "http://210.122.7.193:8080/Trophy_part3/Court.jsp?Data1=\(addressDo)&Data2=\(addressSi[i])".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            }
+            
             Alamofire.request(url!).responseJSON { (responseData) -> Void in
                 if((responseData.result.value) != nil) {
                     let swiftyJsonVar = JSON(responseData.result.value!)
@@ -68,10 +83,32 @@ class CourtAddressDetailViewController: UIViewController, UITableViewDelegate, U
         }
         self.courtTableView.reloadData()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    //네비게이션 아이템
+    @IBAction func addButtonTapped(_ sender: Any) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        let courtApplicationButton = UIAlertAction(title: "코트 추가 요청", style: UIAlertActionStyle.destructive, handler: { (applicationSeleted) -> Void in
+            
+            self.isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
+            
+            if(self.isUserLoggedIn) {
+                
+            }else {
+                let myAlert = UIAlertController(title: "오늘의농구", message: "로그인이 필요합니다", preferredStyle: UIAlertControllerStyle.alert)
+                let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil)
+                myAlert.addAction(okAction)
+                self.present(myAlert, animated: true, completion: nil)
+            }
+        })
+        actionSheet.addAction(courtApplicationButton)
+        
+        let cancelButton = UIAlertAction(title: "취소", style: UIAlertActionStyle.cancel, handler: { (cancelSeleted) -> Void in
+        })
+        
+        actionSheet.addAction(cancelButton)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,7 +117,7 @@ class CourtAddressDetailViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:UITableViewCell? = nil
-        cell = tableView.dequeueReusableCell(withIdentifier: "courtCell", for: indexPath)
+        cell = tableView.dequeueReusableCell(withIdentifier: "courtCell2", for: indexPath)
         
         let courtImage = cell?.viewWithTag(1) as! UIImageView
         let courtName = cell?.viewWithTag(2) as! UILabel
@@ -101,12 +138,14 @@ class CourtAddressDetailViewController: UIViewController, UITableViewDelegate, U
                     }
             }
         }else {
-            courtImage.backgroundColor = UIColor(red: 26, green: 26, blue: 55, alpha: 0)
+            courtImage.backgroundColor = UIColor(red: 26/255, green: 26/255, blue: 55/255, alpha: 1)
             courtImage.image = nil
         }
-        
-        
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -116,8 +155,15 @@ class CourtAddressDetailViewController: UIViewController, UITableViewDelegate, U
             let row = myIndexPath.row
             
             courtDetailViewController.courtPk = courtList[row].courtPk
+            courtDetailViewController.navigationItem.title = courtList[row].courtName
             
+            UserDefaults.standard.set(courtList[row].courtPk, forKey: "courtPk")
+            UserDefaults.standard.synchronize()
         }
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
     }
     
 

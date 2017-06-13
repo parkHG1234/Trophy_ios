@@ -14,23 +14,12 @@ import SwiftyJSON
 class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var teamNameLabel: UILabel!
-    @IBOutlet weak var teamAddressDoLabel: UILabel!
-    @IBOutlet weak var teamAddressSiLabel: UILabel!
+    @IBOutlet weak var teamAddressLabel: UILabel!
     @IBOutlet weak var teamHomeCourtLabel: UILabel!
     @IBOutlet weak var teamIntroduceLabel: UITextView!
     @IBOutlet weak var mainScrollView: UIScrollView!
     @IBOutlet weak var teamEmblemImageView: UIImageView!
     
-    @IBOutlet weak var teamImageView1: UIImageView!
-    @IBOutlet weak var teamImageView2: UIImageView!
-    @IBOutlet weak var teamImageView3: UIImageView!
-    
-    
-    @IBOutlet weak var teamImage1HeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var teamImage2HeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var teamImage3HeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var subViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var warnningHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var teamUserCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var teamUserColletionView: UICollectionView!
     @IBOutlet weak var confirmButton: UIButton!
@@ -45,7 +34,6 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
     var teamImageList:[String] = []
     var teamImageViewList:[UIImageView] = []
     var teamImageViewConstraintList:[NSLayoutConstraint] = []
-    var imageXPosition:Int = 0
     var collectionViewCellHeight = 120
     
     
@@ -59,12 +47,15 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
         
         setButtonTitleForDuty()
         
-        teamUserCollectionViewHeightConstraint.constant = 0
-        subViewHeightConstraint.constant = 520
-        imageXPosition = 407
-        
         teamEmblemImageView.layer.cornerRadius = teamEmblemImageView.frame.size.width/2
         teamEmblemImageView.clipsToBounds = true
+        
+        teamUserColletionView.dataSource = self
+        teamUserColletionView.delegate = self
+        
+        teamUserCollectionViewHeightConstraint.constant = 120
+        
+        getTeamUsers()
         
         Alamofire.request("http://210.122.7.193:8080/Trophy_part3/TeamDetail.jsp?Data1=\(_teamPk)").responseJSON { (responseData) -> Void in
             if((responseData.result.value) != nil) {
@@ -84,16 +75,11 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
                         let _teamAddressDo = dict["teamAddressDo"] as! String
                         let _teamAddressSi = dict["teamAddressSi"] as! String
                         let _teamHomeCourt = dict["teamHomeCourt"] as! String
-                        let _teamImage1 = dict["teamImage1"] as! String
-                        let _teamImage2 = dict["teamImage2"] as! String
-                        let _teamImage3 = dict["teamImage3"] as! String
                         let _teamEmblem = dict["teamEmblem"] as! String
                         
-                        self.teamImageList = [_teamImage1, _teamImage2, _teamImage3]
                         self.teamNameLabel.text = _teamName
                         self.teamIntroduceLabel.text = _teamIntroduce
-                        self.teamAddressDoLabel.text = _teamAddressDo
-                        self.teamAddressSiLabel.text = _teamAddressSi
+                        self.teamAddressLabel.text = "\(_teamAddressDo) \(_teamAddressSi)"
                         self.teamHomeCourtLabel.text = _teamHomeCourt
                         
                         if(_teamEmblem != ".") {
@@ -112,18 +98,11 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
                             self.teamEmblemImageView.image = UIImage(named: "ic_team")
                         }
                     }
-                    self.setTeamImages()
                 }
             }
         }
         
-        teamImageViewList = [teamImageView1, teamImageView2, teamImageView3]
-        teamImageViewConstraintList = [teamImage1HeightConstraint, teamImage2HeightConstraint, teamImage3HeightConstraint]
         
-        teamUserColletionView.dataSource = self
-        teamUserColletionView.delegate = self
-        
-        getTeamUsers()
     }
     
     
@@ -161,6 +140,7 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
         teamUserNameLabel.text = teamUserList[indexPath.row].userName
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: CGFloat(view.frame.size.width/4), height: CGFloat(collectionViewCellHeight))
     }
@@ -214,14 +194,12 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
                         if((dict["isMyTeam"] as! String) == "isMyTeamManager") { //팀대표일시
                             self.userState = "isMyTeamManager"
                             //경고 없애기
-                            self.warnningHeightConstraint.constant = 0
                             self.confirmButton.isEnabled = true
                             self.confirmButton.backgroundColor = UIColor(red: 233.0/255.0, green: 69.0/255.0, blue: 56.0/255.0, alpha: 1.0)
                             self.confirmButton.setTitle("팀관리", for: .normal)
                         }else if ((dict["isMyTeam"] as! String) == "isMyTeam") { //팀원일시
                             self.userState = "isMyTeam"
                             //경고 없애기
-                            self.warnningHeightConstraint.constant = 0
                             //버튼 레드 && enable true && 버튼 text : 가입신청
                             self.confirmButton.isEnabled = true
                             self.confirmButton.backgroundColor = UIColor(red: 233.0/255.0, green: 69.0/255.0, blue: 56.0/255.0, alpha: 1.0)
@@ -230,7 +208,6 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
                             if((dict["isMyTeam"] as! String) == ".") { //가입된 팀이 없을시
                                 self.userState = "notJoinTeam"
                                 //경고 없애기
-                                self.warnningHeightConstraint.constant = 0
                                 //버튼 레드 && enable true && 버튼 text : 가입신청
                                 self.confirmButton.isEnabled = true
                                 self.confirmButton.backgroundColor = UIColor.gray
@@ -238,7 +215,6 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
                             }else {//가입된 다른 팀이 있을시
                                 self.userState = "notMyTeam"
                                 //경고 없애기
-                                self.warnningHeightConstraint.constant = 0
                                 //버튼 레드 && enable true && 버튼 text : 가입신청
                                 self.confirmButton.isEnabled = true
                                 self.confirmButton.backgroundColor = UIColor.gray
@@ -251,50 +227,15 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
         }else { //로그인 안했을시
             userState = "notLoggedIn"
             //warnning : 로그인한 사용자만 가입신청 가능
-            warnningHeightConstraint.constant = 20
+        
             //버튼 회색 && enable false && 버튼 text : 가입신청
             confirmButton.backgroundColor = UIColor.gray
             confirmButton.isEnabled = false
             confirmButton.setTitle("가입신청", for: .normal)
         }
     }
-    
-    func setTeamImages() {
-        if(self.teamImageList.count > 0) {
-            for i in 0 ..< 3 {
-                if (self.teamImageList[i] != ".") {
-                    let url = "http://210.122.7.193:8080/Trophy_img/team/\(self.teamImageList[i]).jpg".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-                    Alamofire.request(url!)
-                        .responseImage { response in
-                            //debugPrint(response)
-                            //print(response.request)
-                            //print(response.response)
-                            //debugPrint(response.result)
-                            DispatchQueue.main.async(execute: {
-                                if let image = response.result.value {
-                                    self.subViewHeightConstraint.constant += 360
-                                    self.teamImageViewList[i].image = image
-                                    self.teamImageViewList[i].contentMode = .scaleToFill
-                                    self.teamImageViewList[i].frame.size.width = self.view.frame.width
-                                    self.teamImageViewList[i].frame.size.height = 360
-                                    self.teamImageViewList[i].frame.origin.x = 0
-                                    self.teamImageViewList[i].frame.origin.y = CGFloat(self.imageXPosition)
-                                    self.imageXPosition += 360
-                                    
-                                }
-                            });
-                    }
-                }else {
-                    teamImageViewConstraintList[i].constant = 0
-                }
-            }
-            
-            if(self.teamImageList[0] == "." && self.teamImageList[1] == "." && self.teamImageList[2] == ".") {
-                //등록된 사진 없음 표시
-            }
-        }
-    }
-    
+
+
     func getTeamUsers() {
         //팀원정보 받아오기
         Alamofire.request("http://210.122.7.193:8080/Trophy_part3/TeamUserSearch.jsp?Data1=\(_teamPk)").responseJSON { (responseData) -> Void in
@@ -306,8 +247,6 @@ class TeamDetailViewController: UIViewController, UICollectionViewDataSource, UI
                     print("\(self.arrRes)")
                 }
                 
-                self.teamUserCollectionViewHeightConstraint.constant += CGFloat((self.collectionViewCellHeight+5) * ((self.arrRes.count % 4)+1))
-                self.subViewHeightConstraint.constant += CGFloat((self.collectionViewCellHeight+5) * ((self.arrRes.count % 4)+1))
                 if self.arrRes.count > 0 {
                     for i in 0 ..< self.arrRes.count {
                         var dict = self.arrRes[i]

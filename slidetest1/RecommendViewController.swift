@@ -19,6 +19,7 @@ class RecommendViewController: UIViewController {
     
     var arrRes = [[String:AnyObject]]()
     
+    var isUserLoggedIn:Bool = false
     var userPk:String = ""
     
     override func viewDidLoad() {

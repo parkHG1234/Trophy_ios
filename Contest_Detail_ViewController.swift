@@ -105,7 +105,7 @@ class Contest_Detail_ViewController: UIViewController , UISearchResultsUpdating 
                             self.teamPk = self.arrRes[0]["Team_Pk"] as! String
                             
                             self.ConfrimButton.isEnabled = true
-                            self.ConfrimButton.backgroundColor = UIColor(red: 233.0/255.0, green: 69.0/255.0, blue: 56.0/255.0, alpha: 1.0)
+                            self.ConfrimButton.backgroundColor = UIColor(red: 255.0/255.0, green: 181.0/255.0, blue: 84.0/255.0, alpha: 1.0)
                             
                             self.WarnningHeightConstraint.constant = 0
                         }else {
