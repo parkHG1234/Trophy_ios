@@ -14,7 +14,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-slidetest1.xcscheme</key>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-TodayBasket.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Protobuf.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -32,17 +42,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>02CD7DA678D8EDFA0838529925A4EC6A</key>
+		<key>4CF27468FA97E6F2B9950077B08A7726</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5B31D0B751A049963F22D30FCD7DB41A</key>
+		<key>52880E92874AAAD77364CF9D056E88A1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6BC525CB9846C947FA522A2EC43567C6</key>
+		<key>70B3897CF7E278EF6C4AB384ABCC2982</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -53,6 +63,16 @@
 			<true/>
 		</dict>
 		<key>9EFE4C70245EE2857D336B8B9FA4E825</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C5B80060FE8C664DF08841000F41D515</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E83E89992D70E72590FD02B9474CFCB0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

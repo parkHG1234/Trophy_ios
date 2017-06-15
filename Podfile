@@ -2,7 +2,7 @@
 # platform :ios, '9.0'
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
-target 'slidetest1' do
+target 'TodayBasket' do
   # Comment the next line if you're not using Swift and don't want to use dynamic 
 
   use_frameworks!
@@ -11,5 +11,8 @@ target 'slidetest1' do
   pod 'AlamofireImage', '~> 3.1'
   pod 'SwiftyJSON'
   pod 'SCLAlertView'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 end
+
 
